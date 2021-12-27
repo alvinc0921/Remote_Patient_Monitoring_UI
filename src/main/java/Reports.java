@@ -4,6 +4,7 @@ public class Reports {
     //Alerts alert_record;
     //balabala
     //to be added
+    //Averg. value
 
 
 
