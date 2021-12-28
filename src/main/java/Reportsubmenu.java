@@ -45,7 +45,8 @@ public class Reportsubmenu extends JFrame {
         ActionListener alertAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //go_alert_menu();
+                reportsubmenu.setVisible(false);
+                EmergencyUIController emUIController = new EmergencyUIController(alertList);
             }
         };
         alert.addActionListener(alertAL);
@@ -53,6 +54,7 @@ public class Reportsubmenu extends JFrame {
         ActionListener wardAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                reportsubmenu.setVisible(false);
                 //go_ward_menu();
             }
         };
