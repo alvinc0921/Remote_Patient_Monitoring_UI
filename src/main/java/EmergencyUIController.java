@@ -93,7 +93,7 @@ public class EmergencyUIController extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // switch to Ward UI, for now:
                 //mainPanel.setVisible(false);
-                Reportsubmenu reportsubmenu = new Reportsubmenu();
+                Reportsubmenu reportsubmenu = new Reportsubmenu(patientList);
 
             }
         };

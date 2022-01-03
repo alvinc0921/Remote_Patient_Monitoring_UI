@@ -11,10 +11,10 @@ public class Reportsubmenu extends JFrame {
 
     private Patient current_pat;
 
-    public Reportsubmenu(){//should be (patient_list after merge)
+    public Reportsubmenu(ArrayList<Patient> patientList){//should be (patient_list after merge)
 
         JFrame reportsubmenu = new JFrame("patientMed");//frame
-        reportsubmenu.setBounds(400,300,1200,800); //values temp.
+        reportsubmenu.setBounds(0,0,1200,800); //values temp.
         JPanel mainPanel = new JPanel();
         JPanel menuselect = new JPanel();
         JPanel patselect = new JPanel();
@@ -69,10 +69,10 @@ public class Reportsubmenu extends JFrame {
         JList patlist = new JList();
         DefaultListModel patlistmodel = new DefaultListModel();
         patlist.setModel(patlistmodel);
-        ArrayList<Patient> patient_list = new ArrayList<Patient>();
+        //ArrayList<Patient> patient_list = new ArrayList<Patient>();
         //patient list (array of patient should be fed when call this function so to be changed when merge
-        for (Patient pat:patient_list){
-            patlistmodel.addElement(pat.get());//the name of the patient object should be the name of the patient
+        for (Patient pat:patientList){
+            patlistmodel.addElement(pat);//the name of the patient object should be the name of the patient
         }
         patselect.setLayout(new FlowLayout());
         patselect.add(patlist);
