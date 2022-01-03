@@ -5,15 +5,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
-
-
-
 
 
 public class Reportsubmenu extends JFrame {
 
-    private patient current_pat;
+    private Patient current_pat;
 
     public Reportsubmenu(){//should be (patient_list after merge)
 
@@ -46,7 +42,7 @@ public class Reportsubmenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 reportsubmenu.setVisible(false);
-                EmergencyUIController emUIController = new EmergencyUIController(patientList);
+                //EmergencyUIController emUIController = new EmergencyUIController(patientList);
             }
         };
         alert.addActionListener(alertAL);
@@ -73,9 +69,9 @@ public class Reportsubmenu extends JFrame {
         JList patlist = new JList();
         DefaultListModel patlistmodel = new DefaultListModel();
         patlist.setModel(patlistmodel);
-        ArrayList<patient> patient_list = new ArrayList<patient>();
+        ArrayList<Patient> patient_list = new ArrayList<Patient>();
         //patient list (array of patient should be fed when call this function so to be changed when merge
-        for (patient pat:patient_list){
+        for (Patient pat:patient_list){
             patlistmodel.addElement(pat.get());//the name of the patient object should be the name of the patient
         }
         patselect.setLayout(new FlowLayout());
@@ -83,7 +79,7 @@ public class Reportsubmenu extends JFrame {
         patlist.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                current_pat = (patient) patlist.getSelectedValue();
+                current_pat = (Patient) patlist.getSelectedValue();
             }
         });
 
@@ -118,13 +114,13 @@ public class Reportsubmenu extends JFrame {
         reportsubmenu.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    public void generate_report(patient current_patient){
+    public void generate_report(Patient current_patient){
         //to be written when details of the contents of the reports are decided
         //also a class Reports maybe added
 
     }
 
-    public void seepast_report(patient current_pat){
+    public void seepast_report(Patient current_pat){
         //to be written later, same as above
     }
 }
