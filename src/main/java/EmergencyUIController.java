@@ -11,7 +11,7 @@ About JList: https://www.youtube.com/watch?v=lRupi3iJmzk&list=PLM-syYolLbszU7ZAT
 About displaying on split pane: https://www.youtube.com/watch?v=KOI1WbkKUpQ&ab_channel=LazicB.
  */
 
-public class EmergencyUIController extends JFrame {
+public class EmergencyUIController extends JFrame{
     private JPanel mainPanel;
     private JPanel menuPanel;
     private JButton emergencyButton;
@@ -36,6 +36,13 @@ public class EmergencyUIController extends JFrame {
     private JList warningDetailsList;
 
     public EmergencyUIController(ArrayList<Patient> patientList){
+
+        JFrame emUIFrame = new JFrame("PatientMed");
+        emUIFrame.setContentPane(mainPanel);
+        emUIFrame.setTitle("PatientMed");
+        emUIFrame.setSize(1200, 800);
+        emUIFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        emUIFrame.setVisible(true);
 
         // Get the length of the patient's vital's length (for now):
         int duration = patientList.get(0).length;
@@ -92,8 +99,9 @@ public class EmergencyUIController extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // switch to Ward UI, for now:
-                mainPanel.setVisible(false);
-                Reportsubmenu reportsubmenu = new Reportsubmenu();
+                // mainPanel.setVisible(false);
+                //emUIFrame.setVisible(false);
+                Reportsubmenu reportsubmenu = new Reportsubmenu(patientList);
 
             }
         };
@@ -108,11 +116,7 @@ public class EmergencyUIController extends JFrame {
         };
         emergencyButton.addActionListener(switchEmergency);
 
-        setContentPane(mainPanel);
-        setTitle("PatientMed");
-        setSize(1200, 800);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
+
 
     }
 
