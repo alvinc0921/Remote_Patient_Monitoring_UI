@@ -46,7 +46,7 @@ public class Reportsubmenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 reportsubmenu.setVisible(false);
-                EmergencyUIController emUIController = new EmergencyUIController(alertList);
+                EmergencyUIController emUIController = new EmergencyUIController(patientList);
             }
         };
         alert.addActionListener(alertAL);
