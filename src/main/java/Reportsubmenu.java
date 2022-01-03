@@ -11,10 +11,10 @@ public class Reportsubmenu extends JFrame {
 
     private Patient current_pat;
 
-    public Reportsubmenu(){//should be (patient_list after merge)
+    public Reportsubmenu(ArrayList<Patient> patientList){//should be (patient_list after merge)
 
         JFrame reportsubmenu = new JFrame("patientMed");//frame
-        reportsubmenu.setBounds(400,300,1200,800); //values temp.
+        reportsubmenu.setBounds(0,0,1200,800); //values temp.
         JPanel mainPanel = new JPanel();
         JPanel menuselect = new JPanel();
         JPanel patselect = new JPanel();
@@ -42,7 +42,7 @@ public class Reportsubmenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 reportsubmenu.setVisible(false);
-                //EmergencyUIController emUIController = new EmergencyUIController(patientList);
+                EmergencyUIController emUIController = new EmergencyUIController(patientList);
             }
         };
         alert.addActionListener(alertAL);
