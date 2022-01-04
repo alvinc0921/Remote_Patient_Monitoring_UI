@@ -4,11 +4,15 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class Reportsubmenu extends JFrame {
 
+    private String current_pat_name;
     private Patient current_pat;
 
     public Reportsubmenu(ArrayList<Patient> patientList){//should be (patient_list after merge)
@@ -27,7 +31,7 @@ public class Reportsubmenu extends JFrame {
         mainPanel.add(patselect);
         mainPanel.add(funcselect);
 
-
+        File test = new File("d:\\RPM_test\\test.txt");//PLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLZZZZZZZZZZZZZZZZZZZZZZZZZchange and try this line, see if a file is created in ur pc thanks!!!!!!!!!!!!!!!!
 
         JButton alert = new JButton("Alert");//menuselect menu
         JButton ward = new JButton("Ward");
@@ -72,14 +76,19 @@ public class Reportsubmenu extends JFrame {
         //ArrayList<Patient> patient_list = new ArrayList<Patient>();
         //patient list (array of patient should be fed when call this function so to be changed when merge
         for (Patient pat:patientList){
-            patlistmodel.addElement(pat);//the name of the patient object should be the name of the patient
+            patlistmodel.addElement(pat.name);//the name of the patient object should be the name of the patient
         }
         patselect.setLayout(new FlowLayout());
         patselect.add(patlist);
         patlist.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                current_pat = (Patient) patlist.getSelectedValue();
+                current_pat_name = (String) patlist.getSelectedValue();
+                for (Patient pat2:patientList){
+                    if (pat2.name == current_pat_name){
+                        current_pat = pat2;
+                    }
+                }
             }
         });
 
@@ -114,13 +123,53 @@ public class Reportsubmenu extends JFrame {
         reportsubmenu.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    public void generate_report(Patient current_patient){
-        //to be written when details of the contents of the reports are decided
-        //also a class Reports maybe added
-
+    public void generate_report(Patient current_pat){
+        //Date?
+        String file_path = "D:\\RPM_test\\PatMed.txt";//now only obe file is created
+        String content;
+        FileWriter fw = null;
+        try{
+            File file = new File(file_path);
+            if (!file.exists()){
+                file.createNewFile();
+            }
+            fw = new FileWriter(file_path);
+            fw.write("Status Report for" + current_pat.name + "on date DD/MM/YYYY"+"\r\n");
+            fw.write("\r\n");
+            fw.write("Patient name:" + current_pat.name + "\r\n");
+            fw.write("Patient location:" + current_pat.patLoc + "\r\n");
+            fw.write("Patient's current status:" + current_pat.alertStatus + "\r\n");
+            fw.write("Patient alert history:" + "\r\n");
+            int hisleng = current_pat.alertHistoryTemp.size();
+            for (int i=0; i < hisleng; i++){
+                fw.write(current_pat.alertHistoryTemp.get(i) + "\r\n");
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            try{
+                fw.close();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        try{
+            Process process = Runtime.getRuntime().exec("cmd.exe /c notepad d:/RPM_test/PatMed.txt");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public void seepast_report(Patient current_pat){
-        //to be written later, same as above
+    public void seepast_report(Patient current_pat){//now only have one file and one dir, can be added later
+        try{
+            Process process = Runtime.getRuntime().exec("cmd.exe /c notepad d:/PatMed/PatMed.txt");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
