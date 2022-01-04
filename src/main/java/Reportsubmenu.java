@@ -4,10 +4,17 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Reportsubmenu extends JFrame {
@@ -31,7 +38,9 @@ public class Reportsubmenu extends JFrame {
         mainPanel.add(patselect);
         mainPanel.add(funcselect);
 
-        File test = new File("d:\\RPM_test\\test.txt");//PLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLZZZZZZZZZZZZZZZZZZZZZZZZZchange and try this line, see if a file is created in ur pc thanks!!!!!!!!!!!!!!!!
+
+
+
 
         JButton alert = new JButton("Alert");//menuselect menu
         JButton ward = new JButton("Ward");
@@ -107,7 +116,9 @@ public class Reportsubmenu extends JFrame {
                 generate_report(current_pat);
             }
         };
-        report.addActionListener(generptAL);
+        genereport.addActionListener(generptAL);
+
+
 
         ActionListener seepastreportAL = new ActionListener() {
             @Override
@@ -115,7 +126,7 @@ public class Reportsubmenu extends JFrame {
                 seepast_report(current_pat);
             }
         };
-        report.addActionListener(seepastreportAL);
+        seepastreport.addActionListener(seepastreportAL);
 
 
 
@@ -123,16 +134,18 @@ public class Reportsubmenu extends JFrame {
         reportsubmenu.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    public void generate_report(Patient current_pat){
+    public static void generate_report(Patient current_pat){
         //Date?
         String file_path = "D:\\RPM_test\\PatMed.txt";//now only obe file is created
-        String content;
+        //String content;
+        //Path path = Paths.get(file_path);
         FileWriter fw = null;
         try{
             File file = new File(file_path);
-            if (!file.exists()){
+            if(!file.exists()){
                 file.createNewFile();
             }
+
             fw = new FileWriter(file_path);
             fw.write("Status Report for" + current_pat.name + "on date DD/MM/YYYY"+"\r\n");
             fw.write("\r\n");
@@ -140,6 +153,7 @@ public class Reportsubmenu extends JFrame {
             fw.write("Patient location:" + current_pat.patLoc + "\r\n");
             fw.write("Patient's current status:" + current_pat.alertStatus + "\r\n");
             fw.write("Patient alert history:" + "\r\n");
+            System.out.println(current_pat.alertHistoryTemp.get(0));
             int hisleng = current_pat.alertHistoryTemp.size();
             for (int i=0; i < hisleng; i++){
                 fw.write(current_pat.alertHistoryTemp.get(i) + "\r\n");
