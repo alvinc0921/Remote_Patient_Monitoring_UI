@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PatientDetailsFrame extends JFrame{
     private JTextField tfName;
@@ -18,20 +20,20 @@ public class PatientDetailsFrame extends JFrame{
     private JButton reportButton;
 
     //Body Temperature
-    private JPanel BodyTempPanel;
+    private JPanel bodyTempPanel;
     //For Heart Rate
-    private JPanel HeartRatePanel;
+    private JPanel heartRatePanel;
     //For Respiratory Rate
-    private JPanel RespiratoryRatePanel;
+    private JPanel respiratoryRatePanel;
     //For Blood Pressure
-    private JPanel BloodPressurePanel;
+    private JPanel bloodPressurePanel;
     //ECG
-    private JPanel ECGPanel;
+    private JPanel ecgPanel;
 
     public PatientDetailsFrame() {
         setContentPane(patientProfilePanel);
         setTitle("Patient's data");
-        setSize(450,300);
+        setSize(1200,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
@@ -41,6 +43,16 @@ public class PatientDetailsFrame extends JFrame{
     //Creating the main method
     public static void main(String[] args) {
         PatientDetailsFrame patientProfileFrame = new PatientDetailsFrame();
+        //DrawGraphBodyTemp
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        List<Integer> scores = new ArrayList<>();
+        scores.add(1);
+        scores.add(2);
+        scores.add(0);
+        bodyTempPanel.add(new DrawGraph(scores));
     }
 }
 //change

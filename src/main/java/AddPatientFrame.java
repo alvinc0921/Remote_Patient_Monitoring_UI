@@ -21,7 +21,7 @@ public class AddPatientFrame extends JFrame{
     public AddPatientFrame() {
         setContentPane(addPatientPanel);
         setTitle("Add Patient");
-        setSize(450,300);
+        setSize(1200,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }

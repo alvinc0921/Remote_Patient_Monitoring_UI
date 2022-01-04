@@ -12,7 +12,7 @@ import java.util.Random;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class DrawGraph extends JPanel{
+public class DrawGraphBodyTemp extends JPanel{
     private static final int MAX_SCORE = 20;//dictates the scale to which we plot
     private static final int PREF_W = 600;
     private static final int PREF_H = 250;
@@ -24,7 +24,7 @@ public class DrawGraph extends JPanel{
     private static final int Y_HATCH_CNT = 10;//y axis gradations
     private List<Integer> scores;
 
-    public DrawGraph(List<Integer> scores) {
+    public DrawGraphBodyTemp(List<Integer> scores) {
         this.scores = scores;
     }
 
@@ -48,7 +48,7 @@ public class DrawGraph extends JPanel{
         g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);
         g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
 
-        // create hatch marks for y axis.
+        // create hatch marks for y axis:
         for (int i = 0; i < Y_HATCH_CNT; i++) {
             int x0 = BORDER_GAP;
             int x1 = GRAPH_POINT_WIDTH + BORDER_GAP;
@@ -57,7 +57,7 @@ public class DrawGraph extends JPanel{
             g2.drawLine(x0, y0, x1, y1);
         }
 
-        // and for x axis
+        // create hatch marks for x axis:
         for (int i = 0; i < scores.size() - 1; i++) {
             int x0 = (i + 1) * (getWidth() - BORDER_GAP * 2) / (scores.size() - 1) + BORDER_GAP;
             int x1 = x0;
@@ -94,7 +94,7 @@ public class DrawGraph extends JPanel{
     }
 
     private static void createAndShowGui() {
-        List<Integer> scores = new ArrayList<Integer>();
+        List<Integer> scores = new ArrayList<>();
         Random random = new Random();
         int maxDataPoints = 16;
         int maxScore = 20;
@@ -103,7 +103,7 @@ public class DrawGraph extends JPanel{
         }
         DrawGraph mainPanel = new DrawGraph(scores);
 
-        JFrame frame = new JFrame("DrawGraph");
+        JFrame frame = new JFrame("DrawGraphBodyTemp");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(mainPanel);
         frame.pack();

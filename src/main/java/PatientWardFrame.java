@@ -39,7 +39,7 @@ public class PatientWardFrame extends JFrame{
     public PatientWardFrame() {
         setContentPane(patientWardPanel);
         setTitle("Patient Ward");
-        //setSize(450,300);
+        setSize(1200,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
