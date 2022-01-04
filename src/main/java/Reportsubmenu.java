@@ -42,7 +42,7 @@ public class Reportsubmenu extends JFrame {
 
 
 
-        JButton alert = new JButton("Alert");//menuselect menu
+        JButton alert = new JButton("Emergency");//menuselect menu
         JButton ward = new JButton("Ward");
         JButton report = new JButton("Report");
         //menuselect.setLayout(new FlowLayout());
@@ -136,7 +136,8 @@ public class Reportsubmenu extends JFrame {
 
     public static void generate_report(Patient current_pat){
         //Date?
-        String file_path = "D:\\RPM_test\\PatMed.txt";//now only obe file is created
+        // Change the file_path below to change your desired directory
+        String file_path = "/Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt"; //now only obe file is created
         //String content;
         //Path path = Paths.get(file_path);
         FileWriter fw = null;
@@ -171,7 +172,8 @@ public class Reportsubmenu extends JFrame {
             }
         }
         try{
-            Process process = Runtime.getRuntime().exec("cmd.exe /c notepad d:/RPM_test/PatMed.txt");
+            // The following command is different between Mac and Window
+            Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -180,7 +182,8 @@ public class Reportsubmenu extends JFrame {
 
     public void seepast_report(Patient current_pat){//now only have one file and one dir, can be added later
         try{
-            Process process = Runtime.getRuntime().exec("cmd.exe /c notepad d:/PatMed/PatMed.txt");
+            // The following command is different between Mac and Window
+            Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
         }
         catch (Exception e){
             e.printStackTrace();
