@@ -4,38 +4,75 @@
 import java.time.Clock;
 import java.time.Instant;
 import java.util.ArrayList;
+import com.google.gson.Gson;
 
+import java.sql.*;
 public class Main {
 
-    public static void main(String[] args) {
-        // Making an array for the temp, hr and rr
-        double[] pat1_temp = new double[] {36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 41, 41, 41, 41, 41, 41, 41, 36, 36};
-        double[] pat2_temp = new double[] {36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36};
-        double[] pat3_temp = new double[] {36, 36, 36, 41, 41, 41, 41, 41, 41, 41, 39, 39, 39, 39, 39, 36, 36, 36, 36, 36};
+    public static void main(String[] args) throws SQLException{
 
-        double[] pat1_hr = new double[] {100, 100, 100, 100, 200, 200, 200, 200, 200, 100, 100, 100, 100, 100, 200, 200, 200, 100, 100, 100};
-        double[] pat2_hr = new double[] {100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
-        double[] pat3_hr = new double[] {100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
+        //CODE ADDED TO IMPLEMENT DATABASE
 
-        double[] pat1_rr = new double[] {4, 4, 4, 4, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18};
-        double[] pat2_rr = new double[] {18, 18, 22, 22, 22, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18};
-        double[] pat3_rr = new double[] {6, 6, 6, 6, 18, 18, 18, 18, 18, 18, 18, 6, 6, 6, 6, 6, 6, 6, 6, 6};
+        String dbUrl = "jdbc:postgresql://localhost:5432/postgres";
+
+        try {
+            // Registers the driver
+            Class.forName("org.postgresql.Driver");
+        } catch (Exception e) {
+        }
+        Connection conn= DriverManager.getConnection(dbUrl, "postgres", "remotepatientmonitoring");
+
+        try {
+            //System.out.println("It reaches here");
+            Statement s2=conn.createStatement();
+            String sqlStr= "SELECT id,firstname,lastname,age,bloodtype,heartrate,respiratoryrate,temperature FROM vitalsigns where id=2;";
+            ResultSet resset=s2.executeQuery(sqlStr);
+            while(resset.next()){
+                int pat1id=resset.getInt("id");
+                String pat1firstname=resset.getString("firstname");
+                String pat1lastname=resset.getString("lastname");
+                int pat1age=resset.getInt("age");
+                String pat1bloodtype=resset.getString("bloodtype");
+                Array pat1_hr=resset.getArray("heartrate");
+                Array pat1_rr=resset.getArray("respiratoryrate");
+                Array pat1_temp=resset.getArray("temperature");
+                System.out.println(pat1_temp);
+            }
+            resset.close();
+            s2.close();
+            //conn.close();
+        }
+        catch (Exception e){
+        }
+
+        try {
+            //System.out.println("It reaches here");
+            Statement s2=conn.createStatement();
+            String sqlStr= "SELECT ecg FROM vitalsigns where id=2;";
+            ResultSet resset=s2.executeQuery(sqlStr);
+            Statement s3=conn.createStatement();
+            String sqlStr3= "SELECT heartrate FROM vitalsigns where id=2;";
+            ResultSet resset3=s3.executeQuery(sqlStr3);
+            while(resset.next()){
+                Array pat1_ecg=resset.getArray("ecg");
+            }
+            while(resset3.next()){
+                Array pat1_bp=resset3.getArray("bloodpressure");
+            }
+            resset.close();
+            s2.close();
+            conn.close();
+        }
+        catch (Exception e){
+        }
 
         // instantiate the patient list here:
-        Patient pat1 = new Patient("Anson", "healthy", "Ward 62", 20, pat1_temp, pat1_hr, pat1_rr);
 
-        Patient pat2 = new Patient("Billy", "healthy", "Ward 88", 20, pat2_temp, pat2_hr, pat2_rr);
-        Patient pat3 = new Patient("Carina", "healthy", "Ward 100", 20, pat3_temp, pat3_hr, pat3_rr);
-
-        ArrayList<Patient> patientList = new ArrayList<Patient>();
-        patientList.add(pat1);
-        patientList.add(pat2);
-        patientList.add(pat3);
-
-        mainMenu.realTimeAlertChecker(patientList);
-
-        EmergencyUIController emUIController = new EmergencyUIController(patientList);
-
+        //Patient pat1 = new Patient(pat1id,pat1firstname,pat1lastname,pat1age,pat1bloodtype,pat1_ecg,pat1_bp, pat1_hr, pat1_rr, pat1_temp);
+        //ArrayList<Patient> patientList = new ArrayList<Patient>();
+        ///patientList.add(pat1);
+        //mainMenu.realTimeAlertChecker(patientList);
+        //EmergencyUIController emUIController = new EmergencyUIController(patientList);
 
     }
 
