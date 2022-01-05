@@ -6,16 +6,21 @@ public class Patient {
 
     // which has variables to store temp, BP, HR, RR, ECG, alertStatus, report, other patient data
 
-    String name;
+    int patID;
+    //String name;
+    String firstname;
+    String lastname;
+    int age;
+    String bloodtype;
     String alertStatus;
-    String patLoc;
+    String patLoc = "(to be done)";
 
-    int length;     // now temporarily store the length of the array
-    double[] temp = new double[length];
-    double[] bp = new double[length];
-    double[] hr = new double[length];
-    double[] rr = new double[length];
-    double[] ecg = new double[length];
+    //int length;     // now temporarily store the length of the array
+    double[] temp;
+    double[] bp;
+    double[] hr;
+    double[] rr;
+    double[] ecg;
 
     List<String> abnormalDetails = new ArrayList<String>();
 
@@ -27,15 +32,17 @@ public class Patient {
     ArrayList<String> alertHistoryHR = new ArrayList<>();
     ArrayList<String> alertHistoryRR = new ArrayList<>();
 
-    public Patient(String name, String alertStatus, String patLoc, int length, double[] temp, double[] hr, double[] rr){
-        this.name = name;
-        this.alertStatus = alertStatus;
-        this.patLoc = patLoc;
-        this.length = length;
-        this.temp = temp;
-        //this.bp = bp;
+    public Patient(int patID, String firstname, String lastname, int age, String bloodtype, double[] ecg, double[] bp, double[] hr, double[] rr, double[] temp){
+        this.patID = patID;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.age = age;
+        this.bloodtype = bloodtype;
+        this.ecg = ecg;
+        this.bp = bp;
         this.hr = hr;
         this.rr = rr;
+        this.temp = temp;
     }
 
     public Patient get() {

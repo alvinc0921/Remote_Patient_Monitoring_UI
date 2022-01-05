@@ -24,7 +24,7 @@ public interface mainMenu {
         double hrLowWThres = 60.0;
         double rrLowWThres = 8.0;
 
-        int duration = patientList.get(0).length;       // need this cuz now the data is small, if 24h data do not need to cancel the timer cuz it will keep looping
+        //int duration = patientList.get(0).length;       // need this cuz now the data is small, if 24h data do not need to cancel the timer cuz it will keep looping
         final int[] i = {0};
 
         for (Patient pat : patientList) {
@@ -375,10 +375,15 @@ public interface mainMenu {
                 }
                 i[0]++;
 
+                /*
                 // Do not need the following if condition for 24h data:
                 if (i[0] == duration) {
                     timer.cancel();
                 }
+
+                 */
+
+
 
             }
         };

@@ -36,7 +36,13 @@ public class Main {
                 Array pat1_hr=resset.getArray("heartrate");
                 Array pat1_rr=resset.getArray("respiratoryrate");
                 Array pat1_temp=resset.getArray("temperature");
-                System.out.println(pat1_temp);
+
+                // converting to double[]
+                double[] pat1_tempArray = (double[])pat1_temp.getArray();
+                double[] pat1_hrArray = (double[])pat1_hr.getArray();
+                double[] pat1_rrArray = (double[])pat1_rr.getArray();
+
+                System.out.println(pat1_tempArray);
             }
             resset.close();
             s2.close();
@@ -55,9 +61,15 @@ public class Main {
             ResultSet resset3=s3.executeQuery(sqlStr3);
             while(resset.next()){
                 Array pat1_ecg=resset.getArray("ecg");
+
+                // converting to double[]
+                double[] pat1_ecgArray = (double[])pat1_ecg.getArray();
             }
             while(resset3.next()){
                 Array pat1_bp=resset3.getArray("bloodpressure");
+
+                // converting to double[]
+                double[] pat1_bpArray = (double[])pat1_bp.getArray();
             }
             resset.close();
             s2.close();
@@ -66,11 +78,12 @@ public class Main {
         catch (Exception e){
         }
 
+
         // instantiate the patient list here:
 
-        //Patient pat1 = new Patient(pat1id,pat1firstname,pat1lastname,pat1age,pat1bloodtype,pat1_ecg,pat1_bp, pat1_hr, pat1_rr, pat1_temp);
+        //Patient pat1 = new Patient(pat1id,pat1firstname,pat1lastname,pat1age,pat1bloodtype,pat1_ecgArray,pat1_bpArray, pat1_hrArray, pat1_rrArray, pat1_tempArray);
         //ArrayList<Patient> patientList = new ArrayList<Patient>();
-        ///patientList.add(pat1);
+        //patientList.add(pat1);
         //mainMenu.realTimeAlertChecker(patientList);
         //EmergencyUIController emUIController = new EmergencyUIController(patientList);
 
