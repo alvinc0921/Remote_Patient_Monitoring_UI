@@ -122,14 +122,14 @@ public class EmergencyUIController extends JFrame {
 
                 for (Patient pat:patientList){
                     if (pat.alertStatus == "Urgent"){
-                        UModel.addElement(pat.name + ":  " + pat.abnormalDetails + " -- Locate at " + pat.patLoc);
+                        UModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  " + pat.abnormalDetails + " -- Locate at " + pat.patLoc);
                        timerUFlash.start();
                     }
                     else if (pat.alertStatus == "Warning"){
-                        WModel.addElement(pat.name + ":  " + pat.abnormalDetails + " -- Locate at " + pat.patLoc);
+                        WModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  " + pat.abnormalDetails + " -- Locate at " + pat.patLoc);
                         timerWFlash.start();
                     }
-                    System.out.print(pat.name + " " + pat.alertStatus+" "+ pat.abnormalDetails+ "\n Temp history:" + pat.alertHistoryTemp+"\n HR history: " + pat.alertHistoryHR+"\n RR history: " +pat.alertHistoryRR+"\n");
+                    System.out.print(pat.firstname + " " + pat.lastname + " " + pat.alertStatus+" "+ pat.abnormalDetails+ "\n Temp history:" + pat.alertHistoryTemp+"\n HR history: " + pat.alertHistoryHR+"\n RR history: " +pat.alertHistoryRR+"\n");
                 }
 
                 counter[0]++;
