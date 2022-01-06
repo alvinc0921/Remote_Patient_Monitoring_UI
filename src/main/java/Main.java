@@ -1,12 +1,17 @@
 // Where everything runs here
 
 
+import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Instant;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 
 import java.sql.*;
+import java.util.Arrays;
+import java.util.List;
+
+
 public class Main {
 
     public static void main(String[] args) throws SQLException{
@@ -15,6 +20,17 @@ public class Main {
 
         String dbUrl = "jdbc:postgresql://localhost:5432/postgres";
 
+        int pat1id=1; //dummy values
+        String pat1firstname="Nettles"; //dummy values, in honour
+        String pat1lastname="Holloway"; //dummy values, in honour
+        int pat1age=7;
+        String pat1bloodtype="O+";
+        List<BigDecimal> pat1_ecg_list = new ArrayList<>();
+        List<BigDecimal> pat1_bp_list = new ArrayList<>();
+        List<BigDecimal> pat1_hr_list = new ArrayList<>();
+        List<BigDecimal> pat1_rr_list = new ArrayList<>();
+        List<BigDecimal> pat1_temp_list= new ArrayList<>();
+
         try {
             // Registers the driver
             Class.forName("org.postgresql.Driver");
@@ -22,54 +38,98 @@ public class Main {
         }
         Connection conn= DriverManager.getConnection(dbUrl, "postgres", "remotepatientmonitoring");
 
+
         try {
-            //System.out.println("It reaches here");
             Statement s2=conn.createStatement();
             String sqlStr= "SELECT id,firstname,lastname,age,bloodtype,heartrate,respiratoryrate,temperature FROM vitalsigns where id=2;";
             ResultSet resset=s2.executeQuery(sqlStr);
             while(resset.next()){
-                int pat1id=resset.getInt("id");
-                String pat1firstname=resset.getString("firstname");
-                String pat1lastname=resset.getString("lastname");
-                int pat1age=resset.getInt("age");
-                String pat1bloodtype=resset.getString("bloodtype");
+                pat1id=resset.getInt("id");
+                pat1firstname=resset.getString("firstname");
+                pat1lastname=resset.getString("lastname");
+                pat1age=resset.getInt("age");
+                pat1bloodtype=resset.getString("bloodtype");
                 Array pat1_hr=resset.getArray("heartrate");
                 Array pat1_rr=resset.getArray("respiratoryrate");
                 Array pat1_temp=resset.getArray("temperature");
 
-                // converting to double[]
-                double[] pat1_tempArray = (double[])pat1_temp.getArray();
-                double[] pat1_hrArray = (double[])pat1_hr.getArray();
-                double[] pat1_rrArray = (double[])pat1_rr.getArray();
+              // CODE FROM  https://stackoverflow.com/questions/23277777/java-sql-array-to-arrayliststring-oraclecallablestatement
+                //heartrate list
+                for (Object obj : (Object[])pat1_hr.getArray()) {
+                    try {
+                        BigDecimal arr = (BigDecimal) obj;
+                        pat1_hr_list.add(arr);
+                    } catch (ClassCastException e) {
+                        System.out.println("Object is not a BigDecimal");
+                        e.printStackTrace();
+                    }
+                }
 
-                System.out.println(pat1_tempArray);
+                //respiratory rate list
+                for (Object obj : (Object[])pat1_rr.getArray()) {
+                    try {
+                        BigDecimal arr = (BigDecimal) obj;
+                        pat1_rr_list.add(arr);
+                    } catch (ClassCastException e) {
+                        System.out.println("Object is not a BigDecimal");
+                        e.printStackTrace();
+                    }
+                }
+
+                //temperature list
+                for (Object obj : (Object[])pat1_temp.getArray()) {
+                    try {
+                        BigDecimal arr = (BigDecimal) obj;
+                        pat1_temp_list.add(arr);
+                    } catch (ClassCastException e) {
+                        System.out.println("Object is not a BigDecimal");
+                        e.printStackTrace();
+                    }
+                }
+
             }
+
             resset.close();
             s2.close();
             //conn.close();
         }
         catch (Exception e){
+            System.out.println("I'M IN CATCH");
+            System.out.println(e.getMessage());
         }
 
-        try {
-            //System.out.println("It reaches here");
+        try {  //CODE TO GET ECG AND BP, ONE AT A TIME NEEDED
             Statement s2=conn.createStatement();
             String sqlStr= "SELECT ecg FROM vitalsigns where id=2;";
             ResultSet resset=s2.executeQuery(sqlStr);
             Statement s3=conn.createStatement();
-            String sqlStr3= "SELECT heartrate FROM vitalsigns where id=2;";
+            String sqlStr3= "SELECT bloodpressure FROM vitalsigns where id=2;";
             ResultSet resset3=s3.executeQuery(sqlStr3);
             while(resset.next()){
                 Array pat1_ecg=resset.getArray("ecg");
-
-                // converting to double[]
-                double[] pat1_ecgArray = (double[])pat1_ecg.getArray();
+                for (Object obj : (Object[])pat1_ecg.getArray()) {
+                    try {
+                        BigDecimal arr = (BigDecimal) obj;
+                        pat1_ecg_list.add(arr);
+                    } catch (ClassCastException e) {
+                        System.out.println("Object is not a BigDecimal");
+                        e.printStackTrace();
+                    }
+                }
+                // converting to double[] THIS WAS WRONG,
+                //double[] pat1_ecgArray = (double[])pat1_ecg.getArray();
             }
             while(resset3.next()){
                 Array pat1_bp=resset3.getArray("bloodpressure");
-
-                // converting to double[]
-                double[] pat1_bpArray = (double[])pat1_bp.getArray();
+                for (Object obj : (Object[])pat1_bp.getArray()) {
+                    try {
+                        BigDecimal arr = (BigDecimal) obj;
+                        pat1_bp_list.add(arr);
+                    } catch (ClassCastException e) {
+                        System.out.println("Object is not a BigDecimal");
+                        e.printStackTrace();
+                    }
+                }
             }
             resset.close();
             s2.close();
@@ -78,8 +138,7 @@ public class Main {
         catch (Exception e){
         }
 
-
-        // instantiate the patient list here:
+        // instantiate the patient list here, this is the code that was present to start the app in main before i worked in database:
 
         //Patient pat1 = new Patient(pat1id,pat1firstname,pat1lastname,pat1age,pat1bloodtype,pat1_ecgArray,pat1_bpArray, pat1_hrArray, pat1_rrArray, pat1_tempArray);
         //ArrayList<Patient> patientList = new ArrayList<Patient>();
@@ -88,6 +147,5 @@ public class Main {
         //EmergencyUIController emUIController = new EmergencyUIController(patientList);
 
     }
-
 }
 
