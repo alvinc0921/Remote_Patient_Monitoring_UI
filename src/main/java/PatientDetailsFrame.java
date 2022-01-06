@@ -71,8 +71,9 @@ public class PatientDetailsFrame extends JFrame{
         Clock clock = Clock.systemDefaultZone();
 
         Timer timer = new Timer(3, e -> {
-            for (DrawGraph graph : graphs) {
-                graph.addPlotValue(Math.sin(clock.millis() / 100.0) + 2);
+            for (int i = 0; i < graphs.size(); i++) {
+                DrawGraph graph = graphs.get(i);
+                graph.addPlotValue(Math.sin((i + 1) * clock.millis() / 100.0) + 2);
                 graph.updateUI();
             }
         });
