@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +16,18 @@ public class Patient {
     String alertStatus;
     String patLoc = "(to be done)";
 
-    //int length;     // now temporarily store the length of the array
+    // To be deleted!
     double[] temp;
     double[] bp;
     double[] hr;
     double[] rr;
     double[] ecg;
+
+    List<BigDecimal> tempSig = new ArrayList<>();
+    List<BigDecimal> bpSig = new ArrayList<>();
+    List<BigDecimal> hrSig = new ArrayList<>();
+    List<BigDecimal> rrSig = new ArrayList<>();
+    List<BigDecimal> ecgSig = new ArrayList<>();
 
     ArrayList<String> abnormalDetails = new ArrayList<String>();
 
