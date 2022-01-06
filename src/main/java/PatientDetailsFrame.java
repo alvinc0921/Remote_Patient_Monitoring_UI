@@ -1,8 +1,12 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Clock;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class PatientDetailsFrame extends JFrame{
     private JTextField tfName;
@@ -50,11 +54,30 @@ public class PatientDetailsFrame extends JFrame{
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        List<Integer> scores = new ArrayList<>();
-        scores.add(1);
-        scores.add(2);
-        scores.add(0);
-        bodyTempPanel.add(new DrawGraph(scores));
+
+        List<DrawGraph> graphs = new ArrayList<>();
+        graphs.add(new DrawGraph(0, 4, Color.RED, 100));
+        graphs.add(new DrawGraph(0, 4, Color.ORANGE, 100));
+        graphs.add(new DrawGraph(0, 4, Color.YELLOW, 100));
+        graphs.add(new DrawGraph(0, 4, Color.GREEN, 100));
+        graphs.add(new DrawGraph(0, 4, Color.BLUE, 100));
+
+        bodyTempPanel = graphs.get(0);
+        heartRatePanel = graphs.get(1);
+        respiratoryRatePanel = graphs.get(2);
+        bloodPressurePanel = graphs.get(3);
+        ecgPanel = graphs.get(4);
+
+        Clock clock = Clock.systemDefaultZone();
+
+        Timer timer = new Timer(3, e -> {
+            for (DrawGraph graph : graphs) {
+                graph.addPlotValue(Math.sin(clock.millis() / 100.0) + 2);
+                graph.updateUI();
+            }
+        });
+
+        timer.start();
     }
 }
 //change
