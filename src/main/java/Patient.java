@@ -22,7 +22,7 @@ public class Patient {
     double[] rr;
     double[] ecg;
 
-    List<String> abnormalDetails = new ArrayList<String>();
+    ArrayList<String> abnormalDetails = new ArrayList<String>();
 
     String tempFlag = new String();
     String hrFlag = new String();

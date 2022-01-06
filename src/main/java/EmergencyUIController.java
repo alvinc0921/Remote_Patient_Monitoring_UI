@@ -86,11 +86,11 @@ public class EmergencyUIController extends JFrame {
             @Override
             public void actionPerformed ( ActionEvent ae ) {
                 ++counter1;
-                counter1 %= UListColors.length;
+                counter1 %= WListColors.length;
                 warningDetailsList.setBackground ( WListColors [ counter1 ] );
 
                 ++counter2;
-                counter2 %= UListColors.length;
+                counter2 %= WListColors.length;
                 warningDetailsList.setBackground ( WListColors [ counter2 ]);
 
                 delayWCount.add(counter1);
@@ -120,12 +120,15 @@ public class EmergencyUIController extends JFrame {
                 WModel = new DefaultListModel();
                 warningDetailsList.setModel(WModel);
 
+
                 for (Patient pat:patientList){
-                    if (pat.alertStatus == "Urgent"){
+                    if (pat.tempFlag == "U" | pat.hrFlag == "U" | pat.rrFlag == "U"){
+                        pat.alertStatus = "Urgent";
                         UModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  " + pat.abnormalDetails + " -- Locate at " + pat.patLoc);
-                       timerUFlash.start();
+                        timerUFlash.start();
                     }
-                    else if (pat.alertStatus == "Warning"){
+                    if (pat.tempFlag != "U" && pat.hrFlag != "U" && pat.rrFlag != "U" && (pat.tempFlag == "W" | pat.hrFlag == "W" | pat.rrFlag == "W")){
+                        pat.alertStatus = "Warning";
                         WModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  " + pat.abnormalDetails + " -- Locate at " + pat.patLoc);
                         timerWFlash.start();
                     }
