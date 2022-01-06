@@ -39,17 +39,17 @@ public class Patient {
     ArrayList<String> alertHistoryHR = new ArrayList<>();
     ArrayList<String> alertHistoryRR = new ArrayList<>();
 
-    public Patient(int patID, String firstname, String lastname, int age, String bloodtype, double[] ecg, double[] bp, double[] hr, double[] rr, double[] temp){
+    public Patient(int patID, String firstname, String lastname, int age, String bloodtype, List<BigDecimal> ecgSig, List<BigDecimal> bpSig, List<BigDecimal> hrSig, List<BigDecimal> rrSig, List<BigDecimal> tempSig){
         this.patID = patID;
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
         this.bloodtype = bloodtype;
-        this.ecg = ecg;
-        this.bp = bp;
-        this.hr = hr;
-        this.rr = rr;
-        this.temp = temp;
+        this.ecgSig = ecgSig;
+        this.bpSig = bpSig;
+        this.hrSig = hrSig;
+        this.rrSig = rrSig;
+        this.tempSig = tempSig;
     }
 
 
