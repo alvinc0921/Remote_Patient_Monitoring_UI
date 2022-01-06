@@ -85,7 +85,7 @@ public class Reportsubmenu extends JFrame {
         //ArrayList<Patient> patient_list = new ArrayList<Patient>();
         //patient list (array of patient should be fed when call this function so to be changed when merge
         for (Patient pat:patientList){
-            patlistmodel.addElement(pat.name);//the name of the patient object should be the name of the patient
+            patlistmodel.addElement(pat.firstname + " " + pat.lastname);//the name of the patient object should be the name of the patient
         }
         patselect.setLayout(new FlowLayout());
         patselect.add(patlist);
@@ -94,7 +94,7 @@ public class Reportsubmenu extends JFrame {
             public void valueChanged(ListSelectionEvent e) {
                 current_pat_name = (String) patlist.getSelectedValue();
                 for (Patient pat2:patientList){
-                    if (pat2.name == current_pat_name){
+                    if ((pat2.firstname + " " + pat2.lastname) == current_pat_name){
                         current_pat = pat2;
                     }
                 }
@@ -148,9 +148,9 @@ public class Reportsubmenu extends JFrame {
             }
 
             fw = new FileWriter(file_path);
-            fw.write("Status Report for" + current_pat.name + "on date DD/MM/YYYY"+"\r\n");
+            fw.write("Status Report for " + current_pat.firstname + " " + current_pat.lastname + " on date DD/MM/YYYY"+"\r\n");
             fw.write("\r\n");
-            fw.write("Patient name:" + current_pat.name + "\r\n");
+            fw.write("Patient name:" + current_pat.firstname + " " + current_pat.lastname + "\r\n");
             fw.write("Patient location:" + current_pat.patLoc + "\r\n");
             fw.write("Patient's current status:" + current_pat.alertStatus + "\r\n");
             fw.write("Patient alert history:" + "\r\n");
