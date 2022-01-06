@@ -142,8 +142,8 @@ public class Reportsubmenu extends JFrame {
     public static void generate_report(Patient current_pat){
         //Date?
         // Change the file_path below to change your desired directory
-        //String file_path = "/Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt"; //now only obe file is created
-        String file_path = "D:\\RPM_test\\PatMed.txt";
+        String file_path = "/Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt"; //now only obe file is created
+        //String file_path = "D:\\RPM_test\\PatMed.txt";
         //String content;
         //Path path = Paths.get(file_path);
         FileWriter fw = null;
@@ -210,10 +210,6 @@ public class Reportsubmenu extends JFrame {
 
 
 
-
-
-
-
         }
         catch(Exception e){
             e.printStackTrace();
@@ -228,8 +224,8 @@ public class Reportsubmenu extends JFrame {
         }
         try{
             // The following command is different between Mac and Window
-            //Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
-            Process process = Runtime.getRuntime().exec("notepad D:/RPM_test/PatMed.txt");
+            Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
+            //Process process = Runtime.getRuntime().exec("notepad D:/RPM_test/PatMed.txt");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -239,7 +235,8 @@ public class Reportsubmenu extends JFrame {
     public void seepast_report(Patient current_pat){//now only have one file and one dir, can be added later
         try{
             // The following command is different between Mac and Window
-            Process process = Runtime.getRuntime().exec("notepad D:/RPM_test/PatMed.txt");
+            Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
+            //Process process = Runtime.getRuntime().exec("notepad D:/RPM_test/PatMed.txt");
         }
         catch (Exception e){
             e.printStackTrace();
