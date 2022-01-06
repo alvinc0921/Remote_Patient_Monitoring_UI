@@ -45,8 +45,5 @@ public class Patient {
         this.temp = temp;
     }
 
-    public Patient get() {
-        return this;
-    }
 
 }
