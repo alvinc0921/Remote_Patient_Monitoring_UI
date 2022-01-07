@@ -70,10 +70,12 @@ public class Reportsubmenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 reportsubmenu.setVisible(false);
+                PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
                 //go_ward_menu();
             }
         };
         ward.addActionListener(wardAL);
+
 
         ActionListener reportAL = new ActionListener() {
             @Override
