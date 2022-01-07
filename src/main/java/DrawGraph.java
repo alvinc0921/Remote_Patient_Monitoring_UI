@@ -99,12 +99,12 @@ public class DrawGraph extends JPanel{
     }
 
     private static void createAndShowGui() {
-        LinkedList<Integer> scores = new LinkedList<>();
+        LinkedList<Integer> values = new LinkedList<>();
         Random random = new Random();
         int maxDataPoints = 16;
-        int maxScore = 20;
+        int maxValue = 20;
         for (int i = 0; i < maxDataPoints ; i++) {
-            scores.add(random.nextInt(maxScore));
+            values.add(random.nextInt(maxValue));
         }
         DrawGraph mainPanel = new DrawGraph(0, 20, Color.red, 100);
 
