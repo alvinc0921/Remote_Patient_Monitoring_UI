@@ -41,7 +41,7 @@ public class EmergencyUIController extends JFrame {
     public EmergencyUIController(ArrayList<Patient> patientList){
 
         // To be deleted!!
-        int duration = patientList.get(0).length;
+        //int duration = patientList.get(0).length;
 
         // For visual and audio alarming effects on the emergency page
         // Codes Source: https://stackoverflow.com/questions/29371778/improve-my-jlabel-flashing
