@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.io.File;
 import java.io.FileWriter;
@@ -13,7 +14,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -162,18 +166,31 @@ public class Reportsubmenu extends JFrame {
             }
 
             fw = new FileWriter(file_path);
-            fw.write("Status Report for " + current_pat.firstname + " " + current_pat.lastname + " on date DD/MM/YYYY"+"\r\n");
+            Calendar calendar = Calendar.getInstance();
+            Date date = calendar.getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String current_time = sdf.format(date);
+            fw.write("Status Report for " + current_pat.firstname + " " + current_pat.lastname + current_time);
             fw.write("\r\n");
             fw.write("Patient name: " + current_pat.firstname + " " + current_pat.lastname + "\r\n");
-            fw.write("Patient location: " + current_pat.patLoc + "\r\n");
-            fw.write("Patient current status: " + current_pat.alertStatus + "\r\n");
-
-            double sum = 0;
-            int tempdataleng = current_pat.temp.length;
-            for(int a = 0; a < tempdataleng; a++){
-                sum += current_pat.temp[a];
+            fw.write("Patient ID: " + current_pat.patID + "\r\n");
+            fw.write("Patient age: " + current_pat.age + "\r\n");
+            fw.write("Patient blood type: " + current_pat.bloodtype + "\r\n");
+            int localength = current_pat.location.size();
+            fw.write("Patient location: ");
+            for (int i = 0; i < localength ; i ++){
+                fw.write(current_pat.location.get(i) + " ");
             }
-            double tempavg = sum / tempdataleng;
+
+            fw.write("\r\n"+"Patient current status: " + current_pat.alertStatus + "\r\n");
+
+            BigDecimal sum = new BigDecimal("0");
+            int tempdataleng = current_pat.tempSig.size();
+            BigDecimal tempdatalength = new BigDecimal(tempdataleng);
+            for(int a = 0; a < tempdataleng; a++){
+                sum = sum.add(current_pat.tempSig.get(a));
+            }
+            BigDecimal tempavg = sum.divide(tempdatalength);
             fw.write("\r\n" + "Patient average temperature over last 24h: " + tempavg + "\r\n");
             fw.write("Patient temperature alert history:" + "\r\n");
             int templeng = current_pat.alertHistoryTemp.size();
@@ -184,12 +201,13 @@ public class Reportsubmenu extends JFrame {
                 fw.write(current_pat.alertHistoryTemp.get(i) + "\r\n");
             }
 
-            sum = 0;
-            int hrdataleng = current_pat.hr.length;
+            sum.equals(0);
+            int hrdataleng = current_pat.hrSig.size();
+            BigDecimal hrdatalength = new BigDecimal(hrdataleng);
             for(int b = 0; b < hrdataleng; b++){
-                sum += current_pat.hr[b];
+                sum = sum.add(current_pat.hrSig.get(b));
             }
-            double hravg = sum / hrdataleng;
+            BigDecimal hravg = sum.divide(hrdatalength);
             fw.write("\r\n" + "Patient average heart rate over last 24h: " + hravg + "\r\n");
             fw.write("Patient heart rate alert history:" + "\r\n");
             int HRleng = current_pat.alertHistoryHR.size();
@@ -200,13 +218,14 @@ public class Reportsubmenu extends JFrame {
                 fw.write(current_pat.alertHistoryHR.get(j) + "\r\n");
             }
 
-            sum = 0;
-            int rrdataleng = current_pat.rr.length;
+            sum.equals(0);
+            int rrdataleng = current_pat.rrSig.size();
+            BigDecimal rrdatalength = new BigDecimal(rrdataleng);
             for(int c = 0; c < rrdataleng; c++){
-                sum += current_pat.rr[c];
+                sum = sum.add(current_pat.rrSig.get(c));
             }
-            double rravg = sum / rrdataleng;
-            fw.write("\r\n" + "Patient average resoiratory rate over last 24h: " + rravg + "\r\n");
+            BigDecimal rravg = sum.divide(rrdatalength);
+            fw.write("\r\n" + "Patient average respiratory rate over last 24h: " + rravg + "\r\n");
             fw.write("Patient respiratory rate alert history:" + "\r\n");
             int RRleng = current_pat.alertHistoryRR.size();
             if (RRleng == 0){
@@ -215,6 +234,25 @@ public class Reportsubmenu extends JFrame {
             for (int k=0; k < RRleng; k++){
                 fw.write(current_pat.alertHistoryRR.get(k) + "\r\n");
             }
+
+            /*sum.equals(0);
+            int ecgdataleng = current_pat.ecgSig.size();
+            BigDecimal ecgdatalength = new BigDecimal(ecgdataleng);
+            for(int c = 0; c < ecgdataleng; c++){
+                sum = sum.add(current_pat.ecgSig.get(c));
+            }
+            BigDecimal ecgavg = sum.divide(ecgdatalength);
+            fw.write("\r\n" + "Patient average ECG value over last 24h: " + ecgavg + "\r\n");
+            fw.write("Patient ECG alert history:" + "\r\n");
+            int RRleng = current_pat.alertHistoryRR.size();
+            if (RRleng == 0){
+                fw.write("N/A"+"\r\n");
+            }
+            for (int k=0; k < RRleng; k++){
+                fw.write(current_pat.alertHistoryRR.get(k) + "\r\n");
+            }
+            */
+
 
 
 
