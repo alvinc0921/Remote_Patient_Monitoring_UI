@@ -10,15 +10,22 @@ import java.util.Random;
 
 public class PatientDetailsFrame extends JFrame{
     private JTextField tfName;
+    //String nameVar = tfName.getText();
+    private JTextField tfSex;
+    //String sexVar = tfSex.getText();
     private JTextField tfAge;
+    //String ageVar = tfAge.getText();
     private JTextField tfHeight;
+    //String heightVar = tfHeight.getText();
     private JTextField tfWeight;
+    //String weightVar = tfWeight.getText();
     private JTextField tfBloodType;
+    //String bloodTypeVar = tfBloodType.getText();
     private JTextField tfHospitalized;
+    //String hospitalizedVar = tfHospitalized.getText();
     private JTextField tfEmergency;
-    private JTextField textField1;
-    private JComboBox comboBox1;
-    private JButton xButton;
+    //String emergencyVar = tfEmergency.getText();
+    public JButton xButton;
     private JPanel patientProfilePanel;
     private JScrollBar scrollBar1;
     private JButton emergencyButton;
@@ -35,6 +42,7 @@ public class PatientDetailsFrame extends JFrame{
     private JPanel bloodPressurePanel;
     //ECG
     private JPanel ecgPanel;
+    private JSlider slider1;
 
     public PatientDetailsFrame() {
         setContentPane(patientProfilePanel);
@@ -42,19 +50,26 @@ public class PatientDetailsFrame extends JFrame{
         setSize(1200,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-    }
 
-    //get patient data and plot in the Panels
+        /*
+        String name, String sex, String age, String height, String weight, String bloodType, String hospitalized, String emergency
+          this.nameVar = name;
+        this.sexVar = sex;
+        this.ageVar = age;
+        this.heightVar = height;
+        this.weightVar = weight;
+        this.bloodTypeVar = bloodType;
+        this.hospitalizedVar = hospitalized;
+        this.emergencyVar = emergency;
+         */
+    }
 
     //Creating the main method
     public static void main(String[] args) {
         PatientDetailsFrame patientProfileFrame = new PatientDetailsFrame();
-        //DrawGraphBodyTemp
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
-
         List<DrawGraph> graphs = new ArrayList<>();
         graphs.add(new DrawGraph(0, 4, Color.RED, 100));
         graphs.add(new DrawGraph(0, 4, Color.ORANGE, 100));
@@ -81,11 +96,4 @@ public class PatientDetailsFrame extends JFrame{
         timer.start();
     }
 }
-//change
-
-/*
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
- */
 
