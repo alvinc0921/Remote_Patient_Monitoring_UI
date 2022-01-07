@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.io.File;
 import java.io.FileWriter;
@@ -154,8 +155,8 @@ public class Reportsubmenu extends JFrame {
     public static void generate_report(Patient current_pat){
         //Date?
         // Change the file_path below to change your desired directory
-        String file_path = "/Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt"; //now only obe file is created
-        //String file_path = "D:\\RPM_test\\PatMed.txt";
+        //String file_path = "/Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt"; //now only obe file is created
+        String file_path = "D:\\RPM_test\\PatMed.txt";
         //String content;
         //Path path = Paths.get(file_path);
         FileWriter fw = null;
@@ -170,17 +171,15 @@ public class Reportsubmenu extends JFrame {
             Date date = calendar.getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             String current_time = sdf.format(date);
-            fw.write("Status Report for " + current_pat.firstname + " " + current_pat.lastname + current_time);
+            fw.write("Status Report for " + current_pat.firstname + " " + current_pat.lastname + " " + current_time);
             fw.write("\r\n");
             fw.write("Patient name: " + current_pat.firstname + " " + current_pat.lastname + "\r\n");
             fw.write("Patient ID: " + current_pat.patID + "\r\n");
             fw.write("Patient age: " + current_pat.age + "\r\n");
             fw.write("Patient blood type: " + current_pat.bloodtype + "\r\n");
             int localength = current_pat.location.size();
-            fw.write("Patient location: ");
-            for (int i = 0; i < localength ; i ++){
-                fw.write(current_pat.location.get(i) + " ");
-            }
+            fw.write("Patient location: Floor " + current_pat.location.get(0) + ", Room " + current_pat.location.get(1) + ", Bed " + current_pat.location.get(2));
+
 
             fw.write("\r\n"+"Patient current status: " + current_pat.alertStatus + "\r\n");
 
@@ -190,7 +189,7 @@ public class Reportsubmenu extends JFrame {
             for(int a = 0; a < tempdataleng; a++){
                 sum = sum.add(current_pat.tempSig.get(a));
             }
-            BigDecimal tempavg = sum.divide(tempdatalength);
+            BigDecimal tempavg = sum.divide(tempdatalength,2, RoundingMode.HALF_UP);
             fw.write("\r\n" + "Patient average temperature over last 24h: " + tempavg + "\r\n");
             fw.write("Patient temperature alert history:" + "\r\n");
             int templeng = current_pat.alertHistoryTemp.size();
@@ -207,7 +206,7 @@ public class Reportsubmenu extends JFrame {
             for(int b = 0; b < hrdataleng; b++){
                 sum = sum.add(current_pat.hrSig.get(b));
             }
-            BigDecimal hravg = sum.divide(hrdatalength);
+            BigDecimal hravg = sum.divide(hrdatalength,2,RoundingMode.HALF_UP);
             fw.write("\r\n" + "Patient average heart rate over last 24h: " + hravg + "\r\n");
             fw.write("Patient heart rate alert history:" + "\r\n");
             int HRleng = current_pat.alertHistoryHR.size();
@@ -224,7 +223,7 @@ public class Reportsubmenu extends JFrame {
             for(int c = 0; c < rrdataleng; c++){
                 sum = sum.add(current_pat.rrSig.get(c));
             }
-            BigDecimal rravg = sum.divide(rrdatalength);
+            BigDecimal rravg = sum.divide(rrdatalength,2,RoundingMode.HALF_UP);
             fw.write("\r\n" + "Patient average respiratory rate over last 24h: " + rravg + "\r\n");
             fw.write("Patient respiratory rate alert history:" + "\r\n");
             int RRleng = current_pat.alertHistoryRR.size();
@@ -270,8 +269,8 @@ public class Reportsubmenu extends JFrame {
         }
         try{
             // The following command is different between Mac and Window
-            Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
-            //Process process = Runtime.getRuntime().exec("notepad D:/RPM_test/PatMed.txt");
+            //Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
+            Process process = Runtime.getRuntime().exec("notepad D:/RPM_test/PatMed.txt");
         }
         catch (Exception e){
             e.printStackTrace();
