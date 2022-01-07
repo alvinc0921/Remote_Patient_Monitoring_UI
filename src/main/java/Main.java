@@ -256,7 +256,6 @@ public class Main {
             System.out.println("I'M IN 2nd CATCH");
         }
 
-
         // instantiate the patient list here, this is the code that was present to start the app in main before i worked in database:
 
         Patient pat1 = new Patient(pat1id,pat1firstname,pat1lastname,pat1age,pat1bloodtype,pat1_loc_list,pat1_ecg_list,pat1_bp_list, pat1_hr_list, pat1_rr_list, pat1_temp_list);
