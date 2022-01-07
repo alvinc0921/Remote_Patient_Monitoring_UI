@@ -93,6 +93,14 @@ public class Reportsubmenu extends JFrame {
         patlist.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
+/*
+                current_pat_name = (String) patlist.getSelectedValue();
+                for (Patient pat2:patientList){
+                    if ((pat2.firstname + " " + pat2.lastname) == current_pat_name){
+                        current_pat = pat2;
+                    }
+                }
+*/
                 //current_pat_name = (String) patlist.getSelectedValue();
                 current_pat_num = patlist.getSelectedIndex();
                 current_pat = patientList.get(current_pat_num);

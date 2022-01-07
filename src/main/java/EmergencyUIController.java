@@ -151,9 +151,12 @@ public class EmergencyUIController extends JFrame {
 
                 // To be deleted!
                 counter[0]++;
+                /*
                 if (counter[0]==duration){
                     timer.cancel();
                 }
+
+                 */
             }
         };
         // Displaying the alert at every second

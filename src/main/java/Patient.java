@@ -1,24 +1,28 @@
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Patient {
-
-    // To be deleted!
-    double[] temp;
-    double[] bp;
-    double[] hr;
-    double[] rr;
-    double[] ecg;
-    int length = 8; // for 24h data no need this
-    String patLoc = "(to be done)";
-
-    // Patient Details
     int patID;
     String firstname;
     String lastname;
     int age;
     String bloodtype;
+    /*
+    String alertStatus;
+    String patLoc = "(to be done)";
+
+    //int length;     // now temporarily store the length of the array
+    double[] temp;
+    double[] bp;
+    double[] hr;
+    double[] rr;
+    double[] ecg;
+
+    List<String> abnormalDetails = new ArrayList<String>();
+    */
+  
     List<BigDecimal> location = new ArrayList<>();
 
     // Lists to store 5 Signals
@@ -41,7 +45,8 @@ public class Patient {
     ArrayList<String> alertHistoryHR = new ArrayList<>();
     ArrayList<String> alertHistoryRR = new ArrayList<>();
 
-    public Patient(int patID, String firstname, String lastname, int age, String bloodtype, List<BigDecimal> location, List<BigDecimal> ecgSig, List<BigDecimal> bpSig, List<BigDecimal> hrSig, List<BigDecimal> rrSig, List<BigDecimal> tempSig){
+
+public Patient(int patID, String firstname, String lastname, int age, String bloodtype, List<BigDecimal> location, List<BigDecimal> ecgSig, List<BigDecimal> bpSig, List<BigDecimal> hrSig, List<BigDecimal> rrSig, List<BigDecimal> tempSig){
         this.patID = patID;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -54,6 +59,4 @@ public class Patient {
         this.rrSig = rrSig;
         this.tempSig = tempSig;
     }
-
-
 }
