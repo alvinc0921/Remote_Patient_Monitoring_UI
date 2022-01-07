@@ -18,30 +18,31 @@ public class Main {
 
         //CODE ADDED TO IMPLEMENT DATABASE
 
-        String dbUrl = "jdbc:postgresql://localhost:5432/postgres";
+        //String dbUrl = "jdbc:postgresql://localhost:5432/postgres";
+
+        //DB CONNECTION PART
+        DBConnection herokuconn = new DBConnection();
+        Connection conn = herokuconn.connectToDB();
+
+        //END OF DB CONNECTION PART
 
         int pat1id=1; //dummy values
         String pat1firstname="Nettles"; //dummy values, in honour
         String pat1lastname="Holloway"; //dummy values, in honour
         int pat1age=7;
         String pat1bloodtype="O+";
+        List<BigDecimal> pat1_loc_list = new ArrayList<>();
         List<BigDecimal> pat1_ecg_list = new ArrayList<>();
         List<BigDecimal> pat1_bp_list = new ArrayList<>();
         List<BigDecimal> pat1_hr_list = new ArrayList<>();
         List<BigDecimal> pat1_rr_list = new ArrayList<>();
         List<BigDecimal> pat1_temp_list= new ArrayList<>();
 
-        try {
-            // Registers the driver
-            Class.forName("org.postgresql.Driver");
-        } catch (Exception e) {
-        }
-        Connection conn= DriverManager.getConnection(dbUrl, "postgres", "remotepatientmonitoring");
 
 
         try {
             Statement s2=conn.createStatement();
-            String sqlStr= "SELECT id,firstname,lastname,age,bloodtype,heartrate,respiratoryrate,temperature FROM vitalsigns where id=2;";
+            String sqlStr= "SELECT id,firstname,lastname,age,bloodtype,location,heartrate,respiratoryrate,temperature FROM vitalsigns where id=1;";
             ResultSet resset=s2.executeQuery(sqlStr);
             while(resset.next()){
                 pat1id=resset.getInt("id");
@@ -49,11 +50,25 @@ public class Main {
                 pat1lastname=resset.getString("lastname");
                 pat1age=resset.getInt("age");
                 pat1bloodtype=resset.getString("bloodtype");
+                Array pat1_loc=resset.getArray("location");
                 Array pat1_hr=resset.getArray("heartrate");
                 Array pat1_rr=resset.getArray("respiratoryrate");
                 Array pat1_temp=resset.getArray("temperature");
 
               // CODE FROM  https://stackoverflow.com/questions/23277777/java-sql-array-to-arrayliststring-oraclecallablestatement
+
+                //location list
+                for (Object obj : (Object[])pat1_loc.getArray()) {
+                    try {
+                        BigDecimal arr = (BigDecimal) obj;
+                        pat1_loc_list.add(arr);
+                    } catch (ClassCastException e) {
+                        System.out.println("Object is not a BigDecimal");
+                        e.printStackTrace();
+                    }
+                }
+
+
                 //heartrate list
                 for (Object obj : (Object[])pat1_hr.getArray()) {
                     try {
@@ -100,10 +115,10 @@ public class Main {
 
         try {  //CODE TO GET ECG AND BP, ONE AT A TIME NEEDED
             Statement s2=conn.createStatement();
-            String sqlStr= "SELECT ecg FROM vitalsigns where id=2;";
+            String sqlStr= "SELECT ecg FROM vitalsigns where id=1;";
             ResultSet resset=s2.executeQuery(sqlStr);
             Statement s3=conn.createStatement();
-            String sqlStr3= "SELECT bloodpressure FROM vitalsigns where id=2;";
+            String sqlStr3= "SELECT bloodpressure FROM vitalsigns where id=1;";
             ResultSet resset3=s3.executeQuery(sqlStr3);
             while(resset.next()){
                 Array pat1_ecg=resset.getArray("ecg");
@@ -136,7 +151,9 @@ public class Main {
             conn.close();
         }
         catch (Exception e){
+            System.out.println("I'M IN 2nd CATCH");
         }
+
 
         // instantiate the patient list here, this is the code that was present to start the app in main before i worked in database:
 
