@@ -167,7 +167,7 @@ public class EmergencyUIController extends JFrame {
         ActionListener switchWard = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PatientDetailsFrame patientDetailsFrame = new PatientDetailsFrame();
+                PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
             }
         };
         wardButton.addActionListener(switchWard);

@@ -49,8 +49,9 @@ public class PatientDetailsFrame extends JFrame{
 
     private List<DrawGraph> graphs;
 
-    public PatientDetailsFrame() {
+    public PatientDetailsFrame(ArrayList<Patient> patientList) {
         setContentPane(patientProfilePanel);
+        setBounds(1200,0,1200,800); //value for windows on the right
         setTitle("Patient's data");
         setSize(1200,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -85,12 +86,56 @@ public class PatientDetailsFrame extends JFrame{
                 patientDetails.setVisible(false);//5. Hide it.
             }
         });
-    }
 
+        ActionListener alertAL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                //EmergencyUIController emUIController = new EmergencyUIController(patientList);
+            }
+        };
+        emergencyButton.addActionListener(alertAL);
+
+        ActionListener reportAL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                Reportsubmenu reportsubmenu = new Reportsubmenu(patientList);
+                //go_ward_menu();
+            }
+        };
+        reportButton.addActionListener(reportAL);
+
+        ActionListener wardAL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
+                //go_ward_menu();
+            }
+        };
+        wardButton.addActionListener(wardAL);
+
+        /*
+        ActionListener detailsClose = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
+                //go_ward_menu();
+            }
+        };
+        xButton.addActionListener(detailsClose);
+         */
+
+    }
+/*
     //Creating the main method
     public static void main(String[] args) {
         PatientDetailsFrame patientProfileFrame = new PatientDetailsFrame();
     }
+
+ */
 
     private void setGraphDuration(double duration) {
         for (DrawGraph graph : graphs) {
