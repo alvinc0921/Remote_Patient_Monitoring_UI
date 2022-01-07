@@ -20,6 +20,8 @@ public class Main {
 
         //String dbUrl = "jdbc:postgresql://localhost:5432/postgres";
 
+        // WEEEEEEEEEEE
+
         //DB CONNECTION PART
         DBConnection herokuconn = new DBConnection();
         Connection conn = herokuconn.connectToDB();
