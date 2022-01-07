@@ -79,7 +79,7 @@ public class PatientDetailsFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //hide PatientDetailsFrame
-                AddPatientFrame patientDetails = new AddPatientFrame();//1. Create the frame.
+                AddPatientFrame patientDetails = new AddPatientFrame(patientList);//1. Create the frame.
                 patientDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 patientDetails.setTitle("Patient Details");//3. Set title for new frame
                 patientDetails.setSize(1200,800);//4. Size the frame.

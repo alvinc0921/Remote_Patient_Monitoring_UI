@@ -157,7 +157,8 @@ public class PatientWardFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //set PatientWardFrame visibility to false
                 //set AddPatientFrame visibility to true
-                AddPatientFrame addPatient = new AddPatientFrame();//1. Create the frame.
+                AddPatientFrame addPatient = new AddPatientFrame(patientList);//1. Create the frame.
+                setVisible(false);
                 addPatient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 addPatient.setTitle("Add Patient");//3. Set title for new frame
                 addPatient.setSize(1200,800);//4. Size the frame.
