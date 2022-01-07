@@ -59,4 +59,40 @@ public Patient(int patID, String firstname, String lastname, int age, String blo
         this.rrSig = rrSig;
         this.tempSig = tempSig;
     }
+
+    public List<BigDecimal> getTempSig() {
+        return tempSig;
+    }
+
+    public List<BigDecimal> getHrSig() {
+        return hrSig;
+    }
+
+    public List<BigDecimal> getRrSig() {
+        return rrSig;
+    }
+
+    public ArrayList<String> getAlertHistoryTemp() {
+        return alertHistoryTemp;
+    }
+
+    public ArrayList<String> getAlertHistoryHR() {
+        return alertHistoryHR;
+    }
+
+    public ArrayList<String> getAlertHistoryRR() {
+        return alertHistoryRR;
+    }
+
+    public int getPatID() {
+        return patID;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
 }
