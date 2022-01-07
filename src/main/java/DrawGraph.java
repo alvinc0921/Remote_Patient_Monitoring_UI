@@ -24,7 +24,7 @@ public class DrawGraph extends JPanel{
     private final int minValue;
     private final int maxValue;//dictates the scale to which we plot
     private final Color graphColor;//line color
-    private final int maxPlotValues;
+    private int maxPlotValues;
     private LinkedList<Double> plotValues;
 
     public DrawGraph(int minValue, int maxValue, Color graphColor, int maxPlotValues) {
@@ -36,7 +36,7 @@ public class DrawGraph extends JPanel{
     }
 
     public void addPlotValue(double plotValue) {
-        if (plotValues.size() == maxPlotValues) {
+        while (plotValues.size() > maxPlotValues) {
             plotValues.removeFirst();
         }
         plotValues.addLast(plotValue);
@@ -52,6 +52,7 @@ public class DrawGraph extends JPanel{
         double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (maxValue - minValue);
 
         List<Point> graphPoints = new ArrayList<Point>();
+
         for (int i = 0; i < plotValues.size(); i++) {
             int x1 = (int) (i * xScale + BORDER_GAP);
             int y1 = (int) ((maxValue - plotValues.get(i)) * yScale + BORDER_GAP);
@@ -122,5 +123,9 @@ public class DrawGraph extends JPanel{
                 createAndShowGui();
             }
         });
+    }
+
+    public void setPlotDuration(double duration) {
+        maxPlotValues = (int) duration/3;
     }
 }
