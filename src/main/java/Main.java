@@ -20,8 +20,6 @@ public class Main {
 
         //String dbUrl = "jdbc:postgresql://localhost:5432/postgres";
 
-        // WEEEEEEEEEEE
-
         //DB CONNECTION PART
         DBConnection herokuconn = new DBConnection();
         Connection conn = herokuconn.connectToDB();
@@ -261,11 +259,11 @@ public class Main {
 
         // instantiate the patient list here, this is the code that was present to start the app in main before i worked in database:
 
-        //Patient pat1 = new Patient(pat1id,pat1firstname,pat1lastname,pat1age,pat1bloodtype,pat1_ecgArray,pat1_bpArray, pat1_hrArray, pat1_rrArray, pat1_tempArray);
-        //ArrayList<Patient> patientList = new ArrayList<Patient>();
-        //patientList.add(pat1);
-        //mainMenu.realTimeAlertChecker(patientList);
-        //EmergencyUIController emUIController = new EmergencyUIController(patientList);
+        Patient pat1 = new Patient(pat1id,pat1firstname,pat1lastname,pat1age,pat1bloodtype,pat1_loc_list,pat1_ecg_list,pat1_bp_list, pat1_hr_list, pat1_rr_list, pat1_temp_list);
+        ArrayList<Patient> patientList = new ArrayList<Patient>();
+        patientList.add(pat1);
+        mainMenu.realTimeAlertChecker(patientList);
+        EmergencyUIController emUIController = new EmergencyUIController(patientList);
 
     }
 }
