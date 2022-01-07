@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class AddPatientFrame extends JFrame{
     private JButton emergencyButton;
@@ -24,6 +26,18 @@ public class AddPatientFrame extends JFrame{
         setSize(1200,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //close AddPatientFrame
+                AddPatientFrame addPatient = new AddPatientFrame();//1. Create the frame.
+                addPatient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
+                addPatient.setTitle("Add Patient");//3. Set title for new frame
+                addPatient.setSize(1200,800);//4. Size the frame.
+                addPatient.setVisible(false);//5. Hide it.
+            }
+        });
     }
 
     public static void main(String[] args) {

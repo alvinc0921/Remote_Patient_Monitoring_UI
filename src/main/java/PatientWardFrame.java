@@ -91,7 +91,6 @@ public class PatientWardFrame extends JFrame{
         tfEmergency4.setText("none");
 
         seePatientDetailsButton1.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 //set PatientWardFrame visibility to false
@@ -101,23 +100,11 @@ public class PatientWardFrame extends JFrame{
                 framePatient1.setTitle("Patient's data");//3. Set title for new frame
                 framePatient1.setSize(1200,800);//4. Size the frame.
                 framePatient1.setVisible(true);//5. Show it.
-
-                //Implement an ActionListener for the JButton that appears together with the PatientDetailsFrame
-                /*xButton.addActionListener(new ActionListener() {
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        //close this frame
-                        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                    }
-                });*/
-
                 //set patient details to suit the patient we are interested in
             }
         });
 
         seePatientDetailsButton2.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 //set PatientWardFrame visibility to false
@@ -132,7 +119,6 @@ public class PatientWardFrame extends JFrame{
         });
 
         seePatientDetailsButton3.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 //set PatientWardFrame visibility to false
@@ -147,7 +133,6 @@ public class PatientWardFrame extends JFrame{
         });
 
         seePatientDetailsButton4.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 //set PatientWardFrame visibility to false
@@ -160,6 +145,21 @@ public class PatientWardFrame extends JFrame{
                 //set patient details to suit the patient we are interested in
             }
         });
+
+        addPatientButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //set PatientWardFrame visibility to false
+                //set AddPatientFrame visibility to true
+                AddPatientFrame addPatient = new AddPatientFrame();//1. Create the frame.
+                addPatient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
+                addPatient.setTitle("Add Patient");//3. Set title for new frame
+                addPatient.setSize(1200,800);//4. Size the frame.
+                addPatient.setVisible(true);//5. Show it.
+                //store the patient details somewhere
+            }
+        });
+
     }
 
     public static void main(String[] args) {PatientWardFrame patientListFrame = new PatientWardFrame();}

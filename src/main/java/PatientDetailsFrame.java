@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +33,7 @@ public class PatientDetailsFrame extends JFrame{
     private JButton emergencyButton;
     private JButton wardButton;
     private JButton reportButton;
+    private JTextField tfPlotTime;
 
     //Body Temperature
     private JPanel bodyTempPanel;
@@ -42,7 +45,9 @@ public class PatientDetailsFrame extends JFrame{
     private JPanel bloodPressurePanel;
     //ECG
     private JPanel ecgPanel;
-    private JSlider slider1;
+    private JSlider slider;
+
+    private List<DrawGraph> graphs;
 
     public PatientDetailsFrame() {
         setContentPane(patientProfilePanel);
@@ -62,6 +67,24 @@ public class PatientDetailsFrame extends JFrame{
         this.hospitalizedVar = hospitalized;
         this.emergencyVar = emergency;
          */
+
+        slider.addChangeListener(e -> {
+            setGraphDuration(slider.getValue() * 1000); // converts from seconds to milliseconds
+            //String x = JTextField.getText();
+            tfPlotTime.setText(String.valueOf(slider.getValue()));
+        });
+
+        xButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //hide PatientDetailsFrame
+                AddPatientFrame patientDetails = new AddPatientFrame();//1. Create the frame.
+                patientDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
+                patientDetails.setTitle("Patient Details");//3. Set title for new frame
+                patientDetails.setSize(1200,800);//4. Size the frame.
+                patientDetails.setVisible(false);//5. Hide it.
+            }
+        });
     }
 
     //Creating the main method
@@ -69,8 +92,14 @@ public class PatientDetailsFrame extends JFrame{
         PatientDetailsFrame patientProfileFrame = new PatientDetailsFrame();
     }
 
+    private void setGraphDuration(double duration) {
+        for (DrawGraph graph : graphs) {
+            graph.setPlotDuration(duration);
+        }
+    }
+
     private void createUIComponents() {
-        List<DrawGraph> graphs = new ArrayList<>();
+        graphs = new ArrayList<>();
         graphs.add(new DrawGraph(0, 4, Color.RED, 100));
         graphs.add(new DrawGraph(0, 4, Color.ORANGE, 100));
         graphs.add(new DrawGraph(0, 4, Color.YELLOW, 100));
