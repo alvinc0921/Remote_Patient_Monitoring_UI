@@ -1,20 +1,31 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Clock;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class PatientDetailsFrame extends JFrame{
     private JTextField tfName;
+    //String nameVar = tfName.getText();
+    private JTextField tfSex;
+    //String sexVar = tfSex.getText();
     private JTextField tfAge;
+    //String ageVar = tfAge.getText();
     private JTextField tfHeight;
+    //String heightVar = tfHeight.getText();
     private JTextField tfWeight;
+    //String weightVar = tfWeight.getText();
     private JTextField tfBloodType;
+    //String bloodTypeVar = tfBloodType.getText();
     private JTextField tfHospitalized;
+    //String hospitalizedVar = tfHospitalized.getText();
     private JTextField tfEmergency;
-    private JTextField textField1;
-    private JComboBox comboBox1;
-    private JButton xButton;
+    //String emergencyVar = tfEmergency.getText();
+    public JButton xButton;
     private JPanel patientProfilePanel;
     private JScrollBar scrollBar1;
     private JButton emergencyButton;
@@ -31,6 +42,7 @@ public class PatientDetailsFrame extends JFrame{
     private JPanel bloodPressurePanel;
     //ECG
     private JPanel ecgPanel;
+    private JSlider slider1;
 
     public PatientDetailsFrame() {
         setContentPane(patientProfilePanel);
@@ -38,30 +50,50 @@ public class PatientDetailsFrame extends JFrame{
         setSize(1200,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-    }
 
-    //get patient data and plot in the Panels
+        /*
+        String name, String sex, String age, String height, String weight, String bloodType, String hospitalized, String emergency
+          this.nameVar = name;
+        this.sexVar = sex;
+        this.ageVar = age;
+        this.heightVar = height;
+        this.weightVar = weight;
+        this.bloodTypeVar = bloodType;
+        this.hospitalizedVar = hospitalized;
+        this.emergencyVar = emergency;
+         */
+    }
 
     //Creating the main method
     public static void main(String[] args) {
         PatientDetailsFrame patientProfileFrame = new PatientDetailsFrame();
-        //DrawGraphBodyTemp
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
-        List<Integer> scores = new ArrayList<>();
-        scores.add(1);
-        scores.add(2);
-        scores.add(0);
-        bodyTempPanel.add(new DrawGraph(scores));
+        List<DrawGraph> graphs = new ArrayList<>();
+        graphs.add(new DrawGraph(0, 4, Color.RED, 100));
+        graphs.add(new DrawGraph(0, 4, Color.ORANGE, 100));
+        graphs.add(new DrawGraph(0, 4, Color.YELLOW, 100));
+        graphs.add(new DrawGraph(0, 4, Color.GREEN, 100));
+        graphs.add(new DrawGraph(0, 4, Color.BLUE, 100));
+
+        bodyTempPanel = graphs.get(0);
+        heartRatePanel = graphs.get(1);
+        respiratoryRatePanel = graphs.get(2);
+        bloodPressurePanel = graphs.get(3);
+        ecgPanel = graphs.get(4);
+
+        Clock clock = Clock.systemDefaultZone();
+
+        Timer timer = new Timer(3, e -> {
+            for (int i = 0; i < graphs.size(); i++) {
+                DrawGraph graph = graphs.get(i);
+                graph.addPlotValue(Math.sin((i + 1) * clock.millis() / 100.0) + 2);
+                graph.updateUI();
+            }
+        });
+
+        timer.start();
     }
 }
-//change
-
-/*
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
- */
 

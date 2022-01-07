@@ -21,11 +21,12 @@ public class Reportsubmenu extends JFrame {
 
     private String current_pat_name;
     private Patient current_pat;
+    private int current_pat_num = 0;
 
     public Reportsubmenu(ArrayList<Patient> patientList){//should be (patient_list after merge)
 
         JFrame reportsubmenu = new JFrame("patientMed");//frame
-        reportsubmenu.setBounds(0,0,1200,800); //values temp.
+        reportsubmenu.setBounds(1200,0,1200,800); //value for windows on the right
         JPanel mainPanel = new JPanel();
         JPanel menuselect = new JPanel();
         JPanel patselect = new JPanel();
@@ -85,21 +86,33 @@ public class Reportsubmenu extends JFrame {
         //ArrayList<Patient> patient_list = new ArrayList<Patient>();
         //patient list (array of patient should be fed when call this function so to be changed when merge
         for (Patient pat:patientList){
-            patlistmodel.addElement(pat.firstname + " " + pat.lastname);//the name of the patient object should be the name of the patient
+            patlistmodel.addElement(pat.firstname +" "+ pat.lastname);//the name of the patient object should be the name of the patient
         }
         patselect.setLayout(new FlowLayout());
         patselect.add(patlist);
         patlist.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
+/*
                 current_pat_name = (String) patlist.getSelectedValue();
                 for (Patient pat2:patientList){
                     if ((pat2.firstname + " " + pat2.lastname) == current_pat_name){
                         current_pat = pat2;
                     }
                 }
+*/
+                //current_pat_name = (String) patlist.getSelectedValue();
+                current_pat_num = patlist.getSelectedIndex();
+                current_pat = patientList.get(current_pat_num);
+                //for (Patient pat2:patientList){
+                    //if ((pat2.firstname + " " + pat2.lastname) == current_pat_name){
+                        // = pat2;
+                    //}
+                //}
             }
         });
+
+
 
 
 
@@ -138,6 +151,7 @@ public class Reportsubmenu extends JFrame {
         //Date?
         // Change the file_path below to change your desired directory
         String file_path = "/Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt"; //now only obe file is created
+        //String file_path = "D:\\RPM_test\\PatMed.txt";
         //String content;
         //Path path = Paths.get(file_path);
         FileWriter fw = null;
@@ -150,15 +164,60 @@ public class Reportsubmenu extends JFrame {
             fw = new FileWriter(file_path);
             fw.write("Status Report for " + current_pat.firstname + " " + current_pat.lastname + " on date DD/MM/YYYY"+"\r\n");
             fw.write("\r\n");
-            fw.write("Patient name:" + current_pat.firstname + " " + current_pat.lastname + "\r\n");
-            fw.write("Patient location:" + current_pat.patLoc + "\r\n");
-            fw.write("Patient's current status:" + current_pat.alertStatus + "\r\n");
-            fw.write("Patient alert history:" + "\r\n");
-            System.out.println(current_pat.alertHistoryTemp.get(0));
-            int hisleng = current_pat.alertHistoryTemp.size();
-            for (int i=0; i < hisleng; i++){
+            fw.write("Patient name: " + current_pat.firstname + " " + current_pat.lastname + "\r\n");
+            fw.write("Patient location: " + current_pat.patLoc + "\r\n");
+            fw.write("Patient current status: " + current_pat.alertStatus + "\r\n");
+
+            double sum = 0;
+            int tempdataleng = current_pat.temp.length;
+            for(int a = 0; a < tempdataleng; a++){
+                sum += current_pat.temp[a];
+            }
+            double tempavg = sum / tempdataleng;
+            fw.write("\r\n" + "Patient average temperature over last 24h: " + tempavg + "\r\n");
+            fw.write("Patient temperature alert history:" + "\r\n");
+            int templeng = current_pat.alertHistoryTemp.size();
+            if (templeng == 0){
+                fw.write("N/A"+"\r\n");
+            }
+            for (int i=0; i < templeng; i++){
                 fw.write(current_pat.alertHistoryTemp.get(i) + "\r\n");
             }
+
+            sum = 0;
+            int hrdataleng = current_pat.hr.length;
+            for(int b = 0; b < hrdataleng; b++){
+                sum += current_pat.hr[b];
+            }
+            double hravg = sum / hrdataleng;
+            fw.write("\r\n" + "Patient average heart rate over last 24h: " + hravg + "\r\n");
+            fw.write("Patient heart rate alert history:" + "\r\n");
+            int HRleng = current_pat.alertHistoryHR.size();
+            if (HRleng == 0){
+                fw.write("N/A"+"\r\n");
+            }
+            for (int j=0; j < HRleng; j++){
+                fw.write(current_pat.alertHistoryHR.get(j) + "\r\n");
+            }
+
+            sum = 0;
+            int rrdataleng = current_pat.rr.length;
+            for(int c = 0; c < rrdataleng; c++){
+                sum += current_pat.rr[c];
+            }
+            double rravg = sum / rrdataleng;
+            fw.write("\r\n" + "Patient average resoiratory rate over last 24h: " + rravg + "\r\n");
+            fw.write("Patient respiratory rate alert history:" + "\r\n");
+            int RRleng = current_pat.alertHistoryRR.size();
+            if (RRleng == 0){
+                fw.write("N/A"+"\r\n");
+            }
+            for (int k=0; k < RRleng; k++){
+                fw.write(current_pat.alertHistoryRR.get(k) + "\r\n");
+            }
+
+
+
         }
         catch(Exception e){
             e.printStackTrace();
@@ -174,6 +233,7 @@ public class Reportsubmenu extends JFrame {
         try{
             // The following command is different between Mac and Window
             Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
+            //Process process = Runtime.getRuntime().exec("notepad D:/RPM_test/PatMed.txt");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -184,6 +244,7 @@ public class Reportsubmenu extends JFrame {
         try{
             // The following command is different between Mac and Window
             Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
+            //Process process = Runtime.getRuntime().exec("notepad D:/RPM_test/PatMed.txt");
         }
         catch (Exception e){
             e.printStackTrace();

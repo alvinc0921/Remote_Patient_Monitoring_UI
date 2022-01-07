@@ -1,3 +1,4 @@
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.lang.Thread;
 
 /*
 Useful tutorial:
@@ -28,12 +28,10 @@ public class EmergencyUIController extends JFrame {
     private DefaultListModel<String> UModel;
     // later need to combine with alertList<Alert>, check out 1st video
 
-    private JLabel urgentDetailsLabel;
     private JPanel warningDetailsPanel;
     private JList WarningPatName;
     private DefaultListModel<String> WModel;
 
-    private JLabel warningDetailsLabel;
     private JList urgentDetailsList;
     private JList warningDetailsList;
 
@@ -42,9 +40,13 @@ public class EmergencyUIController extends JFrame {
 
     public EmergencyUIController(ArrayList<Patient> patientList){
 
-        // Get the length of the patient's vital's length (for now):
-        //int duration = patientList.get(0).length;
+        // To be deleted!!
+        int duration = patientList.get(0).length;
 
+        // For visual and audio alarming effects on the emergency page
+        // Codes Source: https://stackoverflow.com/questions/29371778/improve-my-jlabel-flashing
+
+        // 1. For Urgent box (Flashing red, higher pitch more frequent louder alarming)
         Color[] UListColors = {
                 Color.pink,
                 new Color (255,69,52)};
@@ -64,16 +66,22 @@ public class EmergencyUIController extends JFrame {
                 counter2 %= UListColors.length;
                 urgentDetailsList.setBackground ( UListColors [ counter2 ]);
 
+                try {
+                    AudioAlarm.tone(2000,100, 0.3);
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
+
                 delayUCount.add(counter1);
 
                 if (delayUCount.size() == 4){
                     timerUFlash.stop();
                     delayUCount.clear();
                 }
-
             }
         };
 
+        // 2. For Warning box (Flashing yellow, lower pitch less frequent softer alarming)
         Color[] WListColors = {
                 Color.yellow,
                 new Color (255,218,102)};
@@ -86,32 +94,40 @@ public class EmergencyUIController extends JFrame {
             @Override
             public void actionPerformed ( ActionEvent ae ) {
                 ++counter1;
-                counter1 %= UListColors.length;
+                counter1 %= WListColors.length;
                 warningDetailsList.setBackground ( WListColors [ counter1 ] );
 
                 ++counter2;
-                counter2 %= UListColors.length;
+                counter2 %= WListColors.length;
                 warningDetailsList.setBackground ( WListColors [ counter2 ]);
+                try {
+                    AudioAlarm.tone(800,100, 0.05);
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
 
                 delayWCount.add(counter1);
 
-                if (delayWCount.size() == 4){
+                if (delayWCount.size() == 3){
                     timerWFlash.stop();
                     delayWCount.clear();
                 }
 
             }
         };
+        // The two flashing timers with different flashing rate (Urgent flashing faster)
         timerUFlash = new javax.swing.Timer(200, timerUFlashAction);
-        timerWFlash = new javax.swing.Timer(200, timerWFlashAction);
+        timerWFlash = new javax.swing.Timer(300, timerWFlashAction);
 
 
+        // Real-time displaying urgent patients and warning patients respectively on the emergency page
         final int[] counter = {0};
         Timer timer = new Timer();
         TimerTask displayAlert = new TimerTask() {
             @Override
             public void run() {
 
+                // To be deleted!!
                 System.out.println((counter[0]+1));
 
                 UModel = new DefaultListModel();
@@ -122,16 +138,18 @@ public class EmergencyUIController extends JFrame {
 
                 for (Patient pat:patientList){
                     if (pat.alertStatus == "Urgent"){
-                        UModel.addElement(pat.firstname + " " + pat.lastname + ":  " + pat.abnormalDetails + " -- Locate at " + pat.patLoc);
-                       timerUFlash.start();
+                        UModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  " + pat.abnormalDetails + " -- Locate at Floor: " + pat.location.get(0) + ", Room: " + pat.location.get(1) + ", Bed: " + pat.location.get(2));
+                        timerUFlash.start();
                     }
-                    else if (pat.alertStatus == "Warning"){
-                        WModel.addElement(pat.firstname + " "+ pat.lastname+ ":  " + pat.abnormalDetails + " -- Locate at " + pat.patLoc);
+                    if (pat.alertStatus == "Warning"){
+                        WModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  " + pat.abnormalDetails + " -- Locate at Floor: " + pat.location.get(0) + ", Room: " + pat.location.get(1) + ", Bed: " + pat.location.get(2));
                         timerWFlash.start();
                     }
-                    System.out.print(pat.firstname + " " + pat.lastname + " "+ pat.alertStatus+" "+ pat.abnormalDetails+ "\n Temp history:" + pat.alertHistoryTemp+"\n HR history: " + pat.alertHistoryHR+"\n RR history: " +pat.alertHistoryRR+"\n");
+                    // To be deleted!
+                    System.out.print(pat.firstname + " " + pat.lastname + " " + pat.alertStatus+" "+ pat.abnormalDetails+ "\n Temp history:" + pat.alertHistoryTemp+"\n HR history: " + pat.alertHistoryHR+"\n RR history: " +pat.alertHistoryRR+"\n");
                 }
 
+                // To be deleted!
                 counter[0]++;
                 /*
                 if (counter[0]==duration){
@@ -141,15 +159,14 @@ public class EmergencyUIController extends JFrame {
                  */
             }
         };
+        // Displaying the alert at every second
         timer.schedule(displayAlert, 0, 1000);
 
 
+        // Action Listeners for switching between Ward page and Report page
         ActionListener switchWard = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                // uncomment this:
-                // mainPanel.setVisible(false);
                 PatientDetailsFrame patientDetailsFrame = new PatientDetailsFrame();
             }
         };
@@ -158,22 +175,20 @@ public class EmergencyUIController extends JFrame {
         ActionListener switchReport = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // switch to Ward UI, for now:
-                //mainPanel.setVisible(false);
                 Reportsubmenu reportsubmenu = new Reportsubmenu(patientList);
-
             }
         };
         reportButton.addActionListener(switchReport);
 
+        /*
         ActionListener switchEmergency = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // switch to Ward UI, for now:
                 System.out.println("Already on emergency page...");
             }
         };
         emergencyButton.addActionListener(switchEmergency);
+         */
 
         setContentPane(mainPanel);
         setTitle("PatientMed");
@@ -182,6 +197,5 @@ public class EmergencyUIController extends JFrame {
         setVisible(true);
 
     }
-
 
 }
