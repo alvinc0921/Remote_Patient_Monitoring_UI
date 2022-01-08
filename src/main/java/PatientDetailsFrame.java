@@ -1,14 +1,15 @@
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.time.Clock;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class PatientDetailsFrame extends JFrame{
     private JTextField tfName;
@@ -49,8 +50,9 @@ public class PatientDetailsFrame extends JFrame{
 
     private List<DrawGraph> graphs;
 
-    public PatientDetailsFrame() {
+    public PatientDetailsFrame(ArrayList<Patient> patientList) {
         setContentPane(patientProfilePanel);
+        setBounds(1200,0,1200,800); //value for windows on the right
         setTitle("Patient's data");
         setSize(1200,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -78,19 +80,126 @@ public class PatientDetailsFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //hide PatientDetailsFrame
-                AddPatientFrame patientDetails = new AddPatientFrame();//1. Create the frame.
+                AddPatientFrame patientDetails = new AddPatientFrame(patientList);//1. Create the frame.
                 patientDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 patientDetails.setTitle("Patient Details");//3. Set title for new frame
                 patientDetails.setSize(1200,800);//4. Size the frame.
                 patientDetails.setVisible(false);//5. Hide it.
             }
         });
-    }
 
+
+        // HeartBeat indication
+
+        /* Can be deleted!
+        List<BigDecimal> hrTrial = new ArrayList<>();
+        hrTrial.add(new BigDecimal(100));
+        hrTrial.add(new BigDecimal(100));
+        hrTrial.add(new BigDecimal(100));
+        hrTrial.add(new BigDecimal(100));
+        hrTrial.add(new BigDecimal(200));
+        hrTrial.add(new BigDecimal(200));
+        hrTrial.add(new BigDecimal(200));
+        hrTrial.add(new BigDecimal(200));
+        hrTrial.add(new BigDecimal(200));
+        hrTrial.add(new BigDecimal(200));
+         */
+
+        final double[] heartRate = {0};
+        final int[] counter = {0};
+
+        int patIndex = 0;   // Need to be updated later -
+
+        ActionListener heartBeat = new ActionListener () {
+
+            @Override
+            public void actionPerformed ( ActionEvent ae ) {
+                try {
+                    AudioAlarm.tone(300,100, 0.1);
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        java.util.Timer hrTimer = new java.util.Timer();
+        TimerTask heartRateCount = new TimerTask() {
+            @Override
+            public void run() {
+                heartRate[0] = patientList.get(patIndex).hrSig.get(counter[0]).longValue();
+                // To be deleted - heartRate[0] = hrTrial.get(counter[0]).longValue();
+                System.out.println(heartRate[0]);
+                Timer heartBeatTimer = new Timer((int) (60*1000/heartRate[0]), heartBeat);
+                heartBeatTimer.start();
+                counter[0] = counter[0] + 5;   // HeartBeatSound changing every 10 seconds
+
+                ActionListener soundEnd = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        heartBeatTimer.stop();
+                    }
+                };
+                xButton.addActionListener(soundEnd);
+                emergencyButton.addActionListener(soundEnd);
+                reportButton.addActionListener(soundEnd);
+                wardButton.addActionListener(soundEnd);
+            }
+        };
+        hrTimer.schedule(heartRateCount, 0, 5*1000);
+
+
+        ActionListener alertAL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                hrTimer.cancel();
+                setVisible(false);
+                //EmergencyUIController emUIController = new EmergencyUIController(patientList);
+            }
+        };
+        emergencyButton.addActionListener(alertAL);
+
+        ActionListener reportAL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                hrTimer.cancel();
+                setVisible(false);
+                Reportsubmenu reportsubmenu = new Reportsubmenu(patientList);
+                //go_ward_menu();
+            }
+        };
+        reportButton.addActionListener(reportAL);
+
+        ActionListener wardAL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                hrTimer.cancel();
+                setVisible(false);
+                PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
+                //go_ward_menu();
+            }
+        };
+        wardButton.addActionListener(wardAL);
+
+
+        ActionListener detailsClose = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                hrTimer.cancel();
+                setVisible(false);
+                PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
+                //go_ward_menu();
+            }
+        };
+        xButton.addActionListener(detailsClose);
+
+    }
+/*
     //Creating the main method
     public static void main(String[] args) {
         PatientDetailsFrame patientProfileFrame = new PatientDetailsFrame();
     }
+
+ */
 
     private void setGraphDuration(double duration) {
         for (DrawGraph graph : graphs) {

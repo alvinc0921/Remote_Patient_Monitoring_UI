@@ -38,7 +38,7 @@ public class Reportsubmenu extends JFrame {
         JPanel funcselect = new JPanel();
         reportsubmenu.getContentPane().add(mainPanel);
         //reportsubmenu.setLayout(new FlowLayout());
-        mainPanel.setLayout(new GridLayout(1,3,100,100));
+        mainPanel.setLayout(new GridLayout(1,3,200,100));
         //mainPanel.setLayout(new FlowLayout());
         mainPanel.add(menuselect);
         mainPanel.add(patselect);
@@ -46,13 +46,16 @@ public class Reportsubmenu extends JFrame {
 
 
 
-
-
+        JLabel label = new JLabel("PadMed");
         JButton alert = new JButton("Emergency");//menuselect menu
+        alert.setPreferredSize(new Dimension(25,5));
         JButton ward = new JButton("Ward");
+        ward.setPreferredSize(new Dimension(30,5));
         JButton report = new JButton("Report");
+        report.setPreferredSize(new Dimension(35,5));
         //menuselect.setLayout(new FlowLayout());
-        menuselect.setLayout(new GridLayout(3,1,200,200));
+        menuselect.setLayout(new GridLayout(5,1,200,90));
+        menuselect.add(label);
         menuselect.add(alert);
         menuselect.add(ward);
         menuselect.add(report);
@@ -70,10 +73,12 @@ public class Reportsubmenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 reportsubmenu.setVisible(false);
+                PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
                 //go_ward_menu();
             }
         };
         ward.addActionListener(wardAL);
+
 
         ActionListener reportAL = new ActionListener() {
             @Override
@@ -86,6 +91,7 @@ public class Reportsubmenu extends JFrame {
 
 
         JList patlist = new JList();
+        JLabel patlabel = new JLabel("Please select a patient above");
         DefaultListModel patlistmodel = new DefaultListModel();
         patlist.setModel(patlistmodel);
         //ArrayList<Patient> patient_list = new ArrayList<Patient>();
@@ -93,8 +99,9 @@ public class Reportsubmenu extends JFrame {
         for (Patient pat:patientList){
             patlistmodel.addElement(pat.firstname +" "+ pat.lastname);//the name of the patient object should be the name of the patient
         }
-        patselect.setLayout(new FlowLayout());
+        patselect.setLayout(new GridLayout(2,1,100,200));
         patselect.add(patlist);
+        patselect.add(patlabel);
         patlist.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -149,28 +156,44 @@ public class Reportsubmenu extends JFrame {
 
 
         reportsubmenu.setVisible(true);
-        reportsubmenu.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        reportsubmenu.setDefaultCloseOperation(HIDE_ON_CLOSE);
     }
 
     public static void generate_report(Patient current_pat){
         //Date?
         // Change the file_path below to change your desired directory
         //String file_path = "/Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt"; //now only obe file is created
-        String file_path = "D:\\RPM_test\\PatMed.txt";
+        //String file_path = "D:\\RPM_test\\PatMed.txt";
         //String content;
         //Path path = Paths.get(file_path);
+        String file_path = System.getProperty("user.home") + System.getProperty("file.separator") + "RPM_DATA";
+        System.out.println(file_path);
         FileWriter fw = null;
+        for(int i=0;i<3;i++) {
+            if(i==2) file_path = file_path + System.getProperty("file.separator") + current_pat.getLastname() + "_" + current_pat.getFirstname() + "_" + current_pat.getPatID();
+            if(i==1) file_path=file_path + System.getProperty("file.separator") + "Reports";
+            try {
+                Files.createDirectories(Paths.get(file_path));
+            } catch (IOException e) {
+                System.err.println("Failed to create directory!" + e.getMessage());
+            }
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String current_time = sdf.format(date);
+
+
+        file_path = file_path + System.getProperty("file.separator") + current_pat.getLastname() + "_" + current_pat.getFirstname() + "_" + current_pat.getPatID() + "_" + current_time + ".txt";
+        File file = new File(file_path);
+
         try{
-            File file = new File(file_path);
             if(!file.exists()){
                 file.createNewFile();
             }
 
             fw = new FileWriter(file_path);
-            Calendar calendar = Calendar.getInstance();
-            Date date = calendar.getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            String current_time = sdf.format(date);
             fw.write("Status Report for " + current_pat.firstname + " " + current_pat.lastname + " " + current_time);
             fw.write("\r\n");
             fw.write("Patient name: " + current_pat.firstname + " " + current_pat.lastname + "\r\n");
@@ -270,7 +293,12 @@ public class Reportsubmenu extends JFrame {
         try{
             // The following command is different between Mac and Window
             //Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
-            Process process = Runtime.getRuntime().exec("notepad D:/RPM_test/PatMed.txt");
+            //Process process = Runtime.getRuntime().exec("notepad " + file_path);
+            Desktop desktop = Desktop.getDesktop();
+            if (file.exists()){
+                desktop.open(file);
+            }
+
         }
         catch (Exception e){
             e.printStackTrace();
@@ -280,8 +308,25 @@ public class Reportsubmenu extends JFrame {
     public void seepast_report(Patient current_pat){//now only have one file and one dir, can be added later
         try{
             // The following command is different between Mac and Window
-            Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
+            //Process process = Runtime.getRuntime().exec("open -a TextEdit /Users/chengdorothy/Documents/Prg3/FinalProject/PatMed.txt");
             //Process process = Runtime.getRuntime().exec("notepad D:/RPM_test/PatMed.txt");
+            String file_path = System.getProperty("user.home") + System.getProperty("file.separator") + "RPM_DATA";
+            System.out.println(file_path);
+            FileWriter fw = null;
+            for(int i=0;i<3;i++) {
+                if(i==2) file_path = file_path + System.getProperty("file.separator") + current_pat.getLastname() + "_" + current_pat.getFirstname() + "_" + current_pat.getPatID();
+                if(i==1) file_path = file_path + System.getProperty("file.separator") + "Reports";
+            }
+
+
+
+            //file_path = file_path + System.getProperty("file.separator") + current_pat.getLastname() + "_" + current_pat.getFirstname() + "_" + current_pat.getPatID() + "_" + current_time + ".txt";
+            File file = new File(file_path);
+            Desktop desktop = Desktop.getDesktop();
+            if (file.exists()){
+                desktop.open(file);
+            }
+
         }
         catch (Exception e){
             e.printStackTrace();

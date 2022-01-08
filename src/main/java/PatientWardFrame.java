@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class PatientWardFrame extends JFrame{
     private JScrollBar scrollBar1;
@@ -47,8 +48,9 @@ public class PatientWardFrame extends JFrame{
     private JButton seePatientDetailsButton4;
 
 
-    public PatientWardFrame() {
+    public PatientWardFrame(ArrayList<Patient> patientList) {
         setContentPane(patientWardPanel);
+        setBounds(1200,0,1200,800); //value for windows on the right
         setTitle("Patient Ward");
         setSize(1200,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -95,7 +97,8 @@ public class PatientWardFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //set PatientWardFrame visibility to false
                 //set PatientDetailsFrame visibility to true
-                PatientDetailsFrame framePatient1 = new PatientDetailsFrame();//1. Create the frame.
+                PatientDetailsFrame framePatient1 = new PatientDetailsFrame(patientList);//1. Create the frame.
+                setVisible(false);
                 framePatient1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 framePatient1.setTitle("Patient's data");//3. Set title for new frame
                 framePatient1.setSize(1200,800);//4. Size the frame.
@@ -109,7 +112,8 @@ public class PatientWardFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //set PatientWardFrame visibility to false
                 //set PatientDetailsFrame visibility to true
-                PatientDetailsFrame framePatient2 = new PatientDetailsFrame();//1. Create the frame.
+                PatientDetailsFrame framePatient2 = new PatientDetailsFrame(patientList);//1. Create the frame.
+                setVisible(false);
                 framePatient2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 framePatient2.setTitle("Patient's data");//3. Set title for new frame
                 framePatient2.setSize(1200,800);//4. Size the frame.
@@ -123,7 +127,8 @@ public class PatientWardFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //set PatientWardFrame visibility to false
                 //set PatientDetailsFrame visibility to true
-                PatientDetailsFrame framePatient3 = new PatientDetailsFrame();//1. Create the frame.
+                PatientDetailsFrame framePatient3 = new PatientDetailsFrame(patientList);//1. Create the frame.
+                setVisible(false);
                 framePatient3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 framePatient3.setTitle("Patient's data");//3. Set title for new frame
                 framePatient3.setSize(1200,800);//4. Size the frame.
@@ -137,7 +142,8 @@ public class PatientWardFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //set PatientWardFrame visibility to false
                 //set PatientDetailsFrame visibility to true
-                PatientDetailsFrame framePatient4 = new PatientDetailsFrame();//1. Create the frame.
+                PatientDetailsFrame framePatient4 = new PatientDetailsFrame(patientList);//1. Create the frame.
+                setVisible(false);
                 framePatient4.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 framePatient4.setTitle("Patient's data");//3. Set title for new frame
                 framePatient4.setSize(1200,800);//4. Size the frame.
@@ -151,7 +157,8 @@ public class PatientWardFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //set PatientWardFrame visibility to false
                 //set AddPatientFrame visibility to true
-                AddPatientFrame addPatient = new AddPatientFrame();//1. Create the frame.
+                AddPatientFrame addPatient = new AddPatientFrame(patientList);//1. Create the frame.
+                setVisible(false);
                 addPatient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 addPatient.setTitle("Add Patient");//3. Set title for new frame
                 addPatient.setSize(1200,800);//4. Size the frame.
@@ -160,7 +167,28 @@ public class PatientWardFrame extends JFrame{
             }
         });
 
-    }
+        ActionListener alertAL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                //EmergencyUIController emUIController = new EmergencyUIController(patientList);
+            }
+        };
+        emergencyButton.addActionListener(alertAL);
 
+        ActionListener wardAL = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                Reportsubmenu reportsubmenu = new Reportsubmenu(patientList);
+                //go_ward_menu();
+            }
+        };
+        reportButton.addActionListener(wardAL);
+
+    }
+/*
     public static void main(String[] args) {PatientWardFrame patientListFrame = new PatientWardFrame();}
+
+ */
 }
