@@ -1,15 +1,19 @@
 // Where everything runs here
 
 
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.Clock;
-import java.time.Instant;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 
 import java.sql.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class Main {
@@ -392,6 +396,24 @@ public class Main {
         patientList.add(pat2);
         mainMenu.realTimeAlertChecker(patientList);
         EmergencyUIController emUIController = new EmergencyUIController(patientList);
+
+
+        // scheduled task on generating permanent record at 12am everyday
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        Long midnight=LocalDateTime.now().until(LocalDate.now().plusDays(1).atStartOfDay(), ChronoUnit.MINUTES);
+
+        scheduler.scheduleAtFixedRate(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < patientList.size(); i++) {
+                        try {
+                            Records.recordwriter(patientList.get(i));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        }, midnight, TimeUnit.DAYS.toMinutes(1), TimeUnit.MINUTES);
 
     }
 }

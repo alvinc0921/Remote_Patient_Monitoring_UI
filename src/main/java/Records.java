@@ -11,7 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.lang.*;
 public class Records {
-    public void recordwriter(Patient patient) throws IOException {
+
+    public static void recordwriter(Patient patient) throws IOException {
         List<BigDecimal> temp24h = new ArrayList<>();
         temp24h = patient.getTempSig();
         List<BigDecimal> hr24h = new ArrayList<>();
