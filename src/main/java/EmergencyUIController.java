@@ -41,8 +41,7 @@ public class EmergencyUIController extends JFrame {
 
     public EmergencyUIController(ArrayList<Patient> patientList){
 
-        // To be deleted!!
-        //int duration = patientList.get(0).length;
+        final int[] sound = {1};
 
         // For visual and audio alarming effects on the emergency page
         // Codes Source: https://stackoverflow.com/questions/29371778/improve-my-jlabel-flashing
@@ -67,23 +66,31 @@ public class EmergencyUIController extends JFrame {
                 counter2 %= UListColors.length;
                 urgentDetailsList.setBackground ( UListColors [ counter2 ]);
 
-                try {
-                    AudioAlarm.tone(2000,100, 0.2);
-                } catch (LineUnavailableException e) {
-                    e.printStackTrace();
+                if (sound[0] == 1){
+                    try {
+                        AudioAlarm.tone(2000,100, 0.2);
+                    } catch (LineUnavailableException e) {
+                        e.printStackTrace();
+                    }
                 }
 
+/*
                 ActionListener mute = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        try {
-                            AudioAlarm.tone(0, 0, 0);
-                        } catch (LineUnavailableException ex) {
-                            ex.printStackTrace();
+                        if (sound[0] == 1){
+                            try {
+                                AudioAlarm.tone(0, 0, 0);
+                                sound[0] = 0;
+                            } catch (LineUnavailableException ex) {
+                                ex.printStackTrace();
+                            }
                         }
                     }
                 };
                 muteButton.addActionListener(mute);
+
+ */
 
 /*
                 delayUCount.add(counter1);
@@ -115,23 +122,31 @@ public class EmergencyUIController extends JFrame {
                 ++counter2;
                 counter2 %= WListColors.length;
                 warningDetailsList.setBackground ( WListColors [ counter2 ]);
-                try {
-                    AudioAlarm.tone(0,0, 0);
-                } catch (LineUnavailableException e) {
-                    e.printStackTrace();
-                }
 
+                if (sound[0] == 1){
+                    try {
+                        AudioAlarm.tone(800,100, 0.05);
+                    } catch (LineUnavailableException e) {
+                        e.printStackTrace();
+                    }
+                }
+/*
                 ActionListener mute = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        try {
-                            AudioAlarm.tone(2000, 100, 0);
-                        } catch (LineUnavailableException ex) {
-                            ex.printStackTrace();
+                        if (sound[0] == 1){
+                            try {
+                                AudioAlarm.tone(0, 0, 0);
+                                sound[0] = 0;
+                            } catch (LineUnavailableException ex) {
+                                ex.printStackTrace();
+                            }
                         }
                     }
                 };
                 muteButton.addActionListener(mute);
+
+ */
 /*
                 delayWCount.add(counter1);
 
@@ -189,16 +204,7 @@ public class EmergencyUIController extends JFrame {
                     if (WModel.getSize() == 0){
                         timerWFlash.stop();
                     }
-/*
-                    ActionListener mute = new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            timerWFlash.stop();
-                            timerUFlash.stop();
-                        }
-                    };
-                    muteButton.addActionListener(mute);
- */
+
                 }
 
                 // To be deleted!
@@ -212,6 +218,24 @@ public class EmergencyUIController extends JFrame {
         };
         // Displaying the alert at every second
         timer.schedule(displayAlert, 0, 1000);
+
+        final int[] muteCount = {0};
+
+        ActionListener mute = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                muteCount[0]++;
+                if ((muteCount[0]%2) == 1){
+                    sound[0] = 0;
+                    muteButton.setText("Unmute");
+                }
+                else if ((muteCount[0]%2) == 0){
+                    sound[0] = 1;
+                    muteButton.setText("Mute");
+                }
+            }
+        };
+        muteButton.addActionListener(mute);
 
 
         // Action Listeners for switching between Ward page and Report page

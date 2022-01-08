@@ -53,7 +53,7 @@ public class PatientWardFrame extends JFrame{
         setBounds(1200,0,1200,800); //value for windows on the right
         setTitle("Patient Ward");
         setSize(1200,800);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         setVisible(true);
 
         tfName1.setText("Layla Francene");

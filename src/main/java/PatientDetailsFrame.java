@@ -90,24 +90,8 @@ public class PatientDetailsFrame extends JFrame{
 
 
         // HeartBeat indication
-
-        /* Can be deleted!
-        List<BigDecimal> hrTrial = new ArrayList<>();
-        hrTrial.add(new BigDecimal(100));
-        hrTrial.add(new BigDecimal(100));
-        hrTrial.add(new BigDecimal(100));
-        hrTrial.add(new BigDecimal(100));
-        hrTrial.add(new BigDecimal(200));
-        hrTrial.add(new BigDecimal(200));
-        hrTrial.add(new BigDecimal(200));
-        hrTrial.add(new BigDecimal(200));
-        hrTrial.add(new BigDecimal(200));
-        hrTrial.add(new BigDecimal(200));
-         */
-
         final double[] heartRate = {0};
         final int[] counter = {0};
-
         int patIndex = 0;   // Need to be updated later -
 
         ActionListener heartBeat = new ActionListener () {
