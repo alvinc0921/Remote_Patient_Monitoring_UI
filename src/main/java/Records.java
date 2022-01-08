@@ -97,7 +97,7 @@ public class Records {
         String[] alert_timeT = new String[2];
         String[] alert_timeH = new String[2];
         String[] alert_timeR = new String[2];
-        for (i = 0; i < patient.getHrSig().size(); i++) {
+        for (i = 0; i < hravg.size(); i++) {
             if (i < 10) zero = "0";
             else zero = "";
             if (i < 9) zero2 = "0";
@@ -119,7 +119,7 @@ public class Records {
                 alert_timeR[0] = rralerts.get(i).split("T", 2)[1].split("\\.", 2)[0];
                 if (rralerts.get(i).contains(",")) alert_timeR[1] = rralerts.get(i).split("T", 3)[2].split("\\.", 2)[0];
             }
-            line = zero + i + ":00 - " + zero2 + nexti + ":00," + patient.getHrSig().get(i) + "," + patient.getTempSig().get(i) + "," + patient.getRrSig().get(i) + ",," + alert_timeT[0] + " - " + alert_timeT[1] + "," + alert_typeT + ",," + alert_timeH[0] + " - " + alert_timeH[1] + "," + alert_typeH + ",," + alert_timeR[0] + " - " + alert_timeR[1] + "," + alert_typeR + "\n";
+            line = zero + i + ":00 - " + zero2 + nexti + ":00," + hravg.get(i) + "," + tempavg.get(i) + "," + rravg.get(i) + ",," + alert_timeT[0] + " - " + alert_timeT[1] + "," + alert_typeT + ",," + alert_timeH[0] + " - " + alert_timeH[1] + "," + alert_typeH + ",," + alert_timeR[0] + " - " + alert_timeR[1] + "," + alert_typeR + "\n";
             fw.write(line);
             alert_typeT = alert_typeH = alert_typeR = "";
             Arrays.fill(alert_timeH, null);
