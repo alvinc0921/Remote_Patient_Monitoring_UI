@@ -15,7 +15,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws SQLException{
-
+        Records daily_record = new Records();
         //CODE ADDED TO IMPLEMENT DATABASE
 
         //String dbUrl = "jdbc:postgresql://localhost:5432/postgres";

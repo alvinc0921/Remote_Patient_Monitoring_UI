@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.lang.*;
 public class Records {
@@ -19,54 +20,62 @@ public class Records {
         rr24h = patient.getRrSig();
         ArrayList<String> tempalerts = new ArrayList<String>();
         tempalerts = patient.getAlertHistoryTemp();
+        //tempalerts.add("Warning Start: 2021-12-29T11:58:52.24722>, Warning ends: 2021-12-29T11:58:57.235198Z");
+        //tempalerts.add("Urgent starts: 2021-12-29T11:58:57.235198Z, Urgent ends: 2021-12-29T11:58:59.236708Z");
         ArrayList<String> hralerts = new ArrayList<String>();
         hralerts = patient.getAlertHistoryHR();
+        //hralerts.add("Warning Start: 2021-12-29T11:58:52.24722>, Warning ends: 2021-12-29T11:58:57.235198Z");
+        //hralerts.add("Urgent starts: 2021-12-29T11:58:57.235198Z, Urgent ends:2021-12-29T11:58:59.236708Z");
         ArrayList<String> rralerts = new ArrayList<String>();
-        hralerts = patient.getAlertHistoryRR();
+        rralerts = patient.getAlertHistoryRR();
+        //rralerts.add("Warning Start: 2021-12-29T11:58:52.24722>, Warning ends: 2021-12-29T11:58:57.235198Z");
+        //rralerts.add("Urgent starts: 2021-12-29T11:58:57.235198Z, Urgent ends:2021-12-29T11:58:59.236708Z");
         ArrayList<Double> tempavg = new ArrayList<Double>();
         ArrayList<Double> hravg = new ArrayList<Double>();
         ArrayList<Double> rravg = new ArrayList<Double>();
         int i;
-        double temporary_avg=0;
-        for(i=0;i < temp24h.size();i++){
-            if(i%60+1==1){
-                tempavg.add(temporary_avg/60);
-                temporary_avg=0;
+        double temporary_avg = 0;
+        for (i = 0; i < temp24h.size(); i++) {
+            if (i % 60 + 1 == 1) {
+                tempavg.add(temporary_avg / 60);
+                temporary_avg = 0;
             }
-            temporary_avg=temporary_avg+temp24h.get(i).doubleValue();
-            if(i==temp24h.size()-1 && i%60!=0) {
-                tempavg.add(temporary_avg/(i%60));
-                temporary_avg=0;
-            }
-        }
-        for(i=0;i < hr24h.size();i++){
-            if(i%60+1==1){
-                hravg.add(temporary_avg/60);
-                temporary_avg=0;
-            }
-            temporary_avg=temporary_avg+hr24h.get(i).doubleValue();
-            if(i==hr24h.size()-1 && i%60!=0) {
-                hravg.add(temporary_avg/(i%60));
-                temporary_avg=0;
+            temporary_avg = temporary_avg + temp24h.get(i).doubleValue();
+            if (i == temp24h.size() - 1 && i % 60 != 0) {
+                tempavg.add(temporary_avg / (i % 60));
+                temporary_avg = 0;
             }
         }
-        for(i=0;i < rr24h.size();i++){
-            if(i%60+1==1){
-                rravg.add(temporary_avg/60);
-                temporary_avg=0;
+        for (i = 0; i < hr24h.size(); i++) {
+            if (i % 60 + 1 == 1) {
+                hravg.add(temporary_avg / 60);
+                temporary_avg = 0;
             }
-            temporary_avg=temporary_avg+rr24h.get(i).doubleValue();
-            if(i==rr24h.size()-1 && i%60!=0) {
-                rravg.add(temporary_avg/(i%60));
-                temporary_avg=0;
+            temporary_avg = temporary_avg + hr24h.get(i).doubleValue();
+            if (i == hr24h.size() - 1 && i % 60 != 0) {
+                hravg.add(temporary_avg / (i % 60));
+                temporary_avg = 0;
             }
         }
+        for (i = 0; i < rr24h.size(); i++) {
+            if (i % 60 + 1 == 1) {
+                rravg.add(temporary_avg / 60);
+                temporary_avg = 0;
+            }
+            temporary_avg = temporary_avg + rr24h.get(i).doubleValue();
+            if (i == rr24h.size() - 1 && i % 60 != 0) {
+                rravg.add(temporary_avg / (i % 60));
+                temporary_avg = 0;
+            }
+        }
+
         String file_path = System.getProperty("user.home") + System.getProperty("file.separator") + "RPM_DATA";
         System.out.println(file_path);
         FileWriter fw = null;
-        for(i=0;i<3;i++) {
-            if(i==2) file_path = file_path + System.getProperty("file.separator") + patient.getLastname() + "_" + patient.getFirstname() + "_" + patient.getPatID();
-            if(i==1) file_path=file_path + System.getProperty("file.separator") + "PAST_RECORDS";
+        for (i = 0; i < 3; i++) {
+            if (i == 2)
+                file_path = file_path + System.getProperty("file.separator") + patient.getLastname() + "_" + patient.getFirstname() + "_" + patient.getPatID();
+            if (i == 1) file_path = file_path + System.getProperty("file.separator") + "PAST_RECORDS";
             try {
                 Files.createDirectories(Paths.get(file_path));
             } catch (IOException e) {
@@ -76,29 +85,54 @@ public class Records {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
-
-        file_path=file_path + System.getProperty("file.separator") + dtf.format(now) + ".csv";
+        file_path = file_path + System.getProperty("file.separator") + dtf.format(now) + ".csv";
         fw = new FileWriter(file_path);
-        String line="time_elapsed,signal1,signal2,signal3,,time_of_alert,alert\n";
+        String line = "Time elapsed,Heart Rate,Body Temperature,Respiratory Rate,,Time of alert BT,AlertBT,,Time of alert HR,Alert HR,,Time of alert RR, Alert RR\n";
         fw.write(line);
         String zero, zero2;
         int nexti;
-        for(i=0;i<patient.getHrSig().size();i++){
-            if(i<10) zero="0";
-            else zero="";
-            if(i<9) zero2="0";
-            else zero2="";
-            nexti=i+1;
-            line=zero + i+ ":00 - " + zero2 + nexti + ":00," + patient.getHrSig().get(i)+ "," +patient.getTempSig().get(i)+ "," +patient.getRrSig().get(i)+ "," + "\n";
+        String alert_typeT = "";
+        String alert_typeH = "";
+        String alert_typeR = "";
+        String[] alert_timeT = new String[2];
+        String[] alert_timeH = new String[2];
+        String[] alert_timeR = new String[2];
+        for (i = 0; i < patient.getHrSig().size(); i++) {
+            if (i < 10) zero = "0";
+            else zero = "";
+            if (i < 9) zero2 = "0";
+            else zero2 = "";
+            nexti = i + 1;
+            if (i < tempalerts.size()) {
+                alert_typeT = tempalerts.get(i).split(":", 2)[0].split(" ", 2)[0];
+                alert_timeT[0] = tempalerts.get(i).split("T", 2)[1].split("\\.", 2)[0];
+                if (tempalerts.get(i).contains(","))
+                    alert_timeT[1] = tempalerts.get(i).split("T", 3)[2].split("\\.", 2)[0];
+            }
+            if (i < tempalerts.size()) {
+                alert_typeH = hralerts.get(i).split(":", 2)[0].split(" ", 2)[0];
+                alert_timeH[0] = hralerts.get(i).split("T", 2)[1].split("\\.", 2)[0];
+                if (hralerts.get(i).contains(",")) alert_timeH[1] = hralerts.get(i).split("T", 3)[2].split("\\.", 2)[0];
+            }
+            if (i < tempalerts.size()) {
+                alert_typeR = rralerts.get(i).split(":", 2)[0].split(" ", 2)[0];
+                alert_timeR[0] = rralerts.get(i).split("T", 2)[1].split("\\.", 2)[0];
+                if (rralerts.get(i).contains(",")) alert_timeR[1] = rralerts.get(i).split("T", 3)[2].split("\\.", 2)[0];
+            }
+            line = zero + i + ":00 - " + zero2 + nexti + ":00," + patient.getHrSig().get(i) + "," + patient.getTempSig().get(i) + "," + patient.getRrSig().get(i) + ",," + alert_timeT[0] + " - " + alert_timeT[1] + "," + alert_typeT + ",," + alert_timeH[0] + " - " + alert_timeH[1] + "," + alert_typeH + ",," + alert_timeR[0] + " - " + alert_timeR[1] + "," + alert_typeR + "\n";
             fw.write(line);
+            alert_typeT = alert_typeH = alert_typeR = "";
+            Arrays.fill(alert_timeH, null);
+            Arrays.fill(alert_timeR, null);
+            Arrays.fill(alert_timeT, null);
         }
         fw.close();
     }
+}
 
-    public static void main(String[] args) throws IOException {
+/*    public static void main(String[] args) throws IOException {
         DBConnection db1 = new DBConnection();
         db1.connectToDB();
-
         BigDecimal bd = new BigDecimal("12345");
         BigDecimal bd2 = new BigDecimal("0.0001");
         List<BigDecimal> l1 = new ArrayList<>();
@@ -110,4 +144,4 @@ public class Records {
         Records record = new Records();
         record.recordwriter(patient1);
     }
-}
+}*/
