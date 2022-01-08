@@ -1,4 +1,5 @@
 import java.io.File;
+/* THIS CLASS IS USED TO CREATE A RECORD OF AVERAGES OF THE LAST 24H DATA FOR EACH PATIENT*/
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -10,33 +11,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.lang.*;
-public class Records {
 
-    public static void recordwriter(Patient patient) throws IOException {
-        List<BigDecimal> temp24h = new ArrayList<>();
+public class Records {
+    public static void recordwriter(Patient patient) throws IOException { //METHOD THAT WILL WRITE THE RECORD
+        List<BigDecimal> temp24h = new ArrayList<>(); //GETS THE 24H SIGNALS FROM THE PATIENT
         temp24h = patient.getTempSig();
         List<BigDecimal> hr24h = new ArrayList<>();
         hr24h = patient.getHrSig();
         List<BigDecimal> rr24h = new ArrayList<>();
         rr24h = patient.getRrSig();
-        ArrayList<String> tempalerts = new ArrayList<String>();
-        tempalerts = patient.getAlertHistoryTemp();
+        ArrayList<String> tempalerts = new ArrayList<String>(); //GETS THE ALERT HISTORY FOR THE SIGNALS OF THE PATIENT
+        tempalerts = patient.alertHistoryTemp;
         //tempalerts.add("Warning Start: 2021-12-29T11:58:52.24722>, Warning ends: 2021-12-29T11:58:57.235198Z");
         //tempalerts.add("Urgent starts: 2021-12-29T11:58:57.235198Z, Urgent ends: 2021-12-29T11:58:59.236708Z");
         ArrayList<String> hralerts = new ArrayList<String>();
-        hralerts = patient.getAlertHistoryHR();
+        hralerts = patient.alertHistoryHR;
         //hralerts.add("Warning Start: 2021-12-29T11:58:52.24722>, Warning ends: 2021-12-29T11:58:57.235198Z");
         //hralerts.add("Urgent starts: 2021-12-29T11:58:57.235198Z, Urgent ends:2021-12-29T11:58:59.236708Z");
         ArrayList<String> rralerts = new ArrayList<String>();
-        rralerts = patient.getAlertHistoryRR();
+        rralerts = patient.alertHistoryRR;
         //rralerts.add("Warning Start: 2021-12-29T11:58:52.24722>, Warning ends: 2021-12-29T11:58:57.235198Z");
         //rralerts.add("Urgent starts: 2021-12-29T11:58:57.235198Z, Urgent ends:2021-12-29T11:58:59.236708Z");
-        ArrayList<Double> tempavg = new ArrayList<Double>();
+        ArrayList<Double> tempavg = new ArrayList<Double>(); //THIS IS WHERE THE AVERAGES WILL BE KEPT FOR EACH MINUTE
         ArrayList<Double> hravg = new ArrayList<Double>();
         ArrayList<Double> rravg = new ArrayList<Double>();
         int i;
         double temporary_avg = 0;
-        for (i = 0; i < temp24h.size(); i++) {
+        for (i = 0; i < temp24h.size(); i++) { //CREATES THE AVERAGES FOR EACH SIGNAL BY TAKING FIRST 60 SAMPLES AND DOING A MEAN OF THAT UNTIL THE SIGNAL HAS BEEN FULLY READ
             if (i % 60 + 1 == 1) {
                 tempavg.add(temporary_avg / 60);
                 temporary_avg = 0;
@@ -69,7 +70,7 @@ public class Records {
                 temporary_avg = 0;
             }
         }
-
+        //FOLLOWING PART IS FOR CREATING/FINDING DIRECTORY
         String file_path = System.getProperty("user.home") + System.getProperty("file.separator") + "RPM_DATA";
         System.out.println(file_path);
         FileWriter fw = null;
@@ -110,12 +111,12 @@ public class Records {
                 if (tempalerts.get(i).contains(","))
                     alert_timeT[1] = tempalerts.get(i).split("T", 3)[2].split("\\.", 2)[0];
             }
-            if (i < tempalerts.size()) {
+            if (i < hralerts.size()) {
                 alert_typeH = hralerts.get(i).split(":", 2)[0].split(" ", 2)[0];
                 alert_timeH[0] = hralerts.get(i).split("T", 2)[1].split("\\.", 2)[0];
                 if (hralerts.get(i).contains(",")) alert_timeH[1] = hralerts.get(i).split("T", 3)[2].split("\\.", 2)[0];
             }
-            if (i < tempalerts.size()) {
+            if (i < rralerts.size()) {
                 alert_typeR = rralerts.get(i).split(":", 2)[0].split(" ", 2)[0];
                 alert_timeR[0] = rralerts.get(i).split("T", 2)[1].split("\\.", 2)[0];
                 if (rralerts.get(i).contains(",")) alert_timeR[1] = rralerts.get(i).split("T", 3)[2].split("\\.", 2)[0];
