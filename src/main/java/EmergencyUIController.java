@@ -34,6 +34,7 @@ public class EmergencyUIController extends JFrame {
 
     private JList urgentDetailsList;
     private JList warningDetailsList;
+    private JButton muteButton;
 
     javax.swing.Timer timerUFlash;
     javax.swing.Timer timerWFlash;
@@ -54,7 +55,7 @@ public class EmergencyUIController extends JFrame {
         ActionListener timerUFlashAction = new ActionListener () {
             private int counter1 = 0;
             private int counter2 = 1;
-            ArrayList<Integer> delayUCount = new ArrayList<Integer>();
+            //ArrayList<Integer> delayUCount = new ArrayList<Integer>();
 
             @Override
             public void actionPerformed ( ActionEvent ae ) {
@@ -67,17 +68,31 @@ public class EmergencyUIController extends JFrame {
                 urgentDetailsList.setBackground ( UListColors [ counter2 ]);
 
                 try {
-                    AudioAlarm.tone(2000,100, 0.3);
+                    AudioAlarm.tone(2000,100, 0.2);
                 } catch (LineUnavailableException e) {
                     e.printStackTrace();
                 }
 
+                ActionListener mute = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            AudioAlarm.tone(0, 0, 0);
+                        } catch (LineUnavailableException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                };
+                muteButton.addActionListener(mute);
+
+/*
                 delayUCount.add(counter1);
 
                 if (delayUCount.size() == 4){
                     timerUFlash.stop();
                     delayUCount.clear();
                 }
+ */
             }
         };
 
@@ -89,7 +104,7 @@ public class EmergencyUIController extends JFrame {
         ActionListener timerWFlashAction = new ActionListener () {
             private int counter1 = 0;
             private int counter2 = 1;
-            ArrayList<Integer> delayWCount = new ArrayList<Integer>();
+            //ArrayList<Integer> delayWCount = new ArrayList<Integer>();
 
             @Override
             public void actionPerformed ( ActionEvent ae ) {
@@ -101,18 +116,30 @@ public class EmergencyUIController extends JFrame {
                 counter2 %= WListColors.length;
                 warningDetailsList.setBackground ( WListColors [ counter2 ]);
                 try {
-                    AudioAlarm.tone(800,100, 0.05);
+                    AudioAlarm.tone(0,0, 0);
                 } catch (LineUnavailableException e) {
                     e.printStackTrace();
                 }
 
+                ActionListener mute = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            AudioAlarm.tone(2000, 100, 0);
+                        } catch (LineUnavailableException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                };
+                muteButton.addActionListener(mute);
+/*
                 delayWCount.add(counter1);
 
                 if (delayWCount.size() == 3){
                     timerWFlash.stop();
                     delayWCount.clear();
                 }
-
+ */
             }
         };
         // The two flashing timers with different flashing rate (Urgent flashing faster)
@@ -139,14 +166,38 @@ public class EmergencyUIController extends JFrame {
                 for (Patient pat:patientList){
                     if (pat.alertStatus == "Urgent"){
                         UModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  " + pat.abnormalDetails + " -- Locate at Floor: " + pat.location.get(0) + ", Room: " + pat.location.get(1) + ", Bed: " + pat.location.get(2));
-                        timerUFlash.start();
+                        //timerUFlash.start();
                     }
                     if (pat.alertStatus == "Warning"){
                         WModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  " + pat.abnormalDetails + " -- Locate at Floor: " + pat.location.get(0) + ", Room: " + pat.location.get(1) + ", Bed: " + pat.location.get(2));
-                        timerWFlash.start();
+                        //timerWFlash.start();
+
                     }
                     // To be deleted!
                     System.out.print(pat.firstname + " " + pat.lastname + " " + pat.alertStatus+" "+ pat.abnormalDetails+ "\n Temp history:" + pat.alertHistoryTemp+"\n HR history: " + pat.alertHistoryHR+"\n RR history: " +pat.alertHistoryRR+"\n");
+
+                    if (UModel.getSize() != 0){
+                        timerUFlash.start();
+                    }
+                    if (WModel.getSize() != 0){
+                        timerWFlash.start();
+                    }
+                    if (UModel.getSize() == 0){
+                        timerUFlash.stop();
+                    }
+                    if (WModel.getSize() == 0){
+                        timerWFlash.stop();
+                    }
+/*
+                    ActionListener mute = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            timerWFlash.stop();
+                            timerUFlash.stop();
+                        }
+                    };
+                    muteButton.addActionListener(mute);
+ */
                 }
 
                 // To be deleted!
@@ -155,7 +206,6 @@ public class EmergencyUIController extends JFrame {
                 if (counter[0]==duration){
                     timer.cancel();
                 }
-
                  */
             }
         };

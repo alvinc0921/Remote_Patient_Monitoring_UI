@@ -1,14 +1,15 @@
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.time.Clock;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class PatientDetailsFrame extends JFrame{
     private JTextField tfName;
@@ -87,9 +88,70 @@ public class PatientDetailsFrame extends JFrame{
             }
         });
 
+
+        // HeartBeat indication
+
+        /* Can be deleted!
+        List<BigDecimal> hrTrial = new ArrayList<>();
+        hrTrial.add(new BigDecimal(100));
+        hrTrial.add(new BigDecimal(100));
+        hrTrial.add(new BigDecimal(100));
+        hrTrial.add(new BigDecimal(100));
+        hrTrial.add(new BigDecimal(200));
+        hrTrial.add(new BigDecimal(200));
+        hrTrial.add(new BigDecimal(200));
+        hrTrial.add(new BigDecimal(200));
+        hrTrial.add(new BigDecimal(200));
+        hrTrial.add(new BigDecimal(200));
+         */
+
+        final double[] heartRate = {0};
+        final int[] counter = {0};
+
+        int patIndex = 0;   // Need to be updated later -
+
+        ActionListener heartBeat = new ActionListener () {
+
+            @Override
+            public void actionPerformed ( ActionEvent ae ) {
+                try {
+                    AudioAlarm.tone(300,100, 0.1);
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        java.util.Timer hrTimer = new java.util.Timer();
+        TimerTask heartRateCount = new TimerTask() {
+            @Override
+            public void run() {
+                heartRate[0] = patientList.get(patIndex).hrSig.get(counter[0]).longValue();
+                // To be deleted - heartRate[0] = hrTrial.get(counter[0]).longValue();
+                System.out.println(heartRate[0]);
+                Timer heartBeatTimer = new Timer((int) (60*1000/heartRate[0]), heartBeat);
+                heartBeatTimer.start();
+                counter[0] = counter[0] + 5;   // HeartBeatSound changing every 10 seconds
+
+                ActionListener soundEnd = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        heartBeatTimer.stop();
+                    }
+                };
+                xButton.addActionListener(soundEnd);
+                emergencyButton.addActionListener(soundEnd);
+                reportButton.addActionListener(soundEnd);
+                wardButton.addActionListener(soundEnd);
+            }
+        };
+        hrTimer.schedule(heartRateCount, 0, 5*1000);
+
+
         ActionListener alertAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                hrTimer.cancel();
                 setVisible(false);
                 //EmergencyUIController emUIController = new EmergencyUIController(patientList);
             }
@@ -99,6 +161,7 @@ public class PatientDetailsFrame extends JFrame{
         ActionListener reportAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                hrTimer.cancel();
                 setVisible(false);
                 Reportsubmenu reportsubmenu = new Reportsubmenu(patientList);
                 //go_ward_menu();
@@ -109,6 +172,7 @@ public class PatientDetailsFrame extends JFrame{
         ActionListener wardAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                hrTimer.cancel();
                 setVisible(false);
                 PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
                 //go_ward_menu();
@@ -116,17 +180,17 @@ public class PatientDetailsFrame extends JFrame{
         };
         wardButton.addActionListener(wardAL);
 
-        /*
+
         ActionListener detailsClose = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                hrTimer.cancel();
                 setVisible(false);
                 PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
                 //go_ward_menu();
             }
         };
         xButton.addActionListener(detailsClose);
-         */
 
     }
 /*
