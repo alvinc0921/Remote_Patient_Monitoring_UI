@@ -1,8 +1,6 @@
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -87,7 +85,7 @@ public class AlertCheckingTest {
         //patientList.add(pat2);
         //patientList.add(pat3);
 
-        mainMenu.realTimeAlertChecker(patientList);
+        AlertCheck.realTimeAlertChecker(patientList);
 
         ArrayList<String> pat1Details = new ArrayList<String>();
         pat1Details.add("Low Temperature");

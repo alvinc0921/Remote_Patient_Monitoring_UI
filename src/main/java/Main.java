@@ -6,10 +6,8 @@ import java.math.BigDecimal;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import com.google.gson.Gson;
 
 import java.sql.*;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -173,7 +171,6 @@ public class Main {
                         e.printStackTrace();
                     }
                 }
-
 
                 //heartrate list
                 for (Object obj : (Object[])pat1_hr.getArray()) {
@@ -394,7 +391,7 @@ public class Main {
         ArrayList<Patient> patientList = new ArrayList<Patient>();
         patientList.add(pat1);
         patientList.add(pat2);
-        mainMenu.realTimeAlertChecker(patientList);
+        AlertCheck.realTimeAlertChecker(patientList);
         EmergencyUIController emUIController = new EmergencyUIController(patientList);
 
 

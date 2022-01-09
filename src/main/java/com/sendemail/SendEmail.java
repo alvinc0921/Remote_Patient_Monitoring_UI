@@ -1,5 +1,7 @@
 package com.sendemail;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -12,12 +14,13 @@ import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
 
-    public static void main(String[] args) {
+    public static void SendEmail(String status, String patFirstName, String patLastName, String patLoc, ArrayList<String> detail) {
 
         // CODE FROM https://netcorecloud.com/tutorials/send-email-in-java-using-gmail-smtp/
 
         // Recipient's email ID needs to be mentioned.
-        String to = "sam.oliveira.1331@gmail.com";
+        //String to = "sam.oliveira.1331@gmail.com";
+        String to = "dorcheng1192@gmail.com";
 
         // Sender's email ID needs to be mentioned
         String from = "rpmimperial@gmail.com";
@@ -59,10 +62,10 @@ public class SendEmail {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
             // Set Subject: header field
-            message.setSubject("REMOTE PATIENT MONITORING");
+            message.setSubject(status + " Status of " + patFirstName + " " + patLastName);
 
             // Now set the actual message
-            message.setText("A PATIENT IS DYING BITCH");
+            message.setText(patFirstName + " " + patLastName + " is having " + detail + "\nPatient Location " + patLoc);
 
             System.out.println("sending...");
             // Send message
@@ -73,5 +76,11 @@ public class SendEmail {
         }
 
     }
+    /*
+    public static void main(String[] args) throws SQLException {
+        SendEmail();
+    }
+
+     */
 
 }

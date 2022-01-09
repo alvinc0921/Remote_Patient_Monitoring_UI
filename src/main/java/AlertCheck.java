@@ -1,10 +1,12 @@
+import com.sendemail.SendEmail;
+
 import java.time.Clock;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public interface mainMenu {
+public interface AlertCheck {
     
     static void realTimeAlertChecker(ArrayList<Patient> patientList) {
         // Setting the threshold values
@@ -26,6 +28,7 @@ public interface mainMenu {
 
         //int duration = patientList.get(0).length;       // need this cuz now the data is small, if 24h data do not need to cancel the timer cuz it will keep looping
         final int[] i = {0};
+        //final int[] emailFlag = {0};
 
         for (Patient pat : patientList) {
             pat.tempFlag = "H";
@@ -355,16 +358,15 @@ public interface mainMenu {
                 }
                 i[0]++;
 
-                /*
-                // Do not need the following if condition for 24h data:
-                if (i[0] == duration-1) {
-                    timer.cancel();
+
+                for (Patient pat:patientList){
+                    if ((pat.alertStatus == "Urgent" | pat.alertStatus == "Warning") && pat.emailFlag == 0){
+                        String location = "Floor: " + pat.location.get(0) + ", Room: " + pat.location.get(1) + ", Bed: " + pat.location.get(2);
+                        SendEmail.SendEmail(pat.alertStatus, pat.firstname, pat.lastname, location, pat.abnormalDetails);
+                        pat.emailFlag = 1;
+                    }
+
                 }
-
-                 */
-
-
-
             }
         };
         timer.schedule(alertCheck, 0, 1000);

@@ -174,7 +174,8 @@ public class EmergencyUIController extends JFrame {
 
                     }
                     // To be deleted!
-                    System.out.print(pat.firstname + " " + pat.lastname + " " + pat.alertStatus+" "+ pat.abnormalDetails+ "\n Temp history:" + pat.alertHistoryTemp+"\n HR history: " + pat.alertHistoryHR+"\n RR history: " +pat.alertHistoryRR+"\n");
+                    System.out.print(pat.firstname + " " + pat.lastname + " " + pat.alertStatus+" "+
+                            pat.abnormalDetails+ "\n Temp history:" + pat.alertHistoryTemp+"\n HR history: " + pat.alertHistoryHR+"\n RR history: " +pat.alertHistoryRR+"\n");
 
                     if (UModel.getSize() != 0){
                         timerUFlash.start();

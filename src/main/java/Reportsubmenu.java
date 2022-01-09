@@ -126,8 +126,6 @@ public class Reportsubmenu extends JFrame {
 
 
 
-
-
         JButton genereport = new JButton("Generate Report");
         JButton seepastreport = new JButton("See past reports");
         //funcselect.setLayout(new FlowLayout());

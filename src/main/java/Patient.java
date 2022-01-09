@@ -45,6 +45,8 @@ public class Patient {
     ArrayList<String> alertHistoryHR = new ArrayList<>();
     ArrayList<String> alertHistoryRR = new ArrayList<>();
 
+    int emailFlag = 0;
+
 
 public Patient(int patID, String firstname, String lastname, int age, String bloodtype, List<BigDecimal> location, List<BigDecimal> ecgSig, List<BigDecimal> bpSig, List<BigDecimal> hrSig, List<BigDecimal> rrSig, List<BigDecimal> tempSig){
         this.patID = patID;
