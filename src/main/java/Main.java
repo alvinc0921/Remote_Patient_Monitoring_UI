@@ -278,11 +278,19 @@ public class Main {
 
         // instantiate the ArrayList<Patient> here, and initiate UI
 
+        // instantiate the patient list here, this is the code that was present to start the app in main before i worked in database:
         Patient pat1 = new Patient(pat1id,pat1firstname,pat1lastname,pat1age,pat1bloodtype,pat1_loc_list,pat1_ecg_list,pat1_bp_list, pat1_hr_list, pat1_rr_list, pat1_temp_list);
         Patient pat2 = new Patient(pat2id,pat2firstname,pat2lastname,pat2age,pat2bloodtype,pat2_loc_list,pat2_ecg_list,pat2_bp_list, pat2_hr_list, pat2_rr_list, pat2_temp_list);
+        Patient pat3 = new Patient(3,"Amelia","Brandee",43,"0-",List.of(new BigDecimal(5), new BigDecimal(56), new BigDecimal(6)),pat1_ecg_list,pat1_bp_list, pat1_hr_list, pat1_rr_list, pat1_temp_list);
+        Patient pat4 = new Patient(4,"Lesly","Gauvain",87,"AB+",List.of(new BigDecimal(4), new BigDecimal(43), new BigDecimal(9)),pat2_ecg_list,pat2_bp_list, pat2_hr_list, pat2_rr_list, pat2_temp_list);
+
+
+
         ArrayList<Patient> patientList = new ArrayList<Patient>();
         patientList.add(pat1);
         patientList.add(pat2);
+        patientList.add(pat3);
+        patientList.add(pat4);
         AlertCheck.realTimeAlertChecker(patientList);
         EmergencyUIController emUIController = new EmergencyUIController(patientList);
 
