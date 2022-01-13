@@ -56,47 +56,53 @@ public class PatientWardFrame extends JFrame{
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         setVisible(true);
 
-        tfName1.setText("Layla Francene");
+        Patient pat1 = patientList.get(0);
+        Patient pat2 = patientList.get(0);
+        Patient pat3 = patientList.get(0);
+        Patient pat4 = patientList.get(0);
+
+
+        tfName1.setText(pat1.firstname + " " + pat1.lastname);
         tfSex1.setText("f");
-        tfAge1.setText("36");
+        tfAge1.setText(String.valueOf(pat1.age));
         tfHeight1.setText("1.71 m");
         tfWeight1.setText("67 kg");
-        tfBloodType1.setText("A+");
-        tfHospitalized1.setText("Floor 4, Room 43, Bed 7");
+        tfBloodType1.setText(pat1.bloodType);
+        tfHospitalized1.setText("Floor " + pat1.location.get(0) + ", Room " + pat1.location.get(1) + ", Bed " + pat1.location.get(2));
         tfEmergency1.setText("none");
 
-        tfName2.setText("Petko Adello");
+        tfName2.setText(pat2.firstname + " " + pat2.lastname);
         tfSex2.setText("m");
-        tfAge2.setText("18");
+        tfAge2.setText(String.valueOf(pat2.age));
         tfHeight2.setText("1.75 m");
         tfWeight2.setText("71 kg");
-        tfBloodType2.setText("AB+");
-        tfHospitalized2.setText("Floor 2, Room 21, Bed 18");
+        tfBloodType2.setText(pat2.bloodType);
+        tfHospitalized2.setText("Floor " + pat2.location.get(0) + ", Room " + pat2.location.get(1) + ", Bed " + pat2.location.get(2));
         tfEmergency2.setText("none");
 
-        tfName3.setText("Franjo Erna");
+        tfName3.setText(pat3.firstname + " " + pat3.lastname);
         tfSex3.setText("m");
-        tfAge3.setText("21");
+        tfAge3.setText(String.valueOf(pat3.age));
         tfHeight3.setText("1.68 m");
         tfWeight3.setText("60 kg");
-        tfBloodType3.setText("0+");
-        tfHospitalized3.setText("Floor 6, Room 67, Bed 24");
+        tfBloodType3.setText(pat3.bloodType);
+        tfHospitalized3.setText("Floor " + pat3.location.get(0) + ", Room " + pat3.location.get(1) + ", Bed " + pat3.location.get(2));
         tfEmergency3.setText("none");
 
-        tfName4.setText("Amelia Brandee");
+        tfName4.setText(pat4.firstname + " " + pat4.lastname);
         tfSex4.setText("f");
-        tfAge4.setText("43");
+        tfAge4.setText(String.valueOf(pat4.age));
         tfHeight4.setText("1.63 m");
         tfWeight4.setText("58 kg");
-        tfBloodType4.setText("0-");
-        tfHospitalized4.setText("Floor 4, Room 43, Bed 9");
+        tfBloodType4.setText(pat4.bloodType);
+        tfHospitalized4.setText("Floor " + pat4.location.get(0) + ", Room " + pat4.location.get(1) + ", Bed " + pat4.location.get(2));
         tfEmergency4.setText("none");
 
         seePatientDetailsButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //set PatientDetailsFrame visibility to true
-                PatientDetailsFrame framePatient1 = new PatientDetailsFrame(patientList);//1. Create the frame.
+                PatientDetailsFrame framePatient1 = new PatientDetailsFrame(patientList, 0);//1. Create the frame.
                 setVisible(false);
                 framePatient1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 framePatient1.setTitle("Patient's data");//3. Set title for new frame
@@ -110,7 +116,7 @@ public class PatientWardFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //set PatientDetailsFrame visibility to true
-                PatientDetailsFrame framePatient2 = new PatientDetailsFrame(patientList);//1. Create the frame.
+                PatientDetailsFrame framePatient2 = new PatientDetailsFrame(patientList, 1);//1. Create the frame.
                 setVisible(false);
                 framePatient2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 framePatient2.setTitle("Patient's data");//3. Set title for new frame
@@ -124,7 +130,7 @@ public class PatientWardFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //set PatientDetailsFrame visibility to true
-                PatientDetailsFrame framePatient3 = new PatientDetailsFrame(patientList);//1. Create the frame.
+                PatientDetailsFrame framePatient3 = new PatientDetailsFrame(patientList, 2);//1. Create the frame.
                 setVisible(false);
                 framePatient3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 framePatient3.setTitle("Patient's data");//3. Set title for new frame
@@ -138,7 +144,7 @@ public class PatientWardFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //set PatientDetailsFrame visibility to true
-                PatientDetailsFrame framePatient4 = new PatientDetailsFrame(patientList);//1. Create the frame.
+                PatientDetailsFrame framePatient4 = new PatientDetailsFrame(patientList, 3);//1. Create the frame.
                 setVisible(false);
                 framePatient4.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
                 framePatient4.setTitle("Patient's data");//3. Set title for new frame

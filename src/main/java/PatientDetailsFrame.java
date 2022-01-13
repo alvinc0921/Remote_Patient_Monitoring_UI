@@ -49,8 +49,12 @@ public class PatientDetailsFrame extends JFrame{
     private JSlider slider;
 
     private List<DrawGraph> graphs;
+    private Patient pat;
+    private int signalIndex1;
+    private int signalIndex2;
+    private int signalIndex3;
 
-    public PatientDetailsFrame(ArrayList<Patient> patientList) {
+    public PatientDetailsFrame(ArrayList<Patient> patientList, int patientIndex) {
         setContentPane(patientProfilePanel);
         setBounds(1200,0,1200,800); //value for windows on the right
         setTitle("Patient's data");
@@ -58,17 +62,20 @@ public class PatientDetailsFrame extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
-        /*
-        String name, String sex, String age, String height, String weight, String bloodType, String hospitalized, String emergency
-          this.nameVar = name;
-        this.sexVar = sex;
-        this.ageVar = age;
-        this.heightVar = height;
-        this.weightVar = weight;
-        this.bloodTypeVar = bloodType;
-        this.hospitalizedVar = hospitalized;
-        this.emergencyVar = emergency;
-         */
+        pat = patientList.get(patientIndex);
+        signalIndex1 = 0;
+        signalIndex2 = 0;
+        signalIndex3 = 0;
+
+        tfName.setText(pat.firstname + " " + pat.lastname);
+        tfSex.setText("f");
+        tfAge.setText(String.valueOf(pat.age));
+        tfHeight.setText("1.71 m");
+        tfWeight.setText("67 kg");
+        tfBloodType.setText(pat.bloodType);
+        tfHospitalized.setText("Floor " + pat.location.get(0) + ", Room " + pat.location.get(1) + ", Bed " + pat.location.get(2));
+        tfEmergency.setText("none");
+
 
         slider.addChangeListener(e -> {
             setGraphDuration(slider.getValue() * 1000); // converts from seconds to milliseconds
@@ -193,11 +200,11 @@ public class PatientDetailsFrame extends JFrame{
 
     private void createUIComponents() {
         graphs = new ArrayList<>();
-        graphs.add(new DrawGraph(0, 4, Color.RED, 100));
-        graphs.add(new DrawGraph(0, 4, Color.ORANGE, 100));
-        graphs.add(new DrawGraph(0, 4, Color.YELLOW, 100));
-        graphs.add(new DrawGraph(0, 4, Color.GREEN, 100));
-        graphs.add(new DrawGraph(0, 4, Color.BLUE, 100));
+        graphs.add(new DrawGraph(36, 37, Color.RED, 100));
+        graphs.add(new DrawGraph(60, 120, Color.ORANGE, 100));
+        graphs.add(new DrawGraph(59, 85, Color.YELLOW, 100));
+        graphs.add(new DrawGraph(10, 20, Color.GREEN, 100));
+        graphs.add(new DrawGraph(80, 130, Color.BLUE, 100));
 
         bodyTempPanel = graphs.get(0);
         heartRatePanel = graphs.get(1);
@@ -205,7 +212,7 @@ public class PatientDetailsFrame extends JFrame{
         bloodPressurePanel = graphs.get(3);
         ecgPanel = graphs.get(4);
 
-        Clock clock = Clock.systemDefaultZone();
+        // Clock clock = Clock.systemDefaultZone();
 
         //Patient patient = new Patient(1, "Petko", "Adello", 35, "0+");
             //List<BigDecimal> list = patient.getTempList();
@@ -214,15 +221,31 @@ public class PatientDetailsFrame extends JFrame{
                 //System.out.println(list.get(i));
             //}
 
-        Timer timer = new Timer(3, e -> {
-            for (int i = 0; i < graphs.size(); i++) {
-                DrawGraph graph = graphs.get(i);
-                graph.addPlotValue(Math.sin((i + 1) * clock.millis() / 100.0) + 2);
-                graph.updateUI();
-            }
+        Timer timer1 = new Timer(1000, e -> {
+                graphs.get(0).addPlotValue(pat.tempSig.get(signalIndex1).doubleValue());
+                graphs.get(2).addPlotValue(pat.hrSig.get(signalIndex1).doubleValue());
+                graphs.get(3).addPlotValue(pat.rrSig.get(signalIndex1).doubleValue());
+                signalIndex1++;
+            graphs.get(0).updateUI();
+            graphs.get(2).updateUI();
+            graphs.get(3).updateUI();
         });
 
-        timer.start();
+        Timer timer2 = new Timer(80, e -> {
+                graphs.get(1).addPlotValue(pat.bpSig.get(signalIndex2).doubleValue());
+                signalIndex2++;
+            graphs.get(1).updateUI();
+        });
+
+        Timer timer3 = new Timer(50, e -> {
+                graphs.get(4).addPlotValue(pat.ecgSig.get(signalIndex3).doubleValue());
+                signalIndex3++;
+            graphs.get(4).updateUI();
+        });
+
+        timer1.start();
+        timer2.start();
+        timer3.start();
     }
 }
 

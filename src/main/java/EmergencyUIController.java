@@ -108,6 +108,7 @@ public class EmergencyUIController extends JFrame {
                 Color.yellow,
                 new Color (255,218,102)};
 
+
         ActionListener timerWFlashAction = new ActionListener () {
             private int counter1 = 0;
             private int counter2 = 1;
