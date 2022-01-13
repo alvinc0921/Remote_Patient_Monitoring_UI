@@ -19,7 +19,6 @@ public class SendEmail {
         // CODE FROM https://netcorecloud.com/tutorials/send-email-in-java-using-gmail-smtp/
 
         // Recipient's email ID needs to be mentioned.
-        //String to = "sam.oliveira.1331@gmail.com";
         String to = "dorcheng1192@gmail.com";
 
         // Sender's email ID needs to be mentioned
@@ -76,11 +75,5 @@ public class SendEmail {
         }
 
     }
-    /*
-    public static void main(String[] args) throws SQLException {
-        SendEmail();
-    }
-
-     */
 
 }

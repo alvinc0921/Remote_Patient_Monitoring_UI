@@ -20,117 +20,12 @@ public class Main {
         Records daily_record = new Records();
         //CODE ADDED TO IMPLEMENT DATABASE
 
-        //String dbUrl = "jdbc:postgresql://localhost:5432/postgres";
 
         //DB CONNECTION PART
         DBConnection herokuconn = new DBConnection();
         Connection conn = herokuconn.connectToDB();
 
         //END OF DB CONNECTION PART
-        // Making an array for the temp, hr and rr
-      
-      /*
-        List<BigDecimal> pat1_temp = new ArrayList<>();
-        List<BigDecimal> pat1_ecg = new ArrayList<>();
-        List<BigDecimal> pat1_hr = new ArrayList<>();
-        List<BigDecimal> pat1_bp = new ArrayList<>();
-        List<BigDecimal> pat1_rr = new ArrayList<>();
-
-        pat1_temp.add(new BigDecimal(35.8));
-        pat1_temp.add(new BigDecimal(35.8));
-        pat1_temp.add(new BigDecimal(36.0));
-        pat1_temp.add(new BigDecimal(36.0));
-        pat1_temp.add(new BigDecimal(35.8));    // Low temperature
-        pat1_temp.add(new BigDecimal(35.8));
-        pat1_temp.add(new BigDecimal(37));
-        pat1_temp.add(new BigDecimal(37));
-
-        pat1_hr.add(new BigDecimal(100));
-        pat1_hr.add(new BigDecimal(100));
-        pat1_hr.add(new BigDecimal(114));       // High hr
-        pat1_hr.add(new BigDecimal(114));
-        pat1_hr.add(new BigDecimal(140));       // very high hr
-        pat1_hr.add(new BigDecimal(140));
-        pat1_hr.add(new BigDecimal(140));
-        pat1_hr.add(new BigDecimal(140));
-
-        pat1_rr.add(new BigDecimal(22));        // high rr
-        pat1_rr.add(new BigDecimal(22));
-        pat1_rr.add(new BigDecimal(22));
-        pat1_rr.add(new BigDecimal(22));
-        pat1_rr.add(new BigDecimal(18));
-        pat1_rr.add(new BigDecimal(18));
-        pat1_rr.add(new BigDecimal(18));
-        pat1_rr.add(new BigDecimal(18));
-
-        pat1_ecg = pat1_temp;
-        pat1_bp = pat1_temp;
-
-        List<BigDecimal> pat2_temp = new ArrayList<>();
-        List<BigDecimal> pat2_ecg = new ArrayList<>();
-        List<BigDecimal> pat2_hr = new ArrayList<>();
-        List<BigDecimal> pat2_bp = new ArrayList<>();
-        List<BigDecimal> pat2_rr = new ArrayList<>();
-
-        pat2_temp.add(new BigDecimal(35.8));
-        pat2_temp.add(new BigDecimal(35.8));
-        pat2_temp.add(new BigDecimal(36.0));
-        pat2_temp.add(new BigDecimal(36.0));
-        pat2_temp.add(new BigDecimal(35.8));    // Low temperature
-        pat2_temp.add(new BigDecimal(35.8));
-        pat2_temp.add(new BigDecimal(37));
-        pat2_temp.add(new BigDecimal(37));
-
-        pat2_hr.add(new BigDecimal(100));
-        pat2_hr.add(new BigDecimal(100));
-        pat2_hr.add(new BigDecimal(100));       // High hr
-        pat2_hr.add(new BigDecimal(100));
-        pat2_hr.add(new BigDecimal(100));       // very high hr
-        pat2_hr.add(new BigDecimal(120));
-        pat2_hr.add(new BigDecimal(120));       // very high hr
-        pat2_hr.add(new BigDecimal(120));
-
-        pat2_rr.add(new BigDecimal(22));        // high rr
-        pat2_rr.add(new BigDecimal(22));
-        pat2_rr.add(new BigDecimal(22));
-        pat2_rr.add(new BigDecimal(22));
-        pat2_rr.add(new BigDecimal(22));
-        pat2_rr.add(new BigDecimal(22));
-        pat2_rr.add(new BigDecimal(22));
-        pat2_rr.add(new BigDecimal(18));
-
-        pat2_ecg = pat1_temp;
-        pat2_bp = pat1_temp;
-
-        int pat1ID = 1;
-        int pat2ID = 2;
-        int pat3ID = 3;
-
-        String pat1_bloodtype = "A";
-        String pat2_bloodtype = "B";
-        String pat3_bloodtype = "O";
-
-        List<BigDecimal> pat1_location = new ArrayList<>();
-        pat1_location.add(new BigDecimal(3));       // Floor
-        pat1_location.add(new BigDecimal(50));      // Room
-        pat1_location.add(new BigDecimal(2));       // Bed
-
-        List<BigDecimal> pat2_location = new ArrayList<>();
-        pat2_location.add(new BigDecimal(6));       // Floor
-        pat2_location.add(new BigDecimal(44));      // Room
-        pat2_location.add(new BigDecimal(8));       // Bed
-
-        // instantiate the patient list here:
-        Patient pat1 = new Patient(pat1ID, "Amy", "Smith", 65, pat1_bloodtype, pat1_location, pat1_ecg, pat1_bp, pat1_hr, pat1_rr, pat1_temp);
-        Patient pat2 = new Patient(pat1ID, "Bob", "Bills", 80, pat2_bloodtype, pat2_location, pat2_ecg, pat2_bp, pat2_hr, pat2_rr, pat2_temp);
-        //Patient pat3 = new Patient(pat3ID, "Carina", "Smith", 40, pat3_bloodtype, pat3_ecg, pat3_bp, pat3_hr, pat3_rr, pat3_temp);
-
-        ArrayList<Patient> patientList = new ArrayList<Patient>();
-        patientList.add(pat1);
-        patientList.add(pat2);
-        //patientList.add(pat3);
-        
-        */
 
         int pat1id=1; //dummy values
         String pat1firstname="Nettles"; //dummy values, in honour
@@ -160,6 +55,7 @@ public class Main {
                 Array pat1_temp=resset.getArray("temperature");
 
               // CODE FROM  https://stackoverflow.com/questions/23277777/java-sql-array-to-arrayliststring-oraclecallablestatement
+                //The code transforms each java.sql array datatype to a List<BigDecimal> (done 6 times, for location list and for 5 vital signs)
 
                 //location list
                 for (Object obj : (Object[])pat1_loc.getArray()) {
@@ -209,14 +105,13 @@ public class Main {
 
             resset.close();
             s2.close();
-            //conn.close();
         }
         catch (Exception e){
-            System.out.println("I'M IN CATCH");
+            System.out.println("I'M IN CATCH"); //debug
             System.out.println(e.getMessage());
         }
 
-        try {  //CODE TO GET ECG AND BP, ONE AT A TIME NEEDED
+        try {  //CODE TO GET ECG AND BP(same idea as previously), ONE AT A TIME IMPROVES PERFORMANCE
             Statement s2=conn.createStatement();
             String sqlStr= "SELECT ecg FROM vitalsigns where id=1;";
             ResultSet resset=s2.executeQuery(sqlStr);
@@ -251,12 +146,12 @@ public class Main {
             }
             resset.close();
             s2.close();
-            //conn.close();
         }
         catch (Exception e){
             System.out.println("I'M IN 2nd CATCH");
         }
 
+        //Code above, repeated for 2nd patient
 
         int pat2id=2; //dummy values
         String pat2firstname="Nettles"; //dummy values, in honour
@@ -336,7 +231,6 @@ public class Main {
 
             resset.close();
             s2.close();
-            //conn.close();
         }
         catch (Exception e){
             System.out.println("I'M IN CATCH");
@@ -361,8 +255,6 @@ public class Main {
                         e.printStackTrace();
                     }
                 }
-                // converting to double[] THIS WAS WRONG,
-                //double[] pat1_ecgArray = (double[])pat1_ecg.getArray();
             }
             while(resset3.next()){
                 Array pat2_bp=resset3.getArray("bloodpressure");
@@ -384,7 +276,7 @@ public class Main {
             System.out.println("I'M IN 2nd CATCH");
         }
 
-        // instantiate the patient list here, this is the code that was present to start the app in main before i worked in database:
+        // instantiate the ArrayList<Patient> here, and initiate UI
 
         Patient pat1 = new Patient(pat1id,pat1firstname,pat1lastname,pat1age,pat1bloodtype,pat1_loc_list,pat1_ecg_list,pat1_bp_list, pat1_hr_list, pat1_rr_list, pat1_temp_list);
         Patient pat2 = new Patient(pat2id,pat2firstname,pat2lastname,pat2age,pat2bloodtype,pat2_loc_list,pat2_ecg_list,pat2_bp_list, pat2_hr_list, pat2_rr_list, pat2_temp_list);
