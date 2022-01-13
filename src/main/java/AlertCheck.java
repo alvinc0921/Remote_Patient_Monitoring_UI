@@ -1,62 +1,67 @@
-import com.sendemail.SendEmail;
-
 import java.time.Clock;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 public interface AlertCheck {
-    
+
+    /* Real-time checking the temperature, heart rate and respiratory rate of each patient on the patientList
+       Implement a TimerTask scheduled at every second to:
+       - Update patients' statuses (urgent/ warning/ healthy)
+       - Update patients' abnormality details (e.g. High Temperature, Very High Heart Rate etc.)
+       - Update the tempFlag/ hrFlag/ rrFlag to indicate last second's vital statuses for the next second
+       -  (if any) Save the period of time (start time and end time using Clock variables) of the urgent/
+          warning status of each vital signal in the day to the corresponding alertHistory
+     */
     static void realTimeAlertChecker(ArrayList<Patient> patientList) {
-        // Setting the threshold values
-        double tempHighUThres = 40.0;
+
+        // Threshold values (Very Low, Low, High, Very High) for temperature (temp), heart rate (hr), respiratory rate (rr)
+        double tempHighUThres = 40.0;               // temp
         double tempHighWThres = 37.6;
         double tempLowWThres = 35.9;
         double tempLowUThres = 35.0;
 
-        double hrHighUThres = 130.0;
+        double hrHighUThres = 130.0;                // hr
         double hrHighWThres = 101.0;
         double hrLowWThres = 59.0;
         double hrLowUThres = 40.0;
 
-        double rrHighUThres = 24.0;
+        double rrHighUThres = 24.0;                 // rr
         double rrHighWThres = 19.9;
         double rrLowWThres = 11.9;
         double rrLowUThres = 11.0;
 
-
-        //int duration = patientList.get(0).length;       // need this cuz now the data is small, if 24h data do not need to cancel the timer cuz it will keep looping
-        final int[] i = {0};
-        //final int[] emailFlag = {0};
-
-        for (Patient pat : patientList) {
+        for (Patient pat : patientList) {           // Initialise all flags to be Healthy "H"
             pat.tempFlag = "H";
             pat.hrFlag = "H";
             pat.rrFlag = "H";
         }
 
-        Clock clock = Clock.systemDefaultZone();
+        final int[] i = {0};                        // Counter of the vital signal in TimerTask alertCheck
 
+        Clock clock = Clock.systemDefaultZone();
         Timer timer = new Timer();
         TimerTask alertCheck = new TimerTask() {
-
             @Override
             public void run() {
 
                 for (Patient pat : patientList) {
 
-                    pat.alertStatus = "Healthy";
-                    pat.abnormalDetails.clear();
+                    pat.alertStatus = "Healthy";        // Reset the previous alertStatus
+                    pat.abnormalDetails.clear();        // clear the previous abnormality details
 
-                    // TEMPERATURE
-                    if (pat.tempFlag == "H") {
+                    // 1. Checking TEMPERATURE: with 3 cases
+                    if (pat.tempFlag == "H") {                      //A. If patient is having healthy temp previously
+                        // Get the current data point (using counter i[0]) of tempSig
+                        // Compare with different thresholds to determine the status and abnormality
                         if (pat.tempSig.get(i[0]).doubleValue() >= tempHighWThres && pat.tempSig.get(i[0]).doubleValue() < tempHighUThres) {
                             String temp = "High Temperature";
-                            pat.abnormalDetails.add(temp);
-                            pat.tempFlag = "W";
+                            pat.abnormalDetails.add(temp);          // save the current abnormality details
+                            pat.tempFlag = "W";                     // change the flag
                             Instant instant = clock.instant();
-                            pat.alertHistoryTemp.add("Warning Start: " + instant.toString());
+                            pat.alertHistoryTemp.add("Warning Start: " + instant.toString());   // save the start time of the warning period
                         }
                         if (pat.tempSig.get(i[0]).doubleValue() >= tempHighUThres) {
                             String temp = "Very High Temperature";
@@ -79,18 +84,20 @@ public interface AlertCheck {
                             Instant instant = clock.instant();
                             pat.alertHistoryTemp.add("Urgent Start: " + instant.toString());
                         }
-                    } else if (pat.tempFlag == "W") {
+
+                    } else if (pat.tempFlag == "W") {               // B. If patient is having warning temp previously
                         if (pat.tempSig.get(i[0]).doubleValue() >= tempHighWThres && pat.tempSig.get(i[0]).doubleValue() < tempHighUThres) {
                             String temp = "High Temperature";
                             pat.abnormalDetails.add(temp);
+                            // Stays at "warning" - no change to the flag
                         }
                         if (pat.tempSig.get(i[0]).doubleValue() >= tempHighUThres) {
                             String temp = "Very High Temperature";
                             pat.abnormalDetails.add(temp);
                             pat.tempFlag = "U";
                             Instant instant = clock.instant();
-                            pat.alertHistoryTemp.add("Warning ends: " + instant.toString());
-                            pat.alertHistoryTemp.add("Urgent starts: " + instant.toString());
+                            pat.alertHistoryTemp.add("Warning ends: " + instant.toString());        // save the end time of the previous warning period
+                            pat.alertHistoryTemp.add("Urgent starts: " + instant.toString());       // save the start time of the urgent period
                         }
                         if (pat.tempSig.get(i[0]).doubleValue() < tempHighWThres && pat.tempSig.get(i[0]).doubleValue() > tempLowWThres) {
                             pat.tempFlag = "H";
@@ -109,7 +116,8 @@ public interface AlertCheck {
                             pat.alertHistoryTemp.add("Warning ends: " + instant.toString());
                             pat.alertHistoryTemp.add("Urgent Start: " + instant.toString());
                         }
-                    } else if (pat.tempFlag == "U") {
+
+                    } else if (pat.tempFlag == "U") {               // C. If patient is having urgent temp previously
                         if (pat.tempSig.get(i[0]).doubleValue() >= tempHighWThres && pat.tempSig.get(i[0]).doubleValue() < tempHighUThres) {
                             String temp = "High Temperature";
                             pat.abnormalDetails.add(temp);
@@ -121,6 +129,7 @@ public interface AlertCheck {
                         if (pat.tempSig.get(i[0]).doubleValue() >= tempHighUThres) {
                             String temp = "Very High Temperature";
                             pat.abnormalDetails.add(temp);
+                            // no change to the flag
                         }
                         if (pat.tempSig.get(i[0]).doubleValue() < tempHighWThres && pat.tempSig.get(i[0]).doubleValue() > tempLowWThres) {
                             pat.tempFlag = "H";
@@ -134,7 +143,6 @@ public interface AlertCheck {
                             Instant instant = clock.instant();
                             pat.alertHistoryTemp.add("Urgent ends: " + instant.toString());
                             pat.alertHistoryTemp.add("Warning starts: " + instant.toString());
-
                         }
                         if (pat.tempSig.get(i[0]).doubleValue() <= tempLowUThres) {
                             String statement = "Very Low Temperature";
@@ -142,9 +150,8 @@ public interface AlertCheck {
                         }
                     }
 
-
-                    // HEART RATE
-                    if (pat.hrFlag == "H") {
+                    // 2. Checking HEART RATE
+                    if (pat.hrFlag == "H") {                        // A. If patient is having healthy hr previously
                         if (pat.hrSig.get(i[0]).doubleValue() >= hrHighWThres && pat.hrSig.get(i[0]).doubleValue() < hrHighUThres) {
                             String hr = "High Heart Rate";
                             pat.abnormalDetails.add(hr);
@@ -173,7 +180,8 @@ public interface AlertCheck {
                             Instant instant = clock.instant();
                             pat.alertHistoryHR.add("Urgent Start: " + instant.toString());
                         }
-                    } else if (pat.hrFlag == "W") {
+
+                    } else if (pat.hrFlag == "W") {                     // B. If patient is having warning hr previously
                         if (pat.hrSig.get(i[0]).doubleValue() >= hrHighWThres && pat.hrSig.get(i[0]).doubleValue() < hrHighUThres) {
                             String hr = "High Heart Rate";
                             pat.abnormalDetails.add(hr);
@@ -203,7 +211,8 @@ public interface AlertCheck {
                             pat.alertHistoryHR.add("Warning ends: " + instant.toString());
                             pat.alertHistoryHR.add("Urgent Start: " + instant.toString());
                         }
-                    } else if (pat.hrFlag == "U") {
+
+                    } else if (pat.hrFlag == "U") {                     // C. If patient is having urgent hr previously
                         if (pat.hrSig.get(i[0]).doubleValue() >= hrHighWThres && pat.hrSig.get(i[0]).doubleValue() < hrHighUThres) {
                             String hr = "High Heart Rate";
                             pat.abnormalDetails.add(hr);
@@ -211,7 +220,6 @@ public interface AlertCheck {
                             Instant instant = clock.instant();
                             pat.alertHistoryHR.add("Urgent ends: " + instant.toString());
                             pat.alertHistoryHR.add("Warning starts: " + instant.toString());
-
                         }
                         if (pat.hrSig.get(i[0]).doubleValue() >= hrHighUThres) {
                             String hr = "Very High Heart Rate";
@@ -229,7 +237,6 @@ public interface AlertCheck {
                             Instant instant = clock.instant();
                             pat.alertHistoryHR.add("Urgent ends: " + instant.toString());
                             pat.alertHistoryHR.add("Warning starts: " + instant.toString());
-
                         }
                         if (pat.hrSig.get(i[0]).doubleValue() <= hrLowUThres) {
                             String statement = "Very Low Heart Rate";
@@ -238,8 +245,8 @@ public interface AlertCheck {
                     }
 
 
-                    // RESPIRATORY RATE
-                    if (pat.rrFlag == "H") {
+                    // 3. Checking RESPIRATORY RATE
+                    if (pat.rrFlag == "H") {                            // A. If patient is having healthy rr previously
                         if (pat.rrSig.get(i[0]).doubleValue() >= rrHighWThres && pat.rrSig.get(i[0]).doubleValue() < rrHighUThres) {
                             String rr = "High Respiratory Rate";
                             pat.abnormalDetails.add(rr);
@@ -273,7 +280,7 @@ public interface AlertCheck {
                             pat.alertHistoryRR.add("Urgent Start: " + instant.toString());
                         }
 
-                    } else if (pat.rrFlag == "W") {
+                    } else if (pat.rrFlag == "W") {                     // B. If patient is having warning rr previously
                         if (pat.rrSig.get(i[0]).doubleValue() >= rrHighWThres && pat.rrSig.get(i[0]).doubleValue() < rrHighUThres) {
                             String rr = "High Respiratory Rate";
                             pat.abnormalDetails.add(rr);
@@ -308,7 +315,8 @@ public interface AlertCheck {
                             pat.alertHistoryRR.add("Warning ends: " + instant.toString());
                             pat.alertHistoryRR.add("Urgent Start: " + instant.toString());
                         }
-                    } else if (pat.rrFlag == "U") {
+
+                    } else if (pat.rrFlag == "U") {                     // C. If patient is having urgent rr previously
                         if (pat.rrSig.get(i[0]).doubleValue() >= rrHighWThres && pat.rrSig.get(i[0]).doubleValue() < rrHighUThres) {
                             String rr = "High Respiratory Rate";
                             pat.abnormalDetails.add(rr);
@@ -317,7 +325,6 @@ public interface AlertCheck {
                             Instant instant = clock.instant();
                             pat.alertHistoryRR.add("Urgent ends: " + instant.toString());
                             pat.alertHistoryRR.add("Warning starts: " + instant.toString());
-
                         }
                         if (pat.rrSig.get(i[0]).doubleValue() >= rrHighUThres) {
                             String rr = "Very High Heart Rate";
@@ -338,7 +345,6 @@ public interface AlertCheck {
                             Instant instant = clock.instant();
                             pat.alertHistoryRR.add("Urgent ends: " + instant.toString());
                             pat.alertHistoryRR.add("Warning starts: " + instant.toString());
-
                         }
                         if (pat.rrSig.get(i[0]).doubleValue() <= rrLowUThres) {
                             String statement = "Very Low Respiratory Rate";
@@ -348,257 +354,24 @@ public interface AlertCheck {
                     }
                 }
 
+                // Update the alertStatus of each patient
                 for (Patient pat:patientList){
                     if (pat.tempFlag == "U" | pat.hrFlag == "U" | pat.rrFlag == "U"){
+                        // Urgent if there is any "U" flag
                         pat.alertStatus = "Urgent";
                     }
                     if (pat.tempFlag != "U" && pat.hrFlag != "U" && pat.rrFlag != "U" && (pat.tempFlag == "W" | pat.hrFlag == "W" | pat.rrFlag == "W")){
+                        // Warning if there is no "U" flag but any "W" flag
                         pat.alertStatus = "Warning";
                     }
+                    // If both cases are not satisfied, the patient will remain "Healthy" status, as reset at the start of the method
                 }
-                i[0]++;
 
-
-                for (Patient pat:patientList){
-                    if ((pat.alertStatus == "Urgent" | pat.alertStatus == "Warning") && pat.emailFlag == 0){
-                        String location = "Floor: " + pat.location.get(0) + ", Room: " + pat.location.get(1) + ", Bed: " + pat.location.get(2);
-                        SendEmail.SendEmail(pat.alertStatus, pat.firstname, pat.lastname, location, pat.abnormalDetails);
-                        pat.emailFlag = 1;
-                    }
-
-                }
+                i[0]++;     // counter++ to get the next data point of the signal next time
             }
         };
-        timer.schedule(alertCheck, 0, 1000);
 
+        timer.schedule(alertCheck, 0, 1000);    // TimerTask alertCheck is scheduled without delay and repeated at every 1000ms (1s)
     }
-
-
-/*
-Trying to write a function for that but problem:
-It can only read the first second, cannot update patient's flag for some reason
-
-    static void realTimeAlertChecker(ArrayList<Patient> patientList) {
-        // Setting the threshold values
-        double tempHighUThres = 40.0;
-        double hrHighUThres = 130.0;
-        double rrHighUThres = 25.0;
-
-        double tempHighWThres = 38.0;
-        double hrHighWThres = 110.0;
-        double rrHighWThres = 20.0;
-
-        double tempLowUThres = 34.0;
-        double hrLowUThres = 50.0;
-        double rrLowUThres = 5.0;
-
-        double tempLowWThres = 35.0;
-        double hrLowWThres = 60.0;
-        double rrLowWThres = 8.0;
-
-        int duration = patientList.get(0).length;       // need this cuz now the data is small, if 24h data do not need to cancel the timer cuz it will keep looping
-        final int[] i = {0};
-
-        for (Patient pat:patientList){
-            pat.tempFlag = "H";
-
-            pat.hrFlag = "H";
-
-            pat.rrFlag = "H";
-        }
-
-        Clock clock = Clock.systemDefaultZone();
-
-        Timer timer = new Timer();
-        TimerTask alertCheck = new TimerTask(){
-
-            @Override
-            public void run() {
-
-                for (Patient pat:patientList) {
-
-                    pat.alertStatus = "Healthy";
-                    pat.abnormalDetails.clear();
-
-
-                    String flagCheckTemp = thresholdCheck(tempHighWThres, tempHighUThres, tempLowWThres, tempLowUThres,
-                            pat, i, "Temperature", clock);
-                    System.out.println(flagCheckTemp);
-                    pat.tempFlag = flagCheckTemp;
-
-                    String flagCheckHR = thresholdCheck(hrHighWThres, hrHighUThres, hrLowWThres, hrLowUThres,
-                            pat, i, "Heart Rate", clock);
-                    pat.hrFlag = flagCheckHR;
-
-                    String flagCheckRR = thresholdCheck(rrHighWThres, rrHighUThres, rrLowWThres, rrLowUThres,
-                            pat, i, "Respiratory Rate", clock);
-                    pat.rrFlag = flagCheckRR;
-
-                }
-                i[0]++;
-
-                // Do not need the following if condition for 24h data:
-                if (i[0] == duration){
-                    timer.cancel();
-                }
-
-            }
-        };
-        timer.schedule(alertCheck, 0,1000);
-
-    }
-
-
-    static String thresholdCheck(double highW, double highU, double lowW, double lowU,
-                                  Patient pat, final int[] i, String vital, Clock clock){
-
-        String patFlag = new String();
-        String patFlagAfter = new String();
-        double patSignal = pat.temp[i[0]];
-        ArrayList<String> patAlertHist = new ArrayList<>();
-
-        if (vital == "Temperature"){
-            patFlag = pat.tempFlag;
-            patSignal = pat.temp[i[0]];
-            patAlertHist = pat.alertHistoryTemp;
-        }
-        else if (vital == "Heart Rate"){
-            patFlag = pat.hrFlag;
-            patSignal = pat.hr[i[0]];
-            patAlertHist = pat.alertHistoryHR;
-        }
-        else if (vital == "Respiratory Rate"){
-            patFlag = pat.rrFlag;
-            patSignal = pat.rr[i[0]];
-            patAlertHist = pat.alertHistoryRR;
-        }
-
-        if (patFlag == "H"){
-            if (patSignal >= highW && patSignal <= highU) {
-                String statement = "High " + vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Warning";
-                patFlagAfter = "W";
-                Instant instant = clock.instant();
-                patAlertHist.add("Warning Start: "+ instant.toString());
-            }
-            if (patSignal >= highU) {
-                String statement = "Very High "+ vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Urgent";
-                patFlagAfter = "U";
-                Instant instant = clock.instant();
-                patAlertHist.add("Urgent Start: "+instant.toString());
-            }
-            if (patSignal <= lowW && patSignal >= lowU) {
-                String statement = "Low "+ vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Warning";
-                patFlagAfter = "W";
-                Instant instant = clock.instant();
-                patAlertHist.add("Warning Start: "+instant.toString());
-            }
-            if (patSignal <= lowU) {
-                String statement = "Very Low "+vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Urgent";
-                patFlagAfter = "U";
-                Instant instant = clock.instant();
-                patAlertHist.add("Urgent Start: "+instant.toString());
-            }
-        }
-
-        else if (patFlag == "W"){
-            if (patSignal >= highW && patSignal <= highU) {
-                String statement = "High "+vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Warning";
-            }
-            if (patSignal >= highU) {
-                String statement = "Very High "+vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Urgent";
-                patFlagAfter = "U";
-                Instant instant = clock.instant();
-                patAlertHist.add("Warning ends: "+ instant.toString());
-                patAlertHist.add("Urgent starts: "+ instant.toString());
-            }
-            if (patSignal <= highW && patSignal >= lowW) {
-                pat.alertStatus = "Healthy";
-                patFlagAfter = "H";
-                Instant instant = clock.instant();
-                patAlertHist.add("Warning ends: " +instant.toString());
-            }
-            if (patSignal <= lowW && patSignal >= lowU) {
-                String statement = "Low "+ vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Warning";
-            }
-            if (patSignal <= lowU) {
-                String statement = "Very Low "+vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Urgent";
-                patFlagAfter = "U";
-                Instant instant = clock.instant();
-                patAlertHist.add("Warning ends: "+ instant.toString());
-                patAlertHist.add("Urgent Start: "+instant.toString());
-            }
-        }
-        else if (patFlag == "U"){
-            if (patSignal >= highW && patSignal <= highU) {
-                String statement = "High "+ vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Warning";
-                patFlagAfter = "W";
-                Instant instant = clock.instant();
-                patAlertHist.add("Urgent ends: "+ instant.toString());
-                patAlertHist.add("Warning starts: "+ instant.toString());
-
-            }
-            if (patSignal >= highU) {
-                String statement = "Very High " + vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Urgent";
-            }
-            if (patSignal <= highW && patSignal >= lowW) {
-                pat.alertStatus = "Healthy";
-                patFlagAfter = "H";
-                Instant instant = clock.instant();
-                patAlertHist.add("Urgent ends: " +instant.toString());
-            }
-            if (patSignal <= lowW && patSignal >= lowU) {
-                String statement = "Low "+ vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Warning";
-                patFlagAfter = "W";
-                Instant instant = clock.instant();
-                patAlertHist.add("Urgent ends: "+ instant.toString());
-                patAlertHist.add("Warning starts: "+ instant.toString());
-
-            }
-            if (patSignal <= lowU) {
-                String statement = "Very Low "+vital;
-                pat.abnormalDetails.add(statement);
-                pat.alertStatus = "Urgent";
-            }
-        }
-
-        return patFlagAfter;
-
-    }
-
-    static void updateFlag(String flag, String vital, Patient pat){
-        if (vital == "Temperature"){
-            pat.tempFlag = flag;
-        }
-        else if (vital == "Heart Rate"){
-            pat.hrFlag = flag;
-        }
-        else if (vital == "Respiratory Rate"){
-            pat.rrFlag = flag;
-        }
-    }
-
- */
 
 }

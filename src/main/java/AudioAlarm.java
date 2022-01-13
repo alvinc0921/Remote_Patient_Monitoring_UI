@@ -5,34 +5,22 @@ import javax.sound.sampled.SourceDataLine;
 
 public class AudioAlarm {
 
-/*
-Codes Source:
-https://www.rgagnon.com/javadetails/java-0632.html
-https://stackoverflow.com/questions/3780406/how-to-play-a-sound-alert-in-a-java-application
-*/
-
     public static float SAMPLE_RATE = 8000f;
 
-    public static void tone(int hz, int msecs)
-            throws LineUnavailableException
-    {
+    public static void tone(int hz, int msecs) throws LineUnavailableException {
         tone(hz, msecs, 1.0);
     }
 
-    public static void tone(int hz, int msecs, double vol)
-            throws LineUnavailableException
-    {
+    public static void tone(int hz, int msecs, double vol) throws LineUnavailableException {
         byte[] buf = new byte[1];
-        AudioFormat af =
-                new AudioFormat(
-                        SAMPLE_RATE, // sampleRate
-                        8,           // sampleSizeInBits
-                        1,           // channels
-                        true,        // signed
-                        false);      // bigEndian
-        SourceDataLine sdl = AudioSystem.getSourceDataLine(af);
+        AudioFormat af = new AudioFormat(SAMPLE_RATE,    // sampleRate
+                        8,                // sampleSizeInBits
+                        1,                      // channels
+                        true,                    // signed
+                        false);               // bigEndian
+        SourceDataLine sdl = AudioSystem.getSourceDataLine(af);     // Obtains the source data line of the AudioFormat af
         sdl.open(af);
-        sdl.start();
+        sdl.start();                                                // update the source data line of af with our desired frequency, volume and duration
         for (int i=0; i < msecs*8; i++) {
             double angle = i / (SAMPLE_RATE / hz) * 2.0 * Math.PI;
             buf[0] = (byte)(Math.sin(angle) * 127.0 * vol);
@@ -42,4 +30,5 @@ https://stackoverflow.com/questions/3780406/how-to-play-a-sound-alert-in-a-java-
         sdl.stop();
         sdl.close();
     }
+    // Codes from: https://stackoverflow.com/questions/3780406/how-to-play-a-sound-alert-in-a-java-application
 }
