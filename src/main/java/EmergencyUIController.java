@@ -68,6 +68,7 @@ public class EmergencyUIController extends JFrame {
         Color[] WListColors = {                 // A list of 2 Color objects that the WarningDetailsList is flashing between
                 Color.yellow,
                 new Color (255,218,102)};
+      
         ActionListener WarningAlarm = new ActionListener () {   // Warning visual and audio alarming ActionListener
             private int counter1 = 0;
             private int counter2 = 1;
