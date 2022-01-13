@@ -95,7 +95,6 @@ public class PatientWardFrame extends JFrame{
         seePatientDetailsButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //set PatientWardFrame visibility to false
                 //set PatientDetailsFrame visibility to true
                 PatientDetailsFrame framePatient1 = new PatientDetailsFrame(patientList);//1. Create the frame.
                 setVisible(false);
@@ -110,7 +109,6 @@ public class PatientWardFrame extends JFrame{
         seePatientDetailsButton2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //set PatientWardFrame visibility to false
                 //set PatientDetailsFrame visibility to true
                 PatientDetailsFrame framePatient2 = new PatientDetailsFrame(patientList);//1. Create the frame.
                 setVisible(false);
@@ -125,7 +123,6 @@ public class PatientWardFrame extends JFrame{
         seePatientDetailsButton3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //set PatientWardFrame visibility to false
                 //set PatientDetailsFrame visibility to true
                 PatientDetailsFrame framePatient3 = new PatientDetailsFrame(patientList);//1. Create the frame.
                 setVisible(false);
@@ -140,7 +137,6 @@ public class PatientWardFrame extends JFrame{
         seePatientDetailsButton4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //set PatientWardFrame visibility to false
                 //set PatientDetailsFrame visibility to true
                 PatientDetailsFrame framePatient4 = new PatientDetailsFrame(patientList);//1. Create the frame.
                 setVisible(false);
@@ -155,7 +151,6 @@ public class PatientWardFrame extends JFrame{
         addPatientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //set PatientWardFrame visibility to false
                 //set AddPatientFrame visibility to true
                 AddPatientFrame addPatient = new AddPatientFrame(patientList);//1. Create the frame.
                 setVisible(false);
@@ -189,6 +184,5 @@ public class PatientWardFrame extends JFrame{
     }
 /*
     public static void main(String[] args) {PatientWardFrame patientListFrame = new PatientWardFrame();}
-
  */
 }

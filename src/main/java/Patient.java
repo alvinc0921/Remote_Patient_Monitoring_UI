@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +7,7 @@ public class Patient {
     String firstname;
     String lastname;
     int age;
-    String bloodtype;
+    String bloodType;
     /*
     String alertStatus;
     String patLoc = "(to be done)";
@@ -22,15 +21,14 @@ public class Patient {
 
     List<String> abnormalDetails = new ArrayList<String>();
     */
-  
     List<BigDecimal> location = new ArrayList<>();
 
     // Lists to store 5 Signals
-    List<BigDecimal> tempSig = new ArrayList<>();
-    List<BigDecimal> bpSig = new ArrayList<>();
-    List<BigDecimal> hrSig = new ArrayList<>();
-    List<BigDecimal> rrSig = new ArrayList<>();
-    List<BigDecimal> ecgSig = new ArrayList<>();
+    public List<BigDecimal> tempSig = new ArrayList<>();
+    public List<BigDecimal> bpSig = new ArrayList<>();
+    public List<BigDecimal> hrSig = new ArrayList<>();
+    public List<BigDecimal> rrSig = new ArrayList<>();
+    public List<BigDecimal> ecgSig = new ArrayList<>();
 
     // For real-time alert checking
     String alertStatus;
@@ -48,12 +46,12 @@ public class Patient {
     int emailFlag = 0;
 
 
-public Patient(int patID, String firstname, String lastname, int age, String bloodtype, List<BigDecimal> location, List<BigDecimal> ecgSig, List<BigDecimal> bpSig, List<BigDecimal> hrSig, List<BigDecimal> rrSig, List<BigDecimal> tempSig){
+    public Patient(int patID, String firstname, String lastname, int age, String bloodType, List<BigDecimal> location, List<BigDecimal> ecgSig, List<BigDecimal> bpSig, List<BigDecimal> hrSig, List<BigDecimal> rrSig, List<BigDecimal> tempSig) {
         this.patID = patID;
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
-        this.bloodtype = bloodtype;
+        this.bloodType = bloodType;
         this.location = location;
         this.ecgSig = ecgSig;
         this.bpSig = bpSig;
@@ -61,6 +59,33 @@ public Patient(int patID, String firstname, String lastname, int age, String blo
         this.rrSig = rrSig;
         this.tempSig = tempSig;
     }
+
+        /*for (int i = 0; i < tempSig.size(); i++) {
+            System.out.println(tempSig.get(i));
+        }
+
+        System.out.println("Look here");
+        System.out.println(tempSig.size());
+
+    public List<BigDecimal> getTempList() {
+        return tempSig;
+    }
+    public List<BigDecimal> getBpList() {
+        return bpSig;
+    }
+    public List<BigDecimal> getHrTempList() {
+        return hrSig;
+    }
+    public List<BigDecimal> getRrTempList() {
+        return rrSig;
+    }
+    public List<BigDecimal> getEcgTempList() {
+        return ecgSig;
+    }
+
+    public static void main(String[] args) {
+        //Patient patient1 = new Patient(1, "Petko", "Adello", 35, "0+");
+    }*/
 
     public List<BigDecimal> getTempSig() {
         return tempSig;

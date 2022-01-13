@@ -4,22 +4,17 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.nio.charset.StandardCharsets;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 
 public class Reportsubmenu extends JFrame {
@@ -197,7 +192,7 @@ public class Reportsubmenu extends JFrame {
             fw.write("Patient name: " + current_pat.firstname + " " + current_pat.lastname + "\r\n");
             fw.write("Patient ID: " + current_pat.patID + "\r\n");
             fw.write("Patient age: " + current_pat.age + "\r\n");
-            fw.write("Patient blood type: " + current_pat.bloodtype + "\r\n");
+            fw.write("Patient blood type: " + current_pat.bloodType + "\r\n");
             int localength = current_pat.location.size();
             fw.write("Patient location: Floor " + current_pat.location.get(0) + ", Room " + current_pat.location.get(1) + ", Bed " + current_pat.location.get(2));
 

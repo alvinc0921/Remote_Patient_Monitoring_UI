@@ -207,6 +207,13 @@ public class PatientDetailsFrame extends JFrame{
 
         Clock clock = Clock.systemDefaultZone();
 
+        //Patient patient = new Patient(1, "Petko", "Adello", 35, "0+");
+            //List<BigDecimal> list = patient.getTempList();
+
+            //for(int i = 0; i < list.size(); i++) {
+                //System.out.println(list.get(i));
+            //}
+
         Timer timer = new Timer(3, e -> {
             for (int i = 0; i < graphs.size(); i++) {
                 DrawGraph graph = graphs.get(i);
