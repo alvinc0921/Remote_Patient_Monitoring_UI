@@ -1,3 +1,5 @@
+import com.sendemail.SendEmail;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
@@ -7,11 +9,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/*
-Useful tutorial:
-About JList: https://www.youtube.com/watch?v=lRupi3iJmzk&list=PLM-syYolLbszU7ZATekAlWqiQx9O3XSC1&index=5&ab_channel=PaulBaumgarten
-About displaying on split pane: https://www.youtube.com/watch?v=KOI1WbkKUpQ&ab_channel=LazicB.
- */
 
 public class EmergencyUIController extends JFrame {
     private JPanel mainPanel;
@@ -23,41 +20,32 @@ public class EmergencyUIController extends JFrame {
     private JLabel urgentLabel;
     private JLabel warningLabel;
     private JPanel urgentDetailsPanel;
-
-    private JList UrgentPatName;
     private DefaultListModel<String> UModel;
-    // later need to combine with alertList<Alert>, check out 1st video
-
     private JPanel warningDetailsPanel;
-    private JList WarningPatName;
     private DefaultListModel<String> WModel;
-
     private JList urgentDetailsList;
     private JList warningDetailsList;
     private JButton muteButton;
 
-    javax.swing.Timer timerUFlash;
-    javax.swing.Timer timerWFlash;
+    javax.swing.Timer timerUAlarm;              // Timer for visual flashing in urgentDetailsList
+    javax.swing.Timer timerWAlarm;              // Timer for visual flashing in warningDetailsList
 
     public EmergencyUIController(ArrayList<Patient> patientList){
 
-        final int[] sound = {1};
+    // 1. Visual and audio alarms in the emergencyUI
+        final int[] soundFlag = {1};            // Initialise soundFlag = 1 (1-not muted, 0-muted) for audio alarm
 
-        // For visual and audio alarming effects on the emergency page
-        // Codes Source: https://stackoverflow.com/questions/29371778/improve-my-jlabel-flashing
-
-        // 1. For Urgent box (Flashing red, higher pitch more frequent louder alarming)
-        Color[] UListColors = {
+        // 1a. For Urgent (Visual: flashing in red, Audio: beeping with higher pitch, more frequent, louder)
+        Color[] UListColors = {                 // A list of 2 Color objects that the UrgentDetailsList is flashing between
                 Color.pink,
-                new Color (255,69,52)};
-
-        ActionListener timerUFlashAction = new ActionListener () {
+                new Color (255,82,75)};
+        ActionListener UrgentAlarm = new ActionListener () {    // Urgent visual and audio alarming ActionListener
             private int counter1 = 0;
             private int counter2 = 1;
-            //ArrayList<Integer> delayUCount = new ArrayList<Integer>();
 
             @Override
             public void actionPerformed ( ActionEvent ae ) {
+                // Switching background color between 2 colors on the UListColors
                 ++counter1;
                 counter1 %= UListColors.length;
                 urgentDetailsList.setBackground ( UListColors [ counter1 ] );
@@ -66,55 +54,27 @@ public class EmergencyUIController extends JFrame {
                 counter2 %= UListColors.length;
                 urgentDetailsList.setBackground ( UListColors [ counter2 ]);
 
-                if (sound[0] == 1){
+                if (soundFlag[0] == 1){         // When sound is not muted
                     try {
                         AudioAlarm.tone(2000,100, 0.2);
                     } catch (LineUnavailableException e) {
                         e.printStackTrace();
                     }
                 }
-
-/*
-                ActionListener mute = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (sound[0] == 1){
-                            try {
-                                AudioAlarm.tone(0, 0, 0);
-                                sound[0] = 0;
-                            } catch (LineUnavailableException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    }
-                };
-                muteButton.addActionListener(mute);
-
- */
-
-/*
-                delayUCount.add(counter1);
-
-                if (delayUCount.size() == 4){
-                    timerUFlash.stop();
-                    delayUCount.clear();
-                }
- */
             }
-        };
+        };  // Codes from: https://stackoverflow.com/questions/29371778/improve-my-jlabel-flashing
 
-        // 2. For Warning box (Flashing yellow, lower pitch less frequent softer alarming)
-        Color[] WListColors = {
+        // 1b. For Warning (Visual: flashing in yellow, Audio: beeping with lower pitch, less frequent, softer)
+        Color[] WListColors = {                 // A list of 2 Color objects that the WarningDetailsList is flashing between
                 Color.yellow,
                 new Color (255,218,102)};
-
-        ActionListener timerWFlashAction = new ActionListener () {
+        ActionListener WarningAlarm = new ActionListener () {   // Warning visual and audio alarming ActionListener
             private int counter1 = 0;
             private int counter2 = 1;
-            //ArrayList<Integer> delayWCount = new ArrayList<Integer>();
 
             @Override
             public void actionPerformed ( ActionEvent ae ) {
+                // Switching background color between 2 colors on the WListColors
                 ++counter1;
                 counter1 %= WListColors.length;
                 warningDetailsList.setBackground ( WListColors [ counter1 ] );
@@ -123,122 +83,105 @@ public class EmergencyUIController extends JFrame {
                 counter2 %= WListColors.length;
                 warningDetailsList.setBackground ( WListColors [ counter2 ]);
 
-                if (sound[0] == 1){
+                if (soundFlag[0] == 1){         // When sound is not muted
                     try {
                         AudioAlarm.tone(800,100, 0.05);
                     } catch (LineUnavailableException e) {
                         e.printStackTrace();
                     }
                 }
-/*
-                ActionListener mute = new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (sound[0] == 1){
-                            try {
-                                AudioAlarm.tone(0, 0, 0);
-                                sound[0] = 0;
-                            } catch (LineUnavailableException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    }
-                };
-                muteButton.addActionListener(mute);
-
- */
-/*
-                delayWCount.add(counter1);
-
-                if (delayWCount.size() == 3){
-                    timerWFlash.stop();
-                    delayWCount.clear();
-                }
- */
             }
         };
-        // The two flashing timers with different flashing rate (Urgent flashing faster)
-        timerUFlash = new javax.swing.Timer(200, timerUFlashAction);
-        timerWFlash = new javax.swing.Timer(300, timerWFlashAction);
+
+        timerUAlarm = new javax.swing.Timer(200, UrgentAlarm);  // Timer for urgent alarming (repeat every 200ms - faster)
+        timerWAlarm = new javax.swing.Timer(300, WarningAlarm); // Timer for warning alarming (repeat every 300ms)
 
 
-        // Real-time displaying urgent patients and warning patients respectively on the emergency page
-        final int[] counter = {0};
+    /* 2. Real-time display of urgent patients and warning patients on the emergencyUI
+          Implement a TimerTask scheduled at every second to:
+          - Check if the patient is at urgent/ warning status
+          - If so, display their details onto the corresponding JList
+          - Start the corresponding alarm timer
+          - Send an email alert to the hospital or doctor
+     */
         Timer timer = new Timer();
         TimerTask displayAlert = new TimerTask() {
             @Override
             public void run() {
-
-                // To be deleted!!
-                System.out.println((counter[0]+1));
-
                 UModel = new DefaultListModel();
                 urgentDetailsList.setModel(UModel);
 
                 WModel = new DefaultListModel();
                 warningDetailsList.setModel(WModel);
 
-                for (Patient pat:patientList){
+                for (Patient pat:patientList){      // Check each patient on the patientList
                     if (pat.alertStatus == "Urgent"){
-                        UModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  " + pat.abnormalDetails + " -- Locate at Floor: " + pat.location.get(0) + ", Room: " + pat.location.get(1) + ", Bed: " + pat.location.get(2));
-                        //timerUFlash.start();
+                        // Add the patient onto the UModel and show his ID, name, abnormality and location
+                        UModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  "
+                                + pat.abnormalDetails
+                                + " -- Locate at Floor: " + pat.location.get(0) + ", Room: " + pat.location.get(1) + ", Bed: " + pat.location.get(2));
                     }
                     if (pat.alertStatus == "Warning"){
-                        WModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  " + pat.abnormalDetails + " -- Locate at Floor: " + pat.location.get(0) + ", Room: " + pat.location.get(1) + ", Bed: " + pat.location.get(2));
-                        //timerWFlash.start();
-
+                        // Add the patient onto the WModel and show his ID, name, abnormality and location
+                        WModel.addElement("Patient ID: " + pat.patID + "   " + pat.firstname + " " + pat.lastname + ":  "
+                                + pat.abnormalDetails
+                                + " -- Locate at Floor: " + pat.location.get(0) + ", Room: " + pat.location.get(1) + ", Bed: " + pat.location.get(2));
                     }
-                    // To be deleted!
-                    System.out.print(pat.firstname + " " + pat.lastname + " " + pat.alertStatus+" "+
-                            pat.abnormalDetails+ "\n Temp history:" + pat.alertHistoryTemp+"\n HR history: " + pat.alertHistoryHR+"\n RR history: " +pat.alertHistoryRR+"\n");
-
-                    if (UModel.getSize() != 0){
-                        timerUFlash.start();
-                    }
-                    if (WModel.getSize() != 0){
-                        timerWFlash.start();
-                    }
-                    if (UModel.getSize() == 0){
-                        timerUFlash.stop();
-                    }
-                    if (WModel.getSize() == 0){
-                        timerWFlash.stop();
-                    }
-
                 }
 
-                // To be deleted!
-                counter[0]++;
-                /*
-                if (counter[0]==duration){
-                    timer.cancel();
+                if (UModel.getSize() != 0){     // Start the urgent alarm if there is any urgent patient
+                    timerUAlarm.start();
                 }
-                 */
+                if (WModel.getSize() != 0){     // Start the warning alarm if there is any warning patient
+                    timerWAlarm.start();
+                }
+                if (UModel.getSize() == 0){     // Stop the urgent alarm if there is no urgent patient
+                    timerUAlarm.stop();
+                }
+                if (WModel.getSize() == 0){     // Stop the warning alarm if there is no warning patient
+                    timerWAlarm.stop();
+                }
+
+                emailSending(patientList);      // Send email alert and update emailFlag for every urgent/warning patient
             }
         };
-        // Displaying the alert at every second
-        timer.schedule(displayAlert, 0, 1000);
 
-        final int[] muteCount = {0};
+        timer.schedule(displayAlert, 0, 1000);      // TimerTask displayAlert is scheduled without delay and repeated at every 1000ms (1s)
 
+    // 3. Reset pat.emailFlag = 0 every 15min
+        Timer timerResetEmailFlag = new Timer();
+        TimerTask resetEmailFlag = new TimerTask() {
+            @Override
+            public void run() {
+                for (Patient pat:patientList){
+                    pat.emailFlag = 0;
+                }
+            }
+        };
+        timerResetEmailFlag.schedule(resetEmailFlag, 0, 15*1000*60);
+
+
+    // 4. ActionListeners for buttons on the emergencyUI
+        // 4a. muteButton - to mute/unmute the audio alarm
+        final int[] muteCount = {0};                            // Counter of number of times the muteButton is pressed
         ActionListener mute = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                muteCount[0]++;
-                if ((muteCount[0]%2) == 1){
-                    sound[0] = 0;
-                    muteButton.setText("Unmute");
+                muteCount[0]++;                                 // +1 every time muteButton is pressed
+                if ((muteCount[0]%2) == 1){                     // When the muteButton is pressed when sound is on (repeated)
+                    soundFlag[0] = 0;                           // change the soundFlag to 0 - muted
+                    muteButton.setText("Unmute");               // changing the button text
                 }
-                else if ((muteCount[0]%2) == 0){
-                    sound[0] = 1;
-                    muteButton.setText("Mute");
+                else if ((muteCount[0]%2) == 0){                // When the muteButton is pressed when sound is off (repeated)
+                    soundFlag[0] = 1;                           // change the soundFlag to 1 - not muted
+                    muteButton.setText("Mute");                 // changing the button text
                 }
             }
         };
         muteButton.addActionListener(mute);
 
 
-        // Action Listeners for switching between Ward page and Report page
+        // 4b. wardButton - go to patientWardFrame
         ActionListener switchWard = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -247,6 +190,7 @@ public class EmergencyUIController extends JFrame {
         };
         wardButton.addActionListener(switchWard);
 
+        // 4c. reportButton - go to reportSubmenu
         ActionListener switchReport = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -255,22 +199,25 @@ public class EmergencyUIController extends JFrame {
         };
         reportButton.addActionListener(switchReport);
 
-        /*
-        ActionListener switchEmergency = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Already on emergency page...");
-            }
-        };
-        emergencyButton.addActionListener(switchEmergency);
-         */
-
+    // 5. Set up the panel and to make it visible
         setContentPane(mainPanel);
         setTitle("PatientMed");
         setSize(1200, 800);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);        // The app is closed when the emergencyUI is closed
         setVisible(true);
 
+    }
+
+
+// A class method to send out an email alert when there is any patient is in urgent/ warning status
+    public static void emailSending(ArrayList<Patient> patientList){
+        for (Patient pat:patientList){
+            if ((pat.alertStatus == "Urgent" | pat.alertStatus == "Warning") && pat.emailFlag == 0){
+                String location = "Floor: " + pat.location.get(0) + ", Room: " + pat.location.get(1) + ", Bed: " + pat.location.get(2);
+                SendEmail.SendEmail(pat.alertStatus, pat.firstname, pat.lastname, location, pat.abnormalDetails);   // Call the SendEmail class method
+                pat.emailFlag = 1;      // change the emailFlag to indicate an email alert has been sent
+            }
+        }
     }
 
 }
