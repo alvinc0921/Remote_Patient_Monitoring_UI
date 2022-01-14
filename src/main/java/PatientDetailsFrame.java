@@ -214,7 +214,7 @@ public class PatientDetailsFrame extends JFrame{
 
  */
 
-    private void setGraphDuration(double duration) {
+    private void setGraphDuration(int duration) {
         for (DrawGraph graph : graphs) {
             graph.setPlotDuration(duration);
         }
@@ -222,11 +222,11 @@ public class PatientDetailsFrame extends JFrame{
 
     private void createUIComponents() {
         graphs = new ArrayList<>();
-        graphs.add(new DrawGraph(36, 37, Color.RED, 100));
-        graphs.add(new DrawGraph(60, 120, Color.ORANGE, 100));
-        graphs.add(new DrawGraph(59, 85, Color.GREEN, 100));
-        graphs.add(new DrawGraph(10, 20, Color.BLUE, 100));
-        graphs.add(new DrawGraph(80, 130, Color.BLACK, 100));
+        graphs.add(new DrawGraph(36, 37, Color.RED, 1000));
+        graphs.add(new DrawGraph(60, 120, Color.ORANGE, 80));
+        graphs.add(new DrawGraph(65, 85, Color.GREEN, 1000));
+        graphs.add(new DrawGraph(10, 20, Color.BLUE, 1000));
+        graphs.add(new DrawGraph(800, 1400, Color.BLACK, 50));
 
         bodyTempPanel = graphs.get(0);
         heartRatePanel = graphs.get(1);

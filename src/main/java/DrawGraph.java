@@ -16,29 +16,33 @@ public class DrawGraph extends JPanel{
     private static final int PREF_W = 600;
     private static final int PREF_H = 250;
     private static final int BORDER_GAP = 45;
-    private static final Stroke GRAPH_STROKE = new BasicStroke(1f);//line width
+    private static final Stroke GRAPH_STROKE = new BasicStroke(2f);//line width
     private static final int Y_HATCH_CNT = 10;//y axis gradations
     private static final int HATCH_WIDTH = 4;
 
     private final Color graphColor;//line color
+    private int valueRate;
+    private int timeFrameMillis;
     private int maxPlotValues;
     private LinkedList<Double> plotValues;
     private double maxMinValue;
     private double minMaxValue;
 
-    public DrawGraph(double maxMinValue, double minMaxValue, Color graphColor, int maxPlotValues) {
+    public DrawGraph(double maxMinValue, double minMaxValue, Color graphColor, int valueRate) {
         this.maxMinValue = maxMinValue;
         this.minMaxValue = minMaxValue;
         this.graphColor = graphColor;
-        this.maxPlotValues = maxPlotValues;
+        this.valueRate = valueRate;
         this.plotValues = new LinkedList<>();
+        timeFrameMillis = 5000;
+        maxPlotValues = timeFrameMillis/valueRate;
     }
 
     public void addPlotValue(double plotValue) {
-        while (plotValues.size() > maxPlotValues) {
-            plotValues.removeFirst();
+        while (plotValues.size() >= maxPlotValues) {
+            plotValues.removeLast();
         }
-        plotValues.addLast(plotValue);
+        plotValues.addFirst(plotValue);
     }
 
     @Override
@@ -64,6 +68,8 @@ public class DrawGraph extends JPanel{
         bdMax = bdMax.round(new MathContext(3));
         g.drawString(bdMax.toPlainString(), 7, 50);
         g.drawString(bdMin.toPlainString(), 7, 210);
+        g.drawString("T-" + String.valueOf(timeFrameMillis/1000) + "s",43, 230);
+        g.drawString("T",570, 230);
 
         double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (maxPlotValues - 1);
         double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (maxValue - minValue);
@@ -71,7 +77,7 @@ public class DrawGraph extends JPanel{
         List<Point> graphPoints = new ArrayList<Point>();
 
         for (int i = 0; i < plotValues.size(); i++) {
-            int x1 = (int) (i * xScale + BORDER_GAP);
+            int x1 = (int) ((maxPlotValues - 1 - i) * xScale + BORDER_GAP);
             int y1 = (int) ((maxValue - plotValues.get(i)) * yScale + BORDER_GAP);
             graphPoints.add(new Point(x1, y1));
         }
@@ -80,6 +86,7 @@ public class DrawGraph extends JPanel{
         g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);
         g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
 
+        /*
         // create hatch marks for y axis.
         for (int i = 0; i < Y_HATCH_CNT; i++) {
             int x0 = BORDER_GAP;
@@ -97,6 +104,7 @@ public class DrawGraph extends JPanel{
             int y1 = y0 + HATCH_WIDTH;
             g2.drawLine(x0, y0, x1, y1);
         }
+         */
 
         Stroke oldStroke = g2.getStroke();
         g2.setColor(graphColor);
@@ -145,7 +153,8 @@ public class DrawGraph extends JPanel{
         });
     }
 
-    public void setPlotDuration(double duration) {
-        maxPlotValues = (int) duration/3;
+    public void setPlotDuration(int timeFrameMillis) {
+        this.timeFrameMillis = timeFrameMillis;
+        maxPlotValues = timeFrameMillis/valueRate;
     }
 }
