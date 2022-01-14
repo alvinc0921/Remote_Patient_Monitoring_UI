@@ -8,6 +8,8 @@ The front-end was mainly built using SWING. The patient data and vital signs wer
 
 https://data.heroku.com/dataclips/bfljwdrcpssefebonywlxfskssvx 
 
+We recommend cloning the code to IntelliJ IDEA and running the program on it. 
+
 ## Application Flow 
 
 The app has 3 main windows. When the app is opened, the emergency window is displayed. At all times, on the left side, the user can choose between the 3 windows. When the app starts, a clock is initiated that reads through the data to simulate real-time data collection. The ultimate goal of our app is to take in this data, and alert the doctor if anything in the data shows the patient might be unwell. 
