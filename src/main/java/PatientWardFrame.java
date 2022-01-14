@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class PatientWardFrame extends JFrame{
-    private JScrollBar scrollBar1;
     private JTextField tfName1;
     private JTextField tfSex1;
     private JTextField tfAge1;
