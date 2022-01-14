@@ -8,7 +8,7 @@ The front-end was mainly built using SWING. The patient data and vital signs wer
 
 https://data.heroku.com/dataclips/bfljwdrcpssefebonywlxfskssvx 
 
-We recommend cloning the code to IntelliJ and running the program on it. 
+We recommend cloning the code to IntelliJ IDEA and running the program on it. 
 
 ## Application Flow 
 
