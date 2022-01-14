@@ -1,5 +1,3 @@
-// Where everything runs here
-
 
 import java.io.IOException;
 import java.math.BigDecimal;
