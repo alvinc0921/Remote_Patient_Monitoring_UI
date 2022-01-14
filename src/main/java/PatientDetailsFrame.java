@@ -30,7 +30,6 @@ public class PatientDetailsFrame extends JFrame{
     //String emergencyVar = tfEmergency.getText();
     public JButton xButton;
     private JPanel patientProfilePanel;
-    private JScrollBar scrollBar1;
     private JButton emergencyButton;
     private JButton wardButton;
     private JButton reportButton;
@@ -97,7 +96,7 @@ public class PatientDetailsFrame extends JFrame{
 
 
         // HeartBeat indication
-        final double[] heartRate = {0};
+        /*final double[] heartRate = {0};
         final int[] counter = {0};
         int patIndex = 0;   // Need to be updated later -
 
@@ -137,12 +136,13 @@ public class PatientDetailsFrame extends JFrame{
             }
         };
         hrTimer.schedule(heartRateCount, 0, 5*1000);
+         */
 
 
         ActionListener alertAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                hrTimer.cancel();
+                //hrTimer.cancel();
                 setVisible(false);
                 //EmergencyUIController emUIController = new EmergencyUIController(patientList);
             }
@@ -152,7 +152,7 @@ public class PatientDetailsFrame extends JFrame{
         ActionListener reportAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                hrTimer.cancel();
+                //hrTimer.cancel();
                 setVisible(false);
                 Reportmenu reportmenu = new Reportmenu(patientList);
                 //go_ward_menu();
@@ -163,7 +163,7 @@ public class PatientDetailsFrame extends JFrame{
         ActionListener wardAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                hrTimer.cancel();
+                //hrTimer.cancel();
                 setVisible(false);
                 PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
                 //go_ward_menu();
@@ -175,7 +175,7 @@ public class PatientDetailsFrame extends JFrame{
         ActionListener detailsClose = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                hrTimer.cancel();
+                //hrTimer.cancel();
                 setVisible(false);
                 PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
                 //go_ward_menu();
@@ -202,9 +202,9 @@ public class PatientDetailsFrame extends JFrame{
         graphs = new ArrayList<>();
         graphs.add(new DrawGraph(36, 37, Color.RED, 100));
         graphs.add(new DrawGraph(60, 120, Color.ORANGE, 100));
-        graphs.add(new DrawGraph(59, 85, Color.YELLOW, 100));
-        graphs.add(new DrawGraph(10, 20, Color.GREEN, 100));
-        graphs.add(new DrawGraph(80, 130, Color.BLUE, 100));
+        graphs.add(new DrawGraph(59, 85, Color.GREEN, 100));
+        graphs.add(new DrawGraph(10, 20, Color.BLUE, 100));
+        graphs.add(new DrawGraph(80, 130, Color.BLACK, 100));
 
         bodyTempPanel = graphs.get(0);
         heartRatePanel = graphs.get(1);

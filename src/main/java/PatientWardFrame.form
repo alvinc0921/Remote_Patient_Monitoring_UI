@@ -19,7 +19,9 @@
         <constraints>
           <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-10027521"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="c05fc" class="javax.swing.JLabel">
@@ -185,7 +187,9 @@
         <constraints>
           <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-10027521"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="2ecf3" class="javax.swing.JLabel">
@@ -355,7 +359,9 @@
         <constraints>
           <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-10027521"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="90a59" class="javax.swing.JLabel">
@@ -515,7 +521,9 @@
         <constraints>
           <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-10027521"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="cfbf8" class="javax.swing.JLabel">
@@ -682,7 +690,9 @@
         <constraints>
           <grid row="1" column="1" row-span="4" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-12828673"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="a9ba3" class="javax.swing.JButton" binding="emergencyButton" default-binding="true">

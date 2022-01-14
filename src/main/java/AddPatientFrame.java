@@ -7,7 +7,6 @@ public class AddPatientFrame extends JFrame{
     private JButton emergencyButton;
     private JButton wardButton;
     private JButton reportButton;
-    private JScrollBar scrollBar1;
     private JTextField tfFirstName;
     private JTextField tfLastName;
     private JTextField tfEmail;
@@ -69,8 +68,9 @@ public class AddPatientFrame extends JFrame{
             }
         };
         wardButton.addActionListener(wardAL);
-
     }
+
+
 /*
     public static void main(String[] args) {
         AddPatientFrame newPatientFrame = new AddPatientFrame();
