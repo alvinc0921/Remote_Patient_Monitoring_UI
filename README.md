@@ -12,6 +12,8 @@ We recommend cloning the code to IntelliJ IDEA and running the program on it.
 
 Current version: v1.0 : First version meeting all client requirements.
 
+In our current database, we have 2 patients. One (Petko Adello) is healthy, and thus does not trigger any warnings. The other (Marjorie Finlay) has normal vital signs for the first 5 seconds that the app is open, but then suffers from ventricular fibrillation, so as to show that our app reacts to abnormal vital signs.
+
 ## Application Flow 
 
 The app has 3 main windows. When the app is opened, the emergency window is displayed. At all times, on the left side, the user can choose between the 3 windows. When the app starts, a clock is initiated that reads through the data to simulate real-time data collection. The ultimate goal of our app is to take in this data, and alert the doctor if anything in the data shows the patient might be unwell. 
