@@ -57,9 +57,9 @@ public class PatientWardFrame extends JFrame{
         setVisible(true);
 
         Patient pat1 = patientList.get(0);
-        Patient pat2 = patientList.get(0);
-        Patient pat3 = patientList.get(0);
-        Patient pat4 = patientList.get(0);
+        Patient pat2 = patientList.get(1);
+        Patient pat3 = patientList.get(2);
+        Patient pat4 = patientList.get(3);
 
 
         tfName1.setText(pat1.firstname + " " + pat1.lastname);
