@@ -105,7 +105,7 @@ public class PatientDetailsFrame extends JFrame{
 
             @Override
             public void actionPerformed ( ActionEvent ae ) {
-                if (soundFlag[0] == 1){
+                if (soundFlag[0] == 1){                                     // When sound is on, produce the beeping sound
                     try {
                         AudioAlarm.tone(300,100, 0.1);
                     } catch (LineUnavailableException e) {
@@ -120,15 +120,14 @@ public class PatientDetailsFrame extends JFrame{
             @Override
             public void run() {
                 heartRate[0] = pat.hrSig.get(counter[0]).longValue();
-                System.out.println(heartRate[0]);
-                Timer heartBeatTimer = new Timer((int) (60*1000/heartRate[0]), heartBeat);
+                Timer heartBeatTimer = new Timer((int) (60*1000/heartRate[0]), heartBeat);      // Set the heartBeatTimer repeating according to the heartRate
                 heartBeatTimer.start();
-                counter[0] = counter[0] + 5;   // HeartBeatSound changing every 5 seconds
+                counter[0] = counter[0] + 5;                                                    // Get the Heart Rate value every 5 seconds
 
                 ActionListener soundEnd = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        heartBeatTimer.stop();
+                        heartBeatTimer.stop();  // Stop the heartBeat when any of the exit button is pressed
                     }
                 };
                 xButton.addActionListener(soundEnd);
@@ -137,7 +136,7 @@ public class PatientDetailsFrame extends JFrame{
                 wardButton.addActionListener(soundEnd);
             }
         };
-        hrTimer.schedule(heartRateCount, 0, 5*1000);
+        hrTimer.schedule(heartRateCount, 0, 5*1000);        // Updating the new heart rate at every 5 seconds
 
 
 
@@ -192,11 +191,11 @@ public class PatientDetailsFrame extends JFrame{
                 muteCount[0]++;                                 // +1 every time muteButton is pressed
                 if ((muteCount[0]%2) == 1){                     // When the muteButton is pressed when sound is on (repeated)
                     soundFlag[0] = 0;                           // change the soundFlag to 0 - muted
-                    beatMuteButton.setText("Unmute");               // changing the button text
+                    beatMuteButton.setText("Unmute");           // changing the button text
                 }
                 else if ((muteCount[0]%2) == 0){                // When the muteButton is pressed when sound is off (repeated)
                     soundFlag[0] = 1;                           // change the soundFlag to 1 - not muted
-                    beatMuteButton.setText("Mute");                 // changing the button text
+                    beatMuteButton.setText("Mute");             // changing the button text
                 }
             }
         };

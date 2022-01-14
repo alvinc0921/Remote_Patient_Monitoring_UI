@@ -60,33 +60,6 @@ public class Patient {
         this.tempSig = tempSig;
     }
 
-        /*for (int i = 0; i < tempSig.size(); i++) {
-            System.out.println(tempSig.get(i));
-        }
-
-        System.out.println("Look here");
-        System.out.println(tempSig.size());
-
-    public List<BigDecimal> getTempList() {
-        return tempSig;
-    }
-    public List<BigDecimal> getBpList() {
-        return bpSig;
-    }
-    public List<BigDecimal> getHrTempList() {
-        return hrSig;
-    }
-    public List<BigDecimal> getRrTempList() {
-        return rrSig;
-    }
-    public List<BigDecimal> getEcgTempList() {
-        return ecgSig;
-    }
-
-    public static void main(String[] args) {
-        //Patient patient1 = new Patient(1, "Petko", "Adello", 35, "0+");
-    }*/
-
     public List<BigDecimal> getTempSig() {
         return tempSig;
     }

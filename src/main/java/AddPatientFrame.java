@@ -53,7 +53,7 @@ public class AddPatientFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                Reportsubmenu reportsubmenu = new Reportsubmenu(patientList);
+                Reportmenu reportmenu = new Reportmenu(patientList);
                 //go_ward_menu();
             }
         };
