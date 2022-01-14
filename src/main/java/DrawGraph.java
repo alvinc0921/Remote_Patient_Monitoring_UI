@@ -6,30 +6,29 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class DrawGraph extends JPanel{
     private static final int PREF_W = 600;
     private static final int PREF_H = 250;
-    private static final int BORDER_GAP = 30;
+    private static final int BORDER_GAP = 45;
     private static final Stroke GRAPH_STROKE = new BasicStroke(1f);//line width
     private static final int Y_HATCH_CNT = 10;//y axis gradations
     private static final int HATCH_WIDTH = 4;
 
-    private final int minValue;
-    private final int maxValue;//dictates the scale to which we plot
     private final Color graphColor;//line color
     private int maxPlotValues;
     private LinkedList<Double> plotValues;
+    private double maxMinValue;
+    private double minMaxValue;
 
-    public DrawGraph(int minValue, int maxValue, Color graphColor, int maxPlotValues) {
-        this.minValue = minValue;
-        this.maxValue = maxValue;
+    public DrawGraph(double maxMinValue, double minMaxValue, Color graphColor, int maxPlotValues) {
+        this.maxMinValue = maxMinValue;
+        this.minMaxValue = minMaxValue;
         this.graphColor = graphColor;
         this.maxPlotValues = maxPlotValues;
         this.plotValues = new LinkedList<>();
@@ -47,6 +46,24 @@ public class DrawGraph extends JPanel{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        double minValue = Double.MAX_VALUE;
+        double maxValue = Double.MIN_VALUE;
+
+        for (int i = 0; i < plotValues.size(); i++) {
+            maxValue = Math.max(maxValue, plotValues.get(i));
+            minValue = Math.min(minValue, plotValues.get(i));
+        }
+
+        minValue = Math.min(minValue, maxMinValue);
+        maxValue = Math.max(maxValue, minMaxValue);
+
+        BigDecimal bdMin = new BigDecimal(minValue);
+        BigDecimal bdMax = new BigDecimal(maxValue);
+        bdMin = bdMin.round(new MathContext(3));
+        bdMax = bdMax.round(new MathContext(3));
+        g.drawString(bdMax.toPlainString(), 7, 50);
+        g.drawString(bdMin.toPlainString(), 7, 210);
 
         double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (maxPlotValues - 1);
         double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (maxValue - minValue);
@@ -100,6 +117,7 @@ public class DrawGraph extends JPanel{
     }
 
     private static void createAndShowGui() {
+        /*
         LinkedList<Integer> values = new LinkedList<>();
         Random random = new Random();
         int maxDataPoints = 16;
@@ -115,6 +133,8 @@ public class DrawGraph extends JPanel{
         frame.pack();
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
+
+         */
     }
 
     public static void main(String[] args) {
