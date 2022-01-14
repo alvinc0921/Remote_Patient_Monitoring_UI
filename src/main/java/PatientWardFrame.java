@@ -58,8 +58,6 @@ public class PatientWardFrame extends JFrame{
 
         Patient pat1 = patientList.get(0);
         Patient pat2 = patientList.get(1);
-        Patient pat3 = patientList.get(2);
-        Patient pat4 = patientList.get(3);
 
 
         tfName1.setText(pat1.firstname + " " + pat1.lastname);
@@ -79,7 +77,7 @@ public class PatientWardFrame extends JFrame{
         tfBloodType2.setText(pat2.bloodType);
         tfHospitalized2.setText("Floor " + pat2.location.get(0) + ", Room " + pat2.location.get(1) + ", Bed " + pat2.location.get(2));
         tfEmergency2.setText("none");
-
+        /*
         tfName3.setText(pat3.firstname + " " + pat3.lastname);
         tfSex3.setText("m");
         tfAge3.setText(String.valueOf(pat3.age));
@@ -97,7 +95,7 @@ public class PatientWardFrame extends JFrame{
         tfBloodType4.setText(pat4.bloodType);
         tfHospitalized4.setText("Floor " + pat4.location.get(0) + ", Room " + pat4.location.get(1) + ", Bed " + pat4.location.get(2));
         tfEmergency4.setText("none");
-
+    */
         seePatientDetailsButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,34 +120,6 @@ public class PatientWardFrame extends JFrame{
                 framePatient2.setTitle("Patient's data");//3. Set title for new frame
                 framePatient2.setSize(1200,800);//4. Size the frame.
                 framePatient2.setVisible(true);//5. Show it.
-                //set patient details to suit the patient we are interested in
-            }
-        });
-
-        seePatientDetailsButton3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //set PatientDetailsFrame visibility to true
-                PatientDetailsFrame framePatient3 = new PatientDetailsFrame(patientList, 2);//1. Create the frame.
-                setVisible(false);
-                framePatient3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
-                framePatient3.setTitle("Patient's data");//3. Set title for new frame
-                framePatient3.setSize(1200,800);//4. Size the frame.
-                framePatient3.setVisible(true);//5. Show it.
-                //set patient details to suit the patient we are interested in
-            }
-        });
-
-        seePatientDetailsButton4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //set PatientDetailsFrame visibility to true
-                PatientDetailsFrame framePatient4 = new PatientDetailsFrame(patientList, 3);//1. Create the frame.
-                setVisible(false);
-                framePatient4.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
-                framePatient4.setTitle("Patient's data");//3. Set title for new frame
-                framePatient4.setSize(1200,800);//4. Size the frame.
-                framePatient4.setVisible(true);//5. Show it.
                 //set patient details to suit the patient we are interested in
             }
         });
