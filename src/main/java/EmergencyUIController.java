@@ -195,7 +195,7 @@ public class EmergencyUIController extends JFrame {
         ActionListener switchReport = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Reportsubmenu reportsubmenu = new Reportsubmenu(patientList);
+                Reportmenu reportmenu = new Reportmenu(patientList);
             }
         };
         reportButton.addActionListener(switchReport);

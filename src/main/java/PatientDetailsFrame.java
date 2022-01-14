@@ -154,7 +154,7 @@ public class PatientDetailsFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 hrTimer.cancel();
                 setVisible(false);
-                Reportsubmenu reportsubmenu = new Reportsubmenu(patientList);
+                Reportmenu reportmenu = new Reportmenu(patientList);
                 //go_ward_menu();
             }
         };
