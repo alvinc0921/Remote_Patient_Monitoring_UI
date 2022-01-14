@@ -46,6 +46,7 @@ public class PatientDetailsFrame extends JFrame{
     //ECG
     private JPanel ecgPanel;
     private JSlider slider;
+    private JButton beatMuteButton;
 
     private List<DrawGraph> graphs;
     private Patient pat;
@@ -96,18 +97,20 @@ public class PatientDetailsFrame extends JFrame{
 
 
         // HeartBeat indication
-        /*final double[] heartRate = {0};
+        final double[] heartRate = {0};
         final int[] counter = {0};
-        int patIndex = 0;   // Need to be updated later -
+        final int[] soundFlag = {1};
 
         ActionListener heartBeat = new ActionListener () {
 
             @Override
             public void actionPerformed ( ActionEvent ae ) {
-                try {
-                    AudioAlarm.tone(300,100, 0.1);
-                } catch (LineUnavailableException e) {
-                    e.printStackTrace();
+                if (soundFlag[0] == 1){
+                    try {
+                        AudioAlarm.tone(300,100, 0.1);
+                    } catch (LineUnavailableException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         };
@@ -116,12 +119,11 @@ public class PatientDetailsFrame extends JFrame{
         TimerTask heartRateCount = new TimerTask() {
             @Override
             public void run() {
-                heartRate[0] = patientList.get(patIndex).hrSig.get(counter[0]).longValue();
-                // To be deleted - heartRate[0] = hrTrial.get(counter[0]).longValue();
+                heartRate[0] = pat.hrSig.get(counter[0]).longValue();
                 System.out.println(heartRate[0]);
                 Timer heartBeatTimer = new Timer((int) (60*1000/heartRate[0]), heartBeat);
                 heartBeatTimer.start();
-                counter[0] = counter[0] + 5;   // HeartBeatSound changing every 10 seconds
+                counter[0] = counter[0] + 5;   // HeartBeatSound changing every 5 seconds
 
                 ActionListener soundEnd = new ActionListener() {
                     @Override
@@ -136,13 +138,13 @@ public class PatientDetailsFrame extends JFrame{
             }
         };
         hrTimer.schedule(heartRateCount, 0, 5*1000);
-         */
+
 
 
         ActionListener alertAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //hrTimer.cancel();
+                hrTimer.cancel();
                 setVisible(false);
                 //EmergencyUIController emUIController = new EmergencyUIController(patientList);
             }
@@ -152,7 +154,7 @@ public class PatientDetailsFrame extends JFrame{
         ActionListener reportAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //hrTimer.cancel();
+                hrTimer.cancel();
                 setVisible(false);
                 Reportmenu reportmenu = new Reportmenu(patientList);
                 //go_ward_menu();
@@ -163,7 +165,7 @@ public class PatientDetailsFrame extends JFrame{
         ActionListener wardAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //hrTimer.cancel();
+                hrTimer.cancel();
                 setVisible(false);
                 PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
                 //go_ward_menu();
@@ -175,7 +177,7 @@ public class PatientDetailsFrame extends JFrame{
         ActionListener detailsClose = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //hrTimer.cancel();
+                hrTimer.cancel();
                 setVisible(false);
                 PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
                 //go_ward_menu();
@@ -183,7 +185,27 @@ public class PatientDetailsFrame extends JFrame{
         };
         xButton.addActionListener(detailsClose);
 
+        final int[] muteCount = {0};                            // Counter of number of times the muteButton is pressed
+        ActionListener mute = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                muteCount[0]++;                                 // +1 every time muteButton is pressed
+                if ((muteCount[0]%2) == 1){                     // When the muteButton is pressed when sound is on (repeated)
+                    soundFlag[0] = 0;                           // change the soundFlag to 0 - muted
+                    beatMuteButton.setText("Unmute");               // changing the button text
+                }
+                else if ((muteCount[0]%2) == 0){                // When the muteButton is pressed when sound is off (repeated)
+                    soundFlag[0] = 1;                           // change the soundFlag to 1 - not muted
+                    beatMuteButton.setText("Mute");                 // changing the button text
+                }
+            }
+        };
+        beatMuteButton.addActionListener(mute);
+
     }
+
+
+
 /*
     //Creating the main method
     public static void main(String[] args) {

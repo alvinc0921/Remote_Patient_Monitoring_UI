@@ -85,6 +85,7 @@ public class Reportmenu extends JFrame{
         seepastreport.addActionListener(seepastreportAL);
 
         setContentPane(big);                            //Set basic properties of the main frame
+        setBounds(1200,0,1200,800); //value for windows on the right
         setTitle("PatientMed");
         setSize(1200, 800);
         setDefaultCloseOperation(HIDE_ON_CLOSE);        // The app is closed when the emergencyUI is closed
