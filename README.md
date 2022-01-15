@@ -20,7 +20,7 @@ v1.1 : Small UI updates.
 
 v1.0 : First version meeting all client requirements.
 
-In our current database, we have 4 patients. Patient 1 (Petko Adello) and 4 (Evelyn Brookes) are healthy, and thus do not trigger any warnings. Patient 2 (Marjorie Finlay) has normal vital signs for the first 5 seconds that the app is open, but then suffers from ventricular fibrillation, triggering multiple urgent alerts. Patient 3 (Nils Sjoberg) triggers a warning alert from the beginning of the app due to high body temperature, but more vital signs turn abnormal within 10/15 seconds. These two last patients show our app reacts to abnormal vital signs, differentiating between warning and urgent alerts.
+In our current database, we have 4 patients. Patient 1 (Petko Adello) and 4 (Evelyn Brookes) are healthy, and thus do not trigger any warnings. Patient 2 (Marjorie Finlay) has normal vital signs for the first 5 seconds that the app is open, but then suffers from ventricular fibrillation, triggering multiple urgent alerts. Patient 3 (Nils Sjoberg) triggers a warning alert from the beginning of the app due to high body temperature, but more vital signs turn abnormal within 10/15 seconds(this patient suffers from atrial flutter, represented in his ECG). These two last patients show our app reacts to abnormal vital signs, differentiating between warning and urgent alerts.
 
 ## Application Flow 
 
