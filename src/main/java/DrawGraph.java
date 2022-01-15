@@ -17,29 +17,29 @@ public class DrawGraph extends JPanel{
     private static final int PREF_H = 250;                               //Graph height
     private static final int BORDER_GAP = 45;                            //Padding
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);//Line width
-    private static final int Y_HATCH_CNT = 10;                           //y axis gradations
-    private static final int HATCH_WIDTH = 4;                            //x axis gradations
-    private final Color graphColor;                                      //line color
 
-    private int valueRate;
-    private int timeFrameMillis;
-    private int maxPlotValues;
-    private LinkedList<Double> plotValues;
-    private double maxMinValue;
-    private double minMaxValue;
+    private final Color graphColor;                                      //Line color
+    private final int valueInterval;                                     //The time between values in milliseconds
+    private final LinkedList<Double> plotValues;                         //Values to be plotted. A LinkedList so we can addFirst and removeLast
+    private final double maxMinValue;                                    //Maximum minValue
+    private final double minMaxValue;                                    //Minimum maxValue
 
-    public DrawGraph(double maxMinValue, double minMaxValue, Color graphColor, int valueRate) {
+    private int timeFrameMillis;                                         //The number of milliseconds to plot
+    private int maxPlotValues;                                           //The number of values to be plotted
+
+    public DrawGraph(double maxMinValue, double minMaxValue, Color graphColor, int valueInterval) {
         this.maxMinValue = maxMinValue;
         this.minMaxValue = minMaxValue;
         this.graphColor = graphColor;
-        this.valueRate = valueRate;
+        this.valueInterval = valueInterval;
         this.plotValues = new LinkedList<>();
-        timeFrameMillis = 5000;
-        maxPlotValues = timeFrameMillis/valueRate;
+        timeFrameMillis = 5000; //Default 5 seconds
+        maxPlotValues = timeFrameMillis / valueInterval; //Number of values = plot duration / time between values
     }
 
     public void addPlotValue(double plotValue) {
         while (plotValues.size() >= maxPlotValues) {
+            //Remove the last value that exceeds the maximum number of values
             plotValues.removeLast();
         }
         plotValues.addFirst(plotValue);
@@ -49,8 +49,11 @@ public class DrawGraph extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+
+        //Turn on antialiasing for smoother plots
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        //Calculate the minimum and maximum values of the plot so the y-axis can be scaled to fit them in
         double minValue = Double.MAX_VALUE;
         double maxValue = Double.MIN_VALUE;
 
@@ -62,6 +65,7 @@ public class DrawGraph extends JPanel{
         minValue = Math.min(minValue, maxMinValue);
         maxValue = Math.max(maxValue, minMaxValue);
 
+        //Display the range of values for the axes
         BigDecimal bdMin = new BigDecimal(minValue);
         BigDecimal bdMax = new BigDecimal(maxValue);
         bdMin = bdMin.round(new MathContext(3));
@@ -71,21 +75,24 @@ public class DrawGraph extends JPanel{
         g.drawString("T-" + String.valueOf(timeFrameMillis/1000) + "s",43, 230);
         g.drawString("T",570, 230);
 
+        //Calculate scaling factors for the values on the 2 axes
         double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (maxPlotValues - 1);
         double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (maxValue - minValue);
 
         List<Point> graphPoints = new ArrayList<Point>();
 
+        //Calculate the coordinates of the plot values on the display (in pixels)
         for (int i = 0; i < plotValues.size(); i++) {
             int x1 = (int) ((maxPlotValues - 1 - i) * xScale + BORDER_GAP);
             int y1 = (int) ((maxValue - plotValues.get(i)) * yScale + BORDER_GAP);
             graphPoints.add(new Point(x1, y1));
         }
 
-        // create x and y axes
+        //Draw x and y axes
         g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);
         g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
 
+        //Draw the plot by drawing lines between values
         Stroke oldStroke = g2.getStroke();
         g2.setColor(graphColor);
         g2.setStroke(GRAPH_STROKE);
@@ -106,12 +113,15 @@ public class DrawGraph extends JPanel{
 
     public void setPlotDuration(int timeFrameMillis) {
         this.timeFrameMillis = timeFrameMillis;
-        maxPlotValues = timeFrameMillis/valueRate;
+        maxPlotValues = timeFrameMillis / valueInterval; //Number of values = plot duration / time between values
     }
 
     /*
         //Intended to add hatch marks (gradations) on the plots, but ended up just adding values
         //Create hatch marks for y axis
+
+        private static final int Y_HATCH_CNT = 10;                           //y axis gradations
+        private static final int HATCH_WIDTH = 4;                            //x axis gradations
         for (int i = 0; i < Y_HATCH_CNT; i++) {
             int x0 = BORDER_GAP;
             int x1 = BORDER_GAP - HATCH_WIDTH;
@@ -129,33 +139,4 @@ public class DrawGraph extends JPanel{
             g2.drawLine(x0, y0, x1, y1);
         }
          */
-
-    /*private static void createAndShowGui() {
-
-        LinkedList<Integer> values = new LinkedList<>();
-        Random random = new Random();
-        int maxDataPoints = 16;
-        int maxValue = 20;
-        for (int i = 0; i < maxDataPoints ; i++) {
-            values.add(random.nextInt(maxValue));
-        }
-        DrawGraph mainPanel = new DrawGraph(0, 20, Color.red, 100);
-
-        JFrame frame = new JFrame("DrawGraph");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(mainPanel);
-        frame.pack();
-        frame.setLocationByPlatform(true);
-        frame.setVisible(true);
-
-
-    }*/
-
-    /*public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGui();
-            }
-        });
-    }*/
 }

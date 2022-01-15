@@ -71,7 +71,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="efc4e" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="efc4e" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints/>
             <properties>
@@ -86,7 +86,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <grid id="53a36" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="53a36" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints/>
                     <properties/>
@@ -104,7 +104,7 @@
                         <children>
                           <component id="90a59" class="javax.swing.JLabel">
                             <constraints>
-                              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <text value="Name:"/>
@@ -112,7 +112,7 @@
                           </component>
                           <component id="8ef85" class="javax.swing.JTextField" binding="tfName2">
                             <constraints>
-                              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                              <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
@@ -122,31 +122,15 @@
                           </component>
                           <component id="55579" class="javax.swing.JLabel">
                             <constraints>
-                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <text value="Age:"/>
                             </properties>
                           </component>
-                          <component id="78c54" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value="Height:"/>
-                            </properties>
-                          </component>
-                          <component id="8f03" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value="Weight:"/>
-                            </properties>
-                          </component>
                           <component id="dc5fc" class="javax.swing.JLabel">
                             <constraints>
-                              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <text value="Blood Type:"/>
@@ -154,17 +138,7 @@
                           </component>
                           <component id="c0023" class="javax.swing.JTextField" binding="tfAge2">
                             <constraints>
-                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                                <preferred-size width="150" height="-1"/>
-                              </grid>
-                            </constraints>
-                            <properties>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="1f773" class="javax.swing.JTextField" binding="tfHeight2">
-                            <constraints>
-                              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
@@ -174,21 +148,13 @@
                           </component>
                           <component id="9c7a3" class="javax.swing.JTextField" binding="tfBloodType2">
                             <constraints>
-                              <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                              <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
                             <properties>
                               <text value=""/>
                             </properties>
-                          </component>
-                          <component id="ef0ae" class="javax.swing.JTextField" binding="tfWeight2">
-                            <constraints>
-                              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                                <preferred-size width="150" height="-1"/>
-                              </grid>
-                            </constraints>
-                            <properties/>
                           </component>
                           <component id="43d2" class="javax.swing.JLabel">
                             <constraints>
@@ -226,24 +192,6 @@
                               <text value=""/>
                             </properties>
                           </component>
-                          <component id="c35d" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="0" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value="Sex:"/>
-                            </properties>
-                          </component>
-                          <component id="f4404" class="javax.swing.JTextField" binding="tfSex2">
-                            <constraints>
-                              <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                                <preferred-size width="150" height="-1"/>
-                              </grid>
-                            </constraints>
-                            <properties>
-                              <text value=""/>
-                            </properties>
-                          </component>
                           <component id="3500c" class="javax.swing.JButton" binding="seePatientDetailsButton2" default-binding="true">
                             <constraints>
                               <grid row="6" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -266,7 +214,7 @@
                         <children>
                           <component id="c05fc" class="javax.swing.JLabel">
                             <constraints>
-                              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <text value="Name:"/>
@@ -274,7 +222,7 @@
                           </component>
                           <component id="afb83" class="javax.swing.JTextField" binding="tfName1">
                             <constraints>
-                              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                              <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
@@ -284,7 +232,7 @@
                           </component>
                           <component id="26bcc" class="javax.swing.JLabel">
                             <constraints>
-                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <text value="Age:"/>
@@ -292,51 +240,17 @@
                           </component>
                           <component id="f851b" class="javax.swing.JTextField" binding="tfAge1">
                             <constraints>
-                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
                             <properties>
                               <text value=""/>
                             </properties>
-                          </component>
-                          <component id="f1be6" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value="Height:"/>
-                            </properties>
-                          </component>
-                          <component id="ecc53" class="javax.swing.JTextField" binding="tfHeight1">
-                            <constraints>
-                              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                                <preferred-size width="150" height="-1"/>
-                              </grid>
-                            </constraints>
-                            <properties>
-                              <text value=""/>
-                            </properties>
-                          </component>
-                          <component id="ac525" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                            </constraints>
-                            <properties>
-                              <text value="Weight:"/>
-                            </properties>
-                          </component>
-                          <component id="80e83" class="javax.swing.JTextField" binding="tfWeight1">
-                            <constraints>
-                              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                                <preferred-size width="150" height="-1"/>
-                              </grid>
-                            </constraints>
-                            <properties/>
                           </component>
                           <component id="13b05" class="javax.swing.JLabel">
                             <constraints>
-                              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
                               <text value="Blood Type:"/>
@@ -344,7 +258,7 @@
                           </component>
                           <component id="569a1" class="javax.swing.JTextField" binding="tfBloodType1">
                             <constraints>
-                              <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                              <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
@@ -386,23 +300,223 @@
                               <text value=""/>
                             </properties>
                           </component>
-                          <component id="f7260" class="javax.swing.JLabel">
+                          <component id="976b1" class="javax.swing.JButton" binding="seePatientDetailsButton1">
                             <constraints>
-                              <grid row="0" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="6" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
                             <properties>
-                              <text value="Sex:"/>
+                              <text value="See Patient Details"/>
                             </properties>
                           </component>
-                          <component id="e199d" class="javax.swing.JTextField" binding="tfSex1">
+                        </children>
+                      </grid>
+                      <grid id="7245a" layout-manager="GridLayoutManager" row-count="7" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <background color="-9626"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="51925" class="javax.swing.JLabel">
                             <constraints>
-                              <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                              <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Name:"/>
+                            </properties>
+                          </component>
+                          <component id="d13fb" class="javax.swing.JTextField" binding="tfName3">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="bc1d7" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Age:"/>
+                            </properties>
+                          </component>
+                          <component id="8a14f" class="javax.swing.JTextField" binding="tfAge3">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="5a2fe" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Blood Type:"/>
+                            </properties>
+                          </component>
+                          <component id="88e05" class="javax.swing.JTextField" binding="tfBloodType3">
+                            <constraints>
+                              <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                 <preferred-size width="150" height="-1"/>
                               </grid>
                             </constraints>
                             <properties/>
                           </component>
-                          <component id="976b1" class="javax.swing.JButton" binding="seePatientDetailsButton1">
+                          <component id="562f3" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Hospitalized:"/>
+                            </properties>
+                          </component>
+                          <component id="f08ee" class="javax.swing.JTextField" binding="tfHospitalized3">
+                            <constraints>
+                              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="c266d" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Emergency:"/>
+                            </properties>
+                          </component>
+                          <component id="41a9d" class="javax.swing.JTextField" binding="tfEmergency3">
+                            <constraints>
+                              <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="4e442" class="javax.swing.JButton" binding="seePatientDetailsButton3">
+                            <constraints>
+                              <grid row="6" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="See Patient Details"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                      <grid id="4dfc2" layout-manager="GridLayoutManager" row-count="7" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <background color="-9626"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="c8acb" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Name:"/>
+                            </properties>
+                          </component>
+                          <component id="67a72" class="javax.swing.JTextField" binding="tfName4">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="a8745" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Age:"/>
+                            </properties>
+                          </component>
+                          <component id="120e4" class="javax.swing.JTextField" binding="tfAge4">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="eea59" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Blood Type:"/>
+                            </properties>
+                          </component>
+                          <component id="3557b" class="javax.swing.JTextField" binding="tfBloodType4">
+                            <constraints>
+                              <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties/>
+                          </component>
+                          <component id="94498" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Hospitalized:"/>
+                            </properties>
+                          </component>
+                          <component id="b66bb" class="javax.swing.JTextField" binding="tfHospitalized4">
+                            <constraints>
+                              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="a5f5" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <text value="Emergency:"/>
+                            </properties>
+                          </component>
+                          <component id="8f7e" class="javax.swing.JTextField" binding="tfEmergency4">
+                            <constraints>
+                              <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                                <preferred-size width="150" height="-1"/>
+                              </grid>
+                            </constraints>
+                            <properties>
+                              <text value=""/>
+                            </properties>
+                          </component>
+                          <component id="1ec47" class="javax.swing.JButton" binding="seePatientDetailsButton4">
                             <constraints>
                               <grid row="6" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                             </constraints>
@@ -416,16 +530,6 @@
                   </grid>
                 </children>
               </scrollpane>
-              <vspacer id="20871">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
-              <vspacer id="40895">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
             </children>
           </grid>
         </children>

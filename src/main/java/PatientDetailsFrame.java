@@ -181,14 +181,6 @@ public class PatientDetailsFrame extends JFrame{
 
     }
 
-/*
-    //Creating the main method
-    public static void main(String[] args) {
-        PatientDetailsFrame patientProfileFrame = new PatientDetailsFrame();
-    }
- */
-
-
     private void setGraphDuration(int duration) {
         for (DrawGraph graph : graphs) {
             graph.setPlotDuration(duration);
