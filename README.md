@@ -41,6 +41,6 @@ The data for ECG was obtained from  https://data.mendeley.com/datasets/7dybx7wyf
 
 The data for Radial Blood Pressure was obtained from http://haemod.uk/original
 
-Due to the high frequencies at which these signals are recorded, we reduced their number of points per second so as to ease storage of data for 24h of signal. While this reduced the quality of the signal, we believe we found a good compromise between storage and quality of the signal.
+Due to the high frequencies at which these signals are recorded, we reduced their number of points per second so as to ease storage of data for 24h of signal(see MATLAB folder in this repository). While this reduced the quality of the signal, we believe we found a good compromise between storage and quality of the signal.
 
 As for the other vital signs (heart rate, respiratory rate and body temperature), we entirely simulated these for 24h, both for healthy and unhealthy patients.
