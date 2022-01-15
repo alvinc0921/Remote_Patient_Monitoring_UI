@@ -218,10 +218,6 @@ public class Reportmenu extends JFrame{
                 if(i==2) file_path = file_path + System.getProperty("file.separator") + current_pat.getLastname() + "_" + current_pat.getFirstname() + "_" + current_pat.getPatID();
                 if(i==1) file_path = file_path + System.getProperty("file.separator") + "Reports";//this directory only leads to the reports folder where each patient has a seperate subfolder containing their past reports
             }
-
-
-
-            //file_path = file_path + System.getProperty("file.separator") + current_pat.getLastname() + "_" + current_pat.getFirstname() + "_" + current_pat.getPatID() + "_" + current_time + ".txt";
             File file = new File(file_path);
             Desktop desktop = Desktop.getDesktop();
             if (file.exists()){
