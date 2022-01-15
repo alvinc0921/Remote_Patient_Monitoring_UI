@@ -21,31 +21,13 @@ public class PatientWardFrame extends JFrame{
     private JTextField tfWeight2;
     private JTextField tfHospitalized2;
     private JTextField tfEmergency2;
-    private JTextField tfName3;
-    private JTextField tfSex3;
-    private JTextField tfHeight3;
-    private JTextField tfWeight3;
-    private JTextField tfAge3;
-    private JTextField tfBloodType3;
-    private JTextField tfHospitalized3;
-    private JTextField tfEmergency3;
-    private JTextField tfName4;
-    private JTextField tfSex4;
-    private JTextField tfAge4;
-    private JTextField tfHeight4;
-    private JTextField tfWeight4;
-    private JTextField tfBloodType4;
-    private JTextField tfHospitalized4;
-    private JTextField tfEmergency4;
     private JButton emergencyButton;
     private JButton wardButton;
     private JButton reportButton;
-    private JButton addPatientButton;
+    //private JButton addPatientButton;
     private JPanel patientWardPanel;
     private JButton seePatientDetailsButton1;
     private JButton seePatientDetailsButton2;
-    private JButton seePatientDetailsButton3;
-    private JButton seePatientDetailsButton4;
 
 
     public PatientWardFrame(ArrayList<Patient> patientList) {
@@ -77,6 +59,7 @@ public class PatientWardFrame extends JFrame{
         tfBloodType2.setText(pat2.bloodType);
         tfHospitalized2.setText("Floor " + pat2.location.get(0) + ", Room " + pat2.location.get(1) + ", Bed " + pat2.location.get(2));
         tfEmergency2.setText("none");
+
         /*
         tfName3.setText(pat3.firstname + " " + pat3.lastname);
         tfSex3.setText("m");
@@ -96,6 +79,7 @@ public class PatientWardFrame extends JFrame{
         tfHospitalized4.setText("Floor " + pat4.location.get(0) + ", Room " + pat4.location.get(1) + ", Bed " + pat4.location.get(2));
         tfEmergency4.setText("none");
     */
+
         seePatientDetailsButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,7 +108,7 @@ public class PatientWardFrame extends JFrame{
             }
         });
 
-        addPatientButton.addActionListener(new ActionListener() {
+        /*addPatientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //set AddPatientFrame visibility to true
@@ -136,7 +120,7 @@ public class PatientWardFrame extends JFrame{
                 addPatient.setVisible(true);//5. Show it.
                 //store the patient details somewhere
             }
-        });
+        });*/
 
         ActionListener alertAL = new ActionListener() {
             @Override
