@@ -195,7 +195,7 @@ public class PatientDetailsFrame extends JFrame{
         graphs = new ArrayList<>();
         graphs.add(new DrawGraph(36, 37, Color.RED, 1000));
         graphs.add(new DrawGraph(60, 120, Color.ORANGE, 1000));
-        graphs.add(new DrawGraph(65, 85, Color.GREEN, 1000));
+        graphs.add(new DrawGraph(5, 30, Color.GREEN, 1000));
         graphs.add(new DrawGraph(10, 20, Color.BLUE, 80));
         graphs.add(new DrawGraph(800, 1400, Color.BLACK, 50));
 
