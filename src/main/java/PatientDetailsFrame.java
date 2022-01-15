@@ -203,8 +203,6 @@ public class PatientDetailsFrame extends JFrame{
 
     }
 
-
-
 /*
     //Creating the main method
     public static void main(String[] args) {
