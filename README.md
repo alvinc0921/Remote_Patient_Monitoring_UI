@@ -8,13 +8,15 @@ The front-end was mainly built using SWING. The patient data and vital signs wer
 
 https://data.heroku.com/dataclips/bfljwdrcpssefebonywlxfskssvx 
 
-We recommend cloning the code to IntelliJ IDEA and running the main class on it. Please give 10 to 20 seconds for the application to open. Notice how there is a warning alert for the first 5 seconds, and suddenly a new urgent alert appears (due to patient Marjorie).
+We recommend cloning the code to IntelliJ IDEA and running the main class on it. Please give 10 to 20 seconds for the application to open. Notice how there is a warning alert for the first 5 seconds, and suddenly a new urgent alert appears (due to patient Marjorie). In the ward window, the heartbeat sound indication causes lagging. We recommend muting it (there's a button) once you enter the window with the plots, for a better app experience.
 
 Current version: 
 
-v1.3 : Small UI Updates. Final version.
+v1.4 : Email the app sends to changed. Final version.
 
 Past versions: 
+
+v1.3 : Small UI Updates.
 
 v1.2 : 3rd and 4th Patients added. Matlab code added to repository.
 
