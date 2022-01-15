@@ -25,6 +25,8 @@ public class Main {
 
         //END OF DB CONNECTION PART
 
+        //The following code will be repeated 4 times, 1 for each patient
+
         int pat1id=1; //dummy values
         String pat1firstname="Nettles"; //dummy values, in honour
         String pat1lastname="Holloway"; //dummy values, in honour
