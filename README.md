@@ -12,9 +12,11 @@ We recommend cloning the code to IntelliJ IDEA and running the main class on it.
 
 Current version: 
 
-v1.2 : 3rd and 4th Patients added. Matlab code added to repository.
+v1.3 : Small UI Updates. Final version.
 
 Past versions: 
+
+v1.2 : 3rd and 4th Patients added. Matlab code added to repository.
 
 v1.1 : Small UI updates.
 
