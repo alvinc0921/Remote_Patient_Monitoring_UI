@@ -31,3 +31,14 @@ This window displays the different patients in the ward, with their details. Whe
 ### Report Generation Window 
 
 This window displays a list of the patients in the ward. When the doctor selects a patient, they are given the choice to either generate a detailed report with the average vital sign values (per minute) for the last 24h(as well as any alerts related to the patient). The doctor is also given the choice to check past reports generated for that patient. 
+
+
+## Data
+
+The data for ECG was obtained from  https://data.mendeley.com/datasets/7dybx7wyfn/3
+
+The data for Radial Blood Pressure was obtained from http://haemod.uk/original
+
+Due to the high frequencies at which these signals are recorded, we reduced their number of points per second so as to ease storage of data for 24h of signal. While this reduced the quality of the signal, we believe we found a good compromise between storage and quality of the signal.
+
+As for the other vital signs (heart rate, respiratory rate and body temperature), we entirely simulated these for 24h, both for healthy and unhealthy patients.
