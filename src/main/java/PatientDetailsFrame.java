@@ -208,8 +208,8 @@ public class PatientDetailsFrame extends JFrame{
         //Plotting signals with 1 value/second
         Timer timer1 = new Timer(1000, e -> {
                 graphs.get(0).addPlotValue(pat.tempSig.get(signalIndex1).doubleValue());
-                graphs.get(2).addPlotValue(pat.hrSig.get(signalIndex1).doubleValue());
-                graphs.get(3).addPlotValue(pat.rrSig.get(signalIndex1).doubleValue());
+                graphs.get(2).addPlotValue(pat.rrSig.get(signalIndex1).doubleValue());
+                graphs.get(3).addPlotValue(pat.bpSig.get(signalIndex1).doubleValue());
                 signalIndex1++;
             graphs.get(0).updateUI();
             graphs.get(2).updateUI();
@@ -218,7 +218,7 @@ public class PatientDetailsFrame extends JFrame{
 
         //Plotting signal with 12.5 values/second
         Timer timer2 = new Timer(80, e -> {
-                graphs.get(1).addPlotValue(pat.bpSig.get(signalIndex2).doubleValue());
+                graphs.get(1).addPlotValue(pat.hrSig.get(signalIndex2).doubleValue());
                 signalIndex2++;
             graphs.get(1).updateUI();
         });
