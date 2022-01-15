@@ -19,10 +19,7 @@ public class PatientDetailsFrame extends JFrame{
     private JButton reportButton;
     //Fields containing patient details
     private JTextField tfName;
-    private JTextField tfSex;
     private JTextField tfAge;
-    private JTextField tfHeight;
-    private JTextField tfWeight;
     private JTextField tfBloodType;
     private JTextField tfHospitalized;
     private JTextField tfEmergency;
@@ -60,10 +57,7 @@ public class PatientDetailsFrame extends JFrame{
         signalIndex3 = 0;
 
         tfName.setText(pat.firstname + " " + pat.lastname);        //Passing and displaying the information about the patient in the corresponding text fields
-        tfSex.setText("f");
         tfAge.setText(String.valueOf(pat.age));
-        tfHeight.setText("1.71 m");
-        tfWeight.setText("67 kg");
         tfBloodType.setText(pat.bloodType);
         tfHospitalized.setText("Floor " + pat.location.get(0) + ", Room " + pat.location.get(1) + ", Bed " + pat.location.get(2));
 
