@@ -13,14 +13,14 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class DrawGraph extends JPanel{
-    private static final int PREF_W = 600;
-    private static final int PREF_H = 250;
-    private static final int BORDER_GAP = 45;
-    private static final Stroke GRAPH_STROKE = new BasicStroke(2f);//line width
-    private static final int Y_HATCH_CNT = 10;//y axis gradations
-    private static final int HATCH_WIDTH = 4;
+    private static final int PREF_W = 600;                               //Graph width
+    private static final int PREF_H = 250;                               //Graph height
+    private static final int BORDER_GAP = 45;                            //Padding
+    private static final Stroke GRAPH_STROKE = new BasicStroke(2f);//Line width
+    private static final int Y_HATCH_CNT = 10;                           //y axis gradations
+    private static final int HATCH_WIDTH = 4;                            //x axis gradations
+    private final Color graphColor;                                      //line color
 
-    private final Color graphColor;//line color
     private int valueRate;
     private int timeFrameMillis;
     private int maxPlotValues;
@@ -86,26 +86,6 @@ public class DrawGraph extends JPanel{
         g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);
         g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
 
-        /*
-        // create hatch marks for y axis.
-        for (int i = 0; i < Y_HATCH_CNT; i++) {
-            int x0 = BORDER_GAP;
-            int x1 = BORDER_GAP - HATCH_WIDTH;
-            int y0 = getHeight() - (((i + 1) * (getHeight() - BORDER_GAP * 2)) / Y_HATCH_CNT + BORDER_GAP);
-            int y1 = y0;
-            g2.drawLine(x0, y0, x1, y1);
-        }
-
-        // and for x axis
-        for (int i = 0; i < maxPlotValues - 1; i++) {
-            int x0 = (i + 1) * (getWidth() - BORDER_GAP * 2) / (maxPlotValues - 1) + BORDER_GAP;
-            int x1 = x0;
-            int y0 = getHeight() - BORDER_GAP;
-            int y1 = y0 + HATCH_WIDTH;
-            g2.drawLine(x0, y0, x1, y1);
-        }
-         */
-
         Stroke oldStroke = g2.getStroke();
         g2.setColor(graphColor);
         g2.setStroke(GRAPH_STROKE);
@@ -124,8 +104,34 @@ public class DrawGraph extends JPanel{
         return new Dimension(PREF_W, PREF_H);
     }
 
-    private static void createAndShowGui() {
-        /*
+    public void setPlotDuration(int timeFrameMillis) {
+        this.timeFrameMillis = timeFrameMillis;
+        maxPlotValues = timeFrameMillis/valueRate;
+    }
+
+    /*
+        //Intended to add hatch marks (gradations) on the plots, but ended up just adding values
+        //Create hatch marks for y axis
+        for (int i = 0; i < Y_HATCH_CNT; i++) {
+            int x0 = BORDER_GAP;
+            int x1 = BORDER_GAP - HATCH_WIDTH;
+            int y0 = getHeight() - (((i + 1) * (getHeight() - BORDER_GAP * 2)) / Y_HATCH_CNT + BORDER_GAP);
+            int y1 = y0;
+            g2.drawLine(x0, y0, x1, y1);
+        }
+
+        //Create hatch marks for x axis.
+        for (int i = 0; i < maxPlotValues - 1; i++) {
+            int x0 = (i + 1) * (getWidth() - BORDER_GAP * 2) / (maxPlotValues - 1) + BORDER_GAP;
+            int x1 = x0;
+            int y0 = getHeight() - BORDER_GAP;
+            int y1 = y0 + HATCH_WIDTH;
+            g2.drawLine(x0, y0, x1, y1);
+        }
+         */
+
+    /*private static void createAndShowGui() {
+
         LinkedList<Integer> values = new LinkedList<>();
         Random random = new Random();
         int maxDataPoints = 16;
@@ -142,19 +148,14 @@ public class DrawGraph extends JPanel{
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 
-         */
-    }
 
-    public static void main(String[] args) {
+    }*/
+
+    /*public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGui();
             }
         });
-    }
-
-    public void setPlotDuration(int timeFrameMillis) {
-        this.timeFrameMillis = timeFrameMillis;
-        maxPlotValues = timeFrameMillis/valueRate;
-    }
+    }*/
 }

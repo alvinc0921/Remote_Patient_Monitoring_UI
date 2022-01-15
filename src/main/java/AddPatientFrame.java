@@ -6,21 +6,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddPatientFrame extends JFrame{
+    //The main Panel
+    private JPanel addPatientPanel;
+    //Menu buttons
     private JButton emergencyButton;
     private JButton wardButton;
     private JButton reportButton;
+    //Fields containing the new patient's details
     private JTextField tfFirstName;
     private JTextField tfLastName;
     private JTextField tfEmail;
     private JTextField tfAge;
-    private JButton createProfileButton;
-    private JButton closeButton;
     private JTextField tfPhoneNumber;
     private JTextField tfHeight;
     private JTextField tfWeight;
     private JTextField tfBloodType;
     private JTextField tfHospitalized;
-    private JPanel addPatientPanel;
+    //Buttons to add patient to Ward or close window and open Ward without adding pstient
+    private JButton createProfileButton;
+    private JButton closeButton;
 
     public AddPatientFrame(ArrayList<Patient> patientList) {
         setContentPane(addPatientPanel);
@@ -30,13 +34,11 @@ public class AddPatientFrame extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
+        //Action listener for the createProfileButton
         ActionListener addPatient = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //close AddPatientFrame
-                setVisible(false);
-
-                //create a String list with all the information collected
+                //Create a String list with all the information collected
                 List<String> newPatientInformation = new ArrayList<>();
                 newPatientInformation.add(tfFirstName.getText());
                 newPatientInformation.add(tfLastName.getText());
@@ -48,11 +50,15 @@ public class AddPatientFrame extends JFrame{
                 newPatientInformation.add(tfBloodType.getText());
                 newPatientInformation.add(tfHospitalized.getText());
 
-                //pass the information from the list into the database
+                //Pass the information from the list into the database
 
-                //reopen the Ward instead
+                //Close AddPatientFrame
+                setVisible(false);
+
+                //Reopen the Ward instead
                 PatientWardFrame patientWardFrame = new PatientWardFrame(patientList);
 
+                //Display the new patient's data into the terminal - just for testing purposes
                 for (int i = 0; i < newPatientInformation.size(); i++) {
                     System.out.println(newPatientInformation.get(i));
                 }
@@ -60,6 +66,7 @@ public class AddPatientFrame extends JFrame{
         };
         createProfileButton.addActionListener(addPatient);
 
+        //Action listener for the closeButton
         ActionListener close = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,6 +78,7 @@ public class AddPatientFrame extends JFrame{
         };
         closeButton.addActionListener(close);
 
+        //Action listeners for the buttons in the menu
         ActionListener alertAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -101,8 +109,8 @@ public class AddPatientFrame extends JFrame{
         wardButton.addActionListener(wardAL);
     }
 
-
 /*
+    //Creating the main method
     public static void main(String[] args) {
         AddPatientFrame newPatientFrame = new AddPatientFrame();
     }

@@ -12,42 +12,34 @@ import java.util.*;
 import java.util.List;
 
 public class PatientDetailsFrame extends JFrame{
-    private JTextField tfName;
-    //String nameVar = tfName.getText();
-    private JTextField tfSex;
-    //String sexVar = tfSex.getText();
-    private JTextField tfAge;
-    //String ageVar = tfAge.getText();
-    private JTextField tfHeight;
-    //String heightVar = tfHeight.getText();
-    private JTextField tfWeight;
-    //String weightVar = tfWeight.getText();
-    private JTextField tfBloodType;
-    //String bloodTypeVar = tfBloodType.getText();
-    private JTextField tfHospitalized;
-    //String hospitalizedVar = tfHospitalized.getText();
-    private JTextField tfEmergency;
-    //String emergencyVar = tfEmergency.getText();
-    public JButton xButton;
+    //Menu buttons
     private JPanel patientProfilePanel;
     private JButton emergencyButton;
     private JButton wardButton;
     private JButton reportButton;
-    private JTextField tfPlotTime;
-
-    //Body Temperature
-    private JPanel bodyTempPanel;
-    //For Heart Rate
-    private JPanel heartRatePanel;
-    //For Respiratory Rate
-    private JPanel respiratoryRatePanel;
-    //For Blood Pressure
-    private JPanel bloodPressurePanel;
-    //ECG
-    private JPanel ecgPanel;
+    //Fields containing patient details
+    private JTextField tfName;
+    private JTextField tfSex;
+    private JTextField tfAge;
+    private JTextField tfHeight;
+    private JTextField tfWeight;
+    private JTextField tfBloodType;
+    private JTextField tfHospitalized;
+    private JTextField tfEmergency;
+    //Button to go back to the Ward window
+    public JButton xButton;
+    //Needed to implement the plotting for n seconds, where n is variable
     private JSlider slider;
+    private JTextField tfPlotTime;
+    //Panels in which the plots are created
+    private JPanel bodyTempPanel;                         //Body Temperature
+    private JPanel heartRatePanel;                        //For Heart Rate
+    private JPanel respiratoryRatePanel;                  //For Respiratory Rate
+    private JPanel bloodPressurePanel;                    //For Blood Pressure
+    private JPanel ecgPanel;                              //ECG
+    //Button to mute the heartbeat of the patient
     private JButton beatMuteButton;
-
+    //Used in passing the vital values from the database into the plots
     private List<DrawGraph> graphs;
     private Patient pat;
     private int signalIndex1;
@@ -56,18 +48,18 @@ public class PatientDetailsFrame extends JFrame{
 
     public PatientDetailsFrame(ArrayList<Patient> patientList, int patientIndex) {
         setContentPane(patientProfilePanel);
-        setBounds(1200,0,1200,800); //value for windows on the right
+        setBounds(1200,0,1200,800);              //Value for windows on the right
         setTitle("Patient's data");
         setSize(1200,800);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
-        pat = patientList.get(patientIndex);
+        pat = patientList.get(patientIndex);                        //Getting the index of the patient the user is currently looking at
         signalIndex1 = 0;
         signalIndex2 = 0;
         signalIndex3 = 0;
 
-        tfName.setText(pat.firstname + " " + pat.lastname);
+        tfName.setText(pat.firstname + " " + pat.lastname);        //Passing and displaying the information about the patient in the corresponding text fields
         tfSex.setText("f");
         tfAge.setText(String.valueOf(pat.age));
         tfHeight.setText("1.71 m");
@@ -78,25 +70,11 @@ public class PatientDetailsFrame extends JFrame{
 
 
         slider.addChangeListener(e -> {
-            setGraphDuration(slider.getValue() * 1000); // converts from seconds to milliseconds
-            //String x = JTextField.getText();
-            tfPlotTime.setText(String.valueOf(slider.getValue()));
+            setGraphDuration(slider.getValue() * 1000);            //Converting from seconds to milliseconds
+            tfPlotTime.setText(String.valueOf(slider.getValue())); //Displaying the number of seconds chosen by user when plotting
         });
 
-        xButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //hide PatientDetailsFrame
-                AddPatientFrame patientDetails = new AddPatientFrame(patientList);//1. Create the frame.
-                patientDetails.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//2. Optional: What happens when the frame closes?
-                patientDetails.setTitle("Patient Details");//3. Set title for new frame
-                patientDetails.setSize(1200,800);//4. Size the frame.
-                patientDetails.setVisible(false);//5. Hide it.
-            }
-        });
-
-
-        // HeartBeat indication
+        //HeartBeat indication
         final double[] heartRate = {0};
         final int[] counter = {0};
         final int[] soundFlag = {1};
@@ -139,7 +117,7 @@ public class PatientDetailsFrame extends JFrame{
         hrTimer.schedule(heartRateCount, 0, 5*1000);        // Updating the new heart rate at every 5 seconds
 
 
-
+        //Action listeners for the buttons in the menu
         ActionListener alertAL = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -172,7 +150,7 @@ public class PatientDetailsFrame extends JFrame{
         };
         wardButton.addActionListener(wardAL);
 
-
+        //Action listener for the xButton: closing the Patient Details window and reopening Ward
         ActionListener detailsClose = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -208,8 +186,8 @@ public class PatientDetailsFrame extends JFrame{
     public static void main(String[] args) {
         PatientDetailsFrame patientProfileFrame = new PatientDetailsFrame();
     }
-
  */
+
 
     private void setGraphDuration(int duration) {
         for (DrawGraph graph : graphs) {
@@ -217,6 +195,7 @@ public class PatientDetailsFrame extends JFrame{
         }
     }
 
+    //Creating an ArrayList with all our graphs, their y plotting range and their colours
     private void createUIComponents() {
         graphs = new ArrayList<>();
         graphs.add(new DrawGraph(36, 37, Color.RED, 1000));
@@ -231,15 +210,7 @@ public class PatientDetailsFrame extends JFrame{
         bloodPressurePanel = graphs.get(3);
         ecgPanel = graphs.get(4);
 
-        // Clock clock = Clock.systemDefaultZone();
-
-        //Patient patient = new Patient(1, "Petko", "Adello", 35, "0+");
-            //List<BigDecimal> list = patient.getTempList();
-
-            //for(int i = 0; i < list.size(); i++) {
-                //System.out.println(list.get(i));
-            //}
-
+        //Plotting signals with 1 value/second
         Timer timer1 = new Timer(1000, e -> {
                 graphs.get(0).addPlotValue(pat.tempSig.get(signalIndex1).doubleValue());
                 graphs.get(2).addPlotValue(pat.hrSig.get(signalIndex1).doubleValue());
@@ -250,12 +221,14 @@ public class PatientDetailsFrame extends JFrame{
             graphs.get(3).updateUI();
         });
 
+        //Plotting signal with 12.5 values/second
         Timer timer2 = new Timer(80, e -> {
                 graphs.get(1).addPlotValue(pat.bpSig.get(signalIndex2).doubleValue());
                 signalIndex2++;
             graphs.get(1).updateUI();
         });
 
+        //Plotting signal with 20 values/second
         Timer timer3 = new Timer(50, e -> {
                 graphs.get(4).addPlotValue(pat.ecgSig.get(signalIndex3).doubleValue());
                 signalIndex3++;
