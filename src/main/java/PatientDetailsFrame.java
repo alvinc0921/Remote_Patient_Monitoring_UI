@@ -194,9 +194,9 @@ public class PatientDetailsFrame extends JFrame{
     private void createUIComponents() {
         graphs = new ArrayList<>();
         graphs.add(new DrawGraph(36, 37, Color.RED, 1000));
-        graphs.add(new DrawGraph(60, 120, Color.ORANGE, 80));
+        graphs.add(new DrawGraph(60, 120, Color.ORANGE, 1000));
         graphs.add(new DrawGraph(65, 85, Color.GREEN, 1000));
-        graphs.add(new DrawGraph(10, 20, Color.BLUE, 1000));
+        graphs.add(new DrawGraph(10, 20, Color.BLUE, 80));
         graphs.add(new DrawGraph(800, 1400, Color.BLACK, 50));
 
         bodyTempPanel = graphs.get(0);
@@ -207,20 +207,20 @@ public class PatientDetailsFrame extends JFrame{
 
         //Plotting signals with 1 value/second
         Timer timer1 = new Timer(1000, e -> {
-                graphs.get(0).addPlotValue(pat.tempSig.get(signalIndex1).doubleValue());
-                graphs.get(2).addPlotValue(pat.rrSig.get(signalIndex1).doubleValue());
-                graphs.get(3).addPlotValue(pat.bpSig.get(signalIndex1).doubleValue());
-                signalIndex1++;
+            graphs.get(0).addPlotValue(pat.tempSig.get(signalIndex1).doubleValue());
+            graphs.get(1).addPlotValue(pat.hrSig.get(signalIndex1).doubleValue());
+            graphs.get(2).addPlotValue(pat.rrSig.get(signalIndex1).doubleValue());
+            signalIndex1++;
             graphs.get(0).updateUI();
+            graphs.get(1).updateUI();
             graphs.get(2).updateUI();
-            graphs.get(3).updateUI();
         });
 
         //Plotting signal with 12.5 values/second
         Timer timer2 = new Timer(80, e -> {
-                graphs.get(1).addPlotValue(pat.hrSig.get(signalIndex2).doubleValue());
-                signalIndex2++;
-            graphs.get(1).updateUI();
+            graphs.get(3).addPlotValue(pat.bpSig.get(signalIndex2).doubleValue());
+            signalIndex2++;
+            graphs.get(3).updateUI();
         });
 
         //Plotting signal with 20 values/second
