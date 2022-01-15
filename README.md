@@ -8,9 +8,11 @@ The front-end was mainly built using SWING. The patient data and vital signs wer
 
 https://data.heroku.com/dataclips/bfljwdrcpssefebonywlxfskssvx 
 
-We recommend cloning the code to IntelliJ IDEA and running the program on it. 
+We recommend cloning the code to IntelliJ IDEA and running the main class on it. Please give a few seconds for the application to open. Notice how there are no alerts for the first 5 seconds, and suddenly a new urgent alert appears.
 
-Current version: v1.0 : First version meeting all client requirements.
+Current version: v1.1 : Small UI updates.
+
+Past versions: v1.0 : First version meeting all client requirements.
 
 In our current database, we have 2 patients. One (Petko Adello) is healthy, and thus does not trigger any warnings. The other (Marjorie Finlay) has normal vital signs for the first 5 seconds that the app is open, but then suffers from ventricular fibrillation, so as to show that our app reacts to abnormal vital signs.
 
