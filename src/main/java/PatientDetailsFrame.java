@@ -66,7 +66,16 @@ public class PatientDetailsFrame extends JFrame{
         tfWeight.setText("67 kg");
         tfBloodType.setText(pat.bloodType);
         tfHospitalized.setText("Floor " + pat.location.get(0) + ", Room " + pat.location.get(1) + ", Bed " + pat.location.get(2));
-        tfEmergency.setText("none");
+
+
+        TimerTask readStatus = new TimerTask() {   // TimerTask to read the alertStatus of patient every second
+            @Override
+            public void run() {
+                tfEmergency.setText(pat.alertStatus);
+            }
+        };
+        java.util.Timer emTimer = new java.util.Timer();
+        emTimer.schedule(readStatus, 0, 1000);
 
 
         slider.addChangeListener(e -> {
